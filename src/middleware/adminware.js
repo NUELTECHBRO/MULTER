@@ -12,7 +12,7 @@ const adminware = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWTSECRET);
 
-        if (decoded.email === "udeh99701@gmail.com") {
+        if (decoded.email === "udeh99701@gmail.com" || decoded.email === "chinemee@gmail.com") {
             req.admin = true;
         } else {
             req.admin = false;
