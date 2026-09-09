@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
 
 
-    /* ================================
+    /* =========================================
        MOBILE MENU
-    ================================= */
+    ========================================= */
 
     const mobileMenuBtn = document.getElementById("mobileMenuBtn");
     const mobileMenu = document.getElementById("mobileMenu");
@@ -15,25 +15,22 @@ document.addEventListener("DOMContentLoaded", function() {
             mobileMenu.classList.toggle("active");
 
             if (mobileMenu.classList.contains("active")) {
-
                 mobileMenuBtn.textContent = "✕";
                 mobileMenuBtn.setAttribute("aria-expanded", "true");
-
             } else {
-
                 mobileMenuBtn.textContent = "☰";
                 mobileMenuBtn.setAttribute("aria-expanded", "false");
-
             }
 
         });
 
-        mobileMenu.querySelectorAll("a").forEach(function(link) {
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+
+        mobileLinks.forEach(function(link) {
 
             link.addEventListener("click", function() {
 
                 mobileMenu.classList.remove("active");
-
                 mobileMenuBtn.textContent = "☰";
                 mobileMenuBtn.setAttribute("aria-expanded", "false");
 
@@ -44,108 +41,133 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-    /* ================================
-       COURSE CARDS
-    ================================= */
-
-    const courseCards =
-        document.querySelectorAll(".course-card");
-
-
-    /* ================================
+    /* =========================================
        SEARCH INPUTS
-    ================================= */
+    ========================================= */
 
-    const navbarSearch =
-        document.querySelector(".navbar-search input");
+    const navbarSearch = document.querySelector(
+        ".navbar-search input"
+    );
 
-    const mobileSearch =
-        document.querySelector(".mobile-search input");
+    const mobileSearch = document.querySelector(
+        ".mobile-search input"
+    );
 
-    const mainSearch =
-        document.querySelector(".main-search input");
+    const mainSearch = document.querySelector(
+        ".main-search input"
+    );
 
 
-    /* ================================
-       CURRENT FILTER
-    ================================= */
+    /* =========================================
+       COURSE CARDS
+    ========================================= */
+
+    const courseCards = document.querySelectorAll(
+        ".course-card"
+    );
+
+
+    /* =========================================
+       CURRENT CATEGORY
+    ========================================= */
 
     let currentCategory = "all";
 
 
-    /* ================================
-       FILTER COURSES
-    ================================= */
+    /* =========================================
+       GET SEARCH TEXT
+    ========================================= */
 
-    function filterCourses() {
+    function getSearchText() {
 
-        let searchValue = "";
+        if (
+            mainSearch &&
+            mainSearch.value.trim() !== ""
+        ) {
+            return mainSearch.value.toLowerCase().trim();
+        }
 
-        if (mainSearch && mainSearch.value.trim() !== "") {
-
-            searchValue = mainSearch.value.toLowerCase().trim();
-
-        } else if (
+        if (
             navbarSearch &&
             navbarSearch.value.trim() !== ""
         ) {
+            return navbarSearch.value.toLowerCase().trim();
+        }
 
-            searchValue =
-                navbarSearch.value.toLowerCase().trim();
-
-        } else if (
+        if (
             mobileSearch &&
             mobileSearch.value.trim() !== ""
         ) {
-
-            searchValue =
-                mobileSearch.value.toLowerCase().trim();
-
+            return mobileSearch.value.toLowerCase().trim();
         }
 
+        return "";
 
-        let foundCourses = 0;
+    }
+
+
+    /* =========================================
+       FILTER COURSES
+    ========================================= */
+
+    function filterCourses() {
+
+        const searchText = getSearchText();
+
+        let visibleCourses = 0;
 
 
         courseCards.forEach(function(card) {
 
-            const title =
-                card.querySelector("h3") ?
-                card.querySelector("h3")
-                .textContent
-                .toLowerCase() :
-                "";
+            const titleElement = card.querySelector("h3");
+            const descriptionElement =
+                card.querySelector(".course-description");
+            const categoryElement =
+                card.querySelector(".course-category");
+            const levelElement =
+                card.querySelector(".course-level");
 
 
-            const description =
-                card.querySelector(".course-description") ?
-                card.querySelector(".course-description")
-                .textContent
-                .toLowerCase() :
-                "";
+            let title = "";
+            let description = "";
+            let category = "";
+            let level = "";
 
 
-            const category =
-                card.querySelector(".course-category") ?
-                card.querySelector(".course-category")
-                .textContent
-                .toLowerCase()
-                .trim() :
-                "";
+            if (titleElement) {
+                title = titleElement.textContent
+                    .toLowerCase()
+                    .trim();
+            }
 
 
-            const level =
-                card.querySelector(".course-level") ?
-                card.querySelector(".course-level")
-                .textContent
-                .toLowerCase()
-                .trim() :
-                "";
+            if (descriptionElement) {
+                description = descriptionElement.textContent
+                    .toLowerCase()
+                    .trim();
+            }
+
+
+            if (categoryElement) {
+                category = categoryElement.textContent
+                    .toLowerCase()
+                    .trim();
+            }
+
+
+            if (levelElement) {
+                level = levelElement.textContent
+                    .toLowerCase()
+                    .trim();
+            }
 
 
             /*
-             * Everything inside the course
-             * that can be searched.
+             * Search through:
+             * title
+             * description
+             * category
+             * level
              */
 
             const searchableText =
@@ -159,20 +181,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
             /*
-             * SEARCH
+             * SEARCH MATCH
              */
 
-            const matchesSearch =
-                searchValue === "" ||
-                searchableText.includes(searchValue);
+            let matchesSearch = true;
+
+            if (searchText !== "") {
+
+                matchesSearch =
+                    searchableText.includes(searchText);
+
+            }
 
 
             /*
-             * CATEGORY
+             * CATEGORY MATCH
              */
 
             let matchesCategory = true;
-
 
             if (currentCategory !== "all") {
 
@@ -183,14 +209,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
             /*
-             * SHOW / HIDE
+             * SHOW OR HIDE
              */
 
-            if (matchesSearch && matchesCategory) {
+            if (
+                matchesSearch &&
+                matchesCategory
+            ) {
 
                 card.style.display = "";
 
-                foundCourses++;
+                visibleCourses++;
 
             } else {
 
@@ -201,80 +230,90 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
 
-        /*
-         * No results message
-         */
+        updateNoResultsMessage(visibleCourses);
 
-        let noResults =
-            document.getElementById("jsNoCourses");
+    }
 
 
-        if (!noResults) {
+    /* =========================================
+       NO RESULTS MESSAGE
+    ========================================= */
 
-            noResults =
+    function updateNoResultsMessage(numberOfCourses) {
+
+        const courseGrid =
+            document.querySelector(".course-grid");
+
+        if (!courseGrid) {
+            return;
+        }
+
+
+        let message =
+            document.getElementById("studentNoResults");
+
+
+        if (!message) {
+
+            message =
                 document.createElement("div");
 
-            noResults.id = "jsNoCourses";
+            message.id = "studentNoResults";
 
-            noResults.innerHTML = <
-                div style = "
-            text - align: center;
-            padding: 60 px 20 px;
-            width: 100 % ;
-            grid - column: 1 / -1;
-            ">
+            message.style.textAlign = "center";
+            message.style.padding = "50px 20px";
+            message.style.width = "100%";
+            message.style.gridColumn = "1 / -1";
 
-            <
-            div style = "
-            font - size: 50 px;
-            margin - bottom: 15 px;
-            ">🔎 <
-            /div>
+            const icon =
+                document.createElement("div");
 
-            <
-            h3 >
-                No courses found <
-                /h3>
+            icon.textContent = "🔎";
+            icon.style.fontSize = "45px";
+            icon.style.marginBottom = "15px";
 
-            <
-            p >
-                Try another search or category. <
-                /p>
 
-            <
-            /div>;
+            const heading =
+                document.createElement("h3");
 
-            noResults.style.display = "none";
+            heading.textContent =
+                "No courses found";
 
-            const grid =
-                document.querySelector(".course-grid");
 
-            if (grid) {
+            const paragraph =
+                document.createElement("p");
 
-                grid.appendChild(noResults);
+            paragraph.textContent =
+                "Try another search or choose a different category.";
 
-            }
+
+            message.appendChild(icon);
+            message.appendChild(heading);
+            message.appendChild(paragraph);
+
+            courseGrid.appendChild(message);
 
         }
 
 
-        if (noResults) {
+        if (numberOfCourses === 0) {
 
-            noResults.style.display =
-                foundCourses === 0 ?
-                "block" :
-                "none";
+            message.style.display = "block";
+
+        } else {
+
+            message.style.display = "none";
 
         }
 
     }
 
 
-    /* ================================
-       SEARCH
-    ================================= */
+    /* =========================================
+       CONNECT SEARCH BOX
+    ========================================= */
 
-    function setupSearch(input) {
+    function connectSearch(input) {
 
         if (!input) {
             return;
@@ -284,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function() {
         input.addEventListener("input", function() {
 
             /*
-             * Synchronize all search boxes.
+             * Synchronize the other search boxes.
              */
 
             if (
@@ -320,202 +359,36 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
 
-            /*
-             * Filter immediately.
-             */
-
             filterCourses();
 
         });
 
 
         /*
-         * Prevent page reload when
-         * pressing Search.
+         * Prevent the form from
+         * reloading the page.
          */
 
         const form = input.closest("form");
 
         if (form) {
 
-            form.addEventListener("submit", function(event) {
-
-                event.preventDefault();
-
-                filterCourses();
-
-                const coursesSection =
-                    document.getElementById("courses");
-
-                if (coursesSection) {
-
-                    coursesSection.scrollIntoView({
-                        behavior: "smooth"
-                    });
-
-                }
-
-            });
-
-        }
-
-    }
-
-
-    setupSearch(navbarSearch);
-    setupSearch(mobileSearch);
-    setupSearch(mainSearch);
-
-
-    /* ================================
-       CATEGORY FILTER
-    ================================= */
-
-    const categoryLinks =
-        document.querySelectorAll(
-            'a[href*="/courses?category="]'
-        );
-
-
-    categoryLinks.forEach(function(link) {
-
-        link.addEventListener("click", function(event) {
-
-            event.preventDefault();
-
-
-            const href =
-                link.getAttribute("href");
-
-
-            if (!href) {
-                return;
-            }
-
-
-            /*
-             * Example:
-             *
-             * /courses?category=development
-             */
-
-            const category =
-                href.split("category=")[1];
-
-
-            if (!category) {
-                return;
-            }
-
-
-            currentCategory =
-                decodeURIComponent(category)
-                .toLowerCase()
-                .trim();
-
-
-            /*
-             * Remove active category
-             */
-
-            categoryLinks.forEach(function(item) {
-
-                item.classList.remove(
-                    "selected-category"
-                );
-
-            });
-
-
-            /*
-             * Add active category
-             */
-
-            link.classList.add(
-                "selected-category"
-            );
-
-
-            /*
-             * Filter courses
-             */
-
-            filterCourses();
-
-
-            /*
-             * Scroll down to courses
-             */
-
-            const coursesSection =
-                document.getElementById("courses");
-
-
-            if (coursesSection) {
-
-                coursesSection.scrollIntoView({
-                    behavior: "smooth"
-                });
-
-            }
-
-        });
-
-    });
-
-
-    /* ================================
-       EXPLORE COURSES / RESET
-    ================================= */
-
-    document
-        .querySelectorAll('a[href="/courses"]')
-        .forEach(function(link) {
-
-            link.addEventListener(
-                "click",
+            form.addEventListener(
+                "submit",
                 function(event) {
-
-                    /*
-                     * Only intercept this on
-                     * the dashboard homepage.
-                     */
-
-                    if (
-                        window.location.pathname !== "/"
-                    ) {
-                        return;
-                    }
-
 
                     event.preventDefault();
 
-
-                    currentCategory = "all";
-
-
-                    categoryLinks.forEach(
-                        function(item) {
-
-                            item.classList.remove(
-                                "selected-category"
-                            );
-
-                        }
-                    );
-
-
                     filterCourses();
-
 
                     const coursesSection =
                         document.getElementById("courses");
 
-
                     if (coursesSection) {
 
                         coursesSection.scrollIntoView({
-                            behavior: "smooth"
+                            behavior: "smooth",
+                            block: "start"
                         });
 
                     }
@@ -523,126 +396,340 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             );
 
-        });
+        }
+
+    }
 
 
-    /* ================================
-       CAREER CARD HOVER
-    ================================= */
+    connectSearch(navbarSearch);
+    connectSearch(mobileSearch);
+    connectSearch(mainSearch);
 
-    document
-        .querySelectorAll(".career-card")
-        .forEach(function(card) {
 
-            card.addEventListener(
-                "mouseenter",
-                function() {
+    /* =========================================
+       CATEGORY LINKS
+    ========================================= */
 
-                    card.classList.add(
-                        "category-hover"
+    const categoryLinks =
+        document.querySelectorAll(
+            'a[href*="category="]'
+        );
+
+
+    categoryLinks.forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+
+                const href =
+                    link.getAttribute("href");
+
+
+                if (!href) {
+                    return;
+                }
+
+
+                /*
+                 * Find category after:
+                 * category=
+                 */
+
+                const position =
+                    href.indexOf("category=");
+
+
+                if (position === -1) {
+                    return;
+                }
+
+
+                let category =
+                    href.substring(
+                        position + 9
                     );
 
-                }
-            );
 
+                /*
+                 * Remove anything after &
+                 */
 
-            card.addEventListener(
-                "mouseleave",
-                function() {
+                if (category.indexOf("&") !== -1) {
 
-                    card.classList.remove(
-                        "category-hover"
-                    );
+                    category =
+                        category.split("&")[0];
 
                 }
-            );
-
-        });
 
 
-    /* ================================
-       LEARNING OPTION HOVER
-    ================================= */
+                category =
+                    decodeURIComponent(category)
+                    .toLowerCase()
+                    .trim();
 
-    document
-        .querySelectorAll(".learning-option")
-        .forEach(function(option) {
 
-            option.addEventListener(
-                "mouseenter",
-                function() {
-
-                    option.classList.add(
-                        "learning-hover"
-                    );
-
+                if (!category) {
+                    return;
                 }
-            );
 
 
-            option.addEventListener(
-                "mouseleave",
-                function() {
-
-                    option.classList.remove(
-                        "learning-hover"
-                    );
-
-                }
-            );
-
-        });
+                currentCategory = category;
 
 
-    /* ================================
-       SMOOTH SCROLL
-    ================================= */
+                /*
+                 * Remove previous selected state.
+                 */
 
-    document
-        .querySelectorAll('a[href^="#"]')
-        .forEach(function(link) {
+                categoryLinks.forEach(
+                    function(item) {
 
-            link.addEventListener(
-                "click",
-                function(event) {
+                        item.classList.remove(
+                            "selected-category"
+                        );
 
-                    const targetId =
-                        link.getAttribute("href");
-
-
-                    if (!targetId ||
-                        targetId === "#"
-                    ) {
-                        return;
                     }
+                );
 
 
-                    const target =
-                        document.querySelector(targetId);
+                /*
+                 * Highlight selected category.
+                 */
+
+                link.classList.add(
+                    "selected-category"
+                );
 
 
-                    if (!target) {
-                        return;
-                    }
+                /*
+                 * Filter courses immediately.
+                 */
+
+                filterCourses();
 
 
-                    event.preventDefault();
+                /*
+                 * Scroll to course section.
+                 */
+
+                const coursesSection =
+                    document.getElementById("courses");
 
 
-                    target.scrollIntoView({
+                if (coursesSection) {
+
+                    coursesSection.scrollIntoView({
                         behavior: "smooth",
                         block: "start"
                     });
 
                 }
-            );
 
-        });
+            }
+        );
+
+    });
 
 
-    /* ================================
-       ESCAPE CLOSE MENU
-    ================================= */
+    /* =========================================
+       RESET / EXPLORE COURSES
+    ========================================= */
+
+    const exploreLinks =
+        document.querySelectorAll(
+            'a[href="/courses"]'
+        );
+
+
+    exploreLinks.forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function(event) {
+
+                /*
+                 * Only intercept this on
+                 * the homepage.
+                 */
+
+                if (
+                    window.location.pathname !== "/"
+                ) {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+
+                currentCategory = "all";
+
+
+                categoryLinks.forEach(
+                    function(item) {
+
+                        item.classList.remove(
+                            "selected-category"
+                        );
+
+                    }
+                );
+
+
+                filterCourses();
+
+
+                const coursesSection =
+                    document.getElementById("courses");
+
+
+                if (coursesSection) {
+
+                    coursesSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+
+            }
+        );
+
+    });
+
+
+    /* =========================================
+       CAREER CARD HOVER
+    ========================================= */
+
+    const careerCards =
+        document.querySelectorAll(".career-card");
+
+
+    careerCards.forEach(function(card) {
+
+        card.addEventListener(
+            "mouseenter",
+            function() {
+
+                card.classList.add(
+                    "category-hover"
+                );
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            function() {
+
+                card.classList.remove(
+                    "category-hover"
+                );
+
+            }
+        );
+
+    });
+
+
+    /* =========================================
+       LEARNING OPTION HOVER
+    ========================================= */
+
+    const learningOptions =
+        document.querySelectorAll(
+            ".learning-option"
+        );
+
+
+    learningOptions.forEach(function(option) {
+
+        option.addEventListener(
+            "mouseenter",
+            function() {
+
+                option.classList.add(
+                    "learning-hover"
+                );
+
+            }
+        );
+
+
+        option.addEventListener(
+            "mouseleave",
+            function() {
+
+                option.classList.remove(
+                    "learning-hover"
+                );
+
+            }
+        );
+
+    });
+
+
+    /* =========================================
+       SMOOTH SCROLL
+    ========================================= */
+
+    const anchorLinks =
+        document.querySelectorAll(
+            'a[href^="#"]'
+        );
+
+
+    anchorLinks.forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function(event) {
+
+                const targetId =
+                    link.getAttribute("href");
+
+
+                if (!targetId ||
+                    targetId === "#"
+                ) {
+                    return;
+                }
+
+
+                const target =
+                    document.querySelector(
+                        targetId
+                    );
+
+
+                if (!target) {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+
+    });
+
+
+    /* =========================================
+       ESCAPE KEY
+    ========================================= */
 
     document.addEventListener(
         "keydown",
@@ -676,15 +763,15 @@ document.addEventListener("DOMContentLoaded", function() {
     );
 
 
-    /* ================================
-       INITIALIZE
-    ================================= */
+    /* =========================================
+       INITIAL FILTER
+    ========================================= */
 
     filterCourses();
 
 
     console.log(
-        "XTP Student Dashboard JavaScript loaded."
+        "XTP Student Dashboard JavaScript loaded successfully."
     );
 
 
