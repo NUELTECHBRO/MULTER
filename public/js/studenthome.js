@@ -1,38 +1,79 @@
 document.addEventListener("DOMContentLoaded", function() {
 
 
-    /* =========================================
-       MOBILE MENU
-    ========================================= */
+    var mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    var mobileMenu = document.getElementById("mobileMenu");
 
-    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
+    var desktopSearch = document.querySelector(
+        '.navbar-search input[name="search"]'
+    );
+
+    var mobileSearch = document.querySelector(
+        '.mobile-search input[name="search"]'
+    );
+
+    var mainSearch = document.querySelector(
+        '.main-search input[name="search"]'
+    );
+
+    var courseGrid = document.querySelector(".course-grid");
+
+    var courseCards = [];
+
+    if (courseGrid) {
+        courseCards = Array.prototype.slice.call(
+            courseGrid.querySelectorAll(".course-card")
+        );
+    }
+
+    var activeCategory = "";
+    var activeSearch = "";
+
+
+
+    /* ==========================================
+       MOBILE MENU
+    ========================================== */
 
     if (mobileMenuBtn && mobileMenu) {
 
         mobileMenuBtn.addEventListener("click", function() {
 
-            mobileMenu.classList.toggle("active");
+            var opened = mobileMenu.classList.toggle("open");
 
-            if (mobileMenu.classList.contains("active")) {
-                mobileMenuBtn.textContent = "✕";
-                mobileMenuBtn.setAttribute("aria-expanded", "true");
-            } else {
-                mobileMenuBtn.textContent = "☰";
-                mobileMenuBtn.setAttribute("aria-expanded", "false");
-            }
+            mobileMenuBtn.setAttribute(
+                "aria-expanded",
+                opened ? "true" : "false"
+            );
 
         });
 
-        const mobileLinks = mobileMenu.querySelectorAll("a");
+    }
+
+
+
+    /* ==========================================
+       CLOSE MOBILE MENU
+    ========================================== */
+
+    if (mobileMenu) {
+
+        var mobileLinks = mobileMenu.querySelectorAll("a");
 
         mobileLinks.forEach(function(link) {
 
             link.addEventListener("click", function() {
 
-                mobileMenu.classList.remove("active");
-                mobileMenuBtn.textContent = "☰";
-                mobileMenuBtn.setAttribute("aria-expanded", "false");
+                mobileMenu.classList.remove("open");
+
+                if (mobileMenuBtn) {
+
+                    mobileMenuBtn.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                }
 
             });
 
@@ -41,180 +82,316 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-    /* =========================================
-       SEARCH INPUTS
-    ========================================= */
 
-    const navbarSearch = document.querySelector(
-        ".navbar-search input"
-    );
+    /* ==========================================
+       NORMALIZE TEXT
+    ========================================== */
 
-    const mobileSearch = document.querySelector(
-        ".mobile-search input"
-    );
+    function normalize(text) {
 
-    const mainSearch = document.querySelector(
-        ".main-search input"
-    );
-
-
-    /* =========================================
-       COURSE CARDS
-    ========================================= */
-
-    const courseCards = document.querySelectorAll(
-        ".course-card"
-    );
-
-
-    /* =========================================
-       CURRENT CATEGORY
-    ========================================= */
-
-    let currentCategory = "all";
-
-
-    /* =========================================
-       GET SEARCH TEXT
-    ========================================= */
-
-    function getSearchText() {
-
-        if (
-            mainSearch &&
-            mainSearch.value.trim() !== ""
-        ) {
-            return mainSearch.value.toLowerCase().trim();
-        }
-
-        if (
-            navbarSearch &&
-            navbarSearch.value.trim() !== ""
-        ) {
-            return navbarSearch.value.toLowerCase().trim();
-        }
-
-        if (
-            mobileSearch &&
-            mobileSearch.value.trim() !== ""
-        ) {
-            return mobileSearch.value.toLowerCase().trim();
-        }
-
-        return "";
+        return String(text || "")
+            .toLowerCase()
+            .replace(/\s+/g, " ")
+            .trim();
 
     }
 
 
-    /* =========================================
+
+    /* ==========================================
+       GET CATEGORY FROM LINK
+    ========================================== */
+
+    function getCategory(link) {
+
+        if (!link) {
+            return "";
+        }
+
+        var href = link.getAttribute("href") || "";
+
+        try {
+
+            var url = new URL(
+                href,
+                window.location.origin
+            );
+
+            var category = url.searchParams.get(
+                "category"
+            );
+
+            return normalize(category);
+
+        } catch (error) {
+
+            var match = href.match(
+                /[?&]category=([^&]+)/
+            );
+
+            if (!match) {
+                return "";
+            }
+
+            try {
+
+                return normalize(
+                    decodeURIComponent(match[1])
+                );
+
+            } catch (decodeError) {
+
+                return normalize(match[1]);
+
+            }
+
+        }
+
+    }
+
+
+
+    /* ==========================================
+       CATEGORY ALIASES
+    ========================================== */
+
+    var categoryAliases = {
+
+        development: [
+            "development",
+            "software development",
+            "web development",
+            "programming",
+            "software",
+            "frontend",
+            "front end",
+            "backend",
+            "back end",
+            "full stack",
+            "fullstack"
+        ],
+
+        cybersecurity: [
+            "cybersecurity",
+            "cyber security",
+            "information security",
+            "security"
+        ],
+
+        hacking: [
+            "hacking",
+            "ethical hacking",
+            "penetration testing",
+            "penetration",
+            "pentesting"
+        ],
+
+        data: [
+            "data",
+            "data analysis",
+            "data analytics",
+            "analytics",
+            "database",
+            "sql"
+        ],
+
+        ai: [
+            "ai",
+            "artificial intelligence",
+            "machine learning",
+            "deep learning",
+            "ml"
+        ],
+
+        cloud: [
+            "cloud",
+            "cloud computing",
+            "aws",
+            "azure",
+            "google cloud",
+            "devops"
+        ],
+
+        networking: [
+            "networking",
+            "computer networking",
+            "network",
+            "infrastructure"
+        ],
+
+        design: [
+            "design",
+            "ui design",
+            "ux design",
+            "ui/ux",
+            "ui ux",
+            "user interface",
+            "user experience",
+            "graphics",
+            "graphic design"
+        ],
+
+        business: [
+            "business",
+            "entrepreneurship",
+            "entrepreneur",
+            "business management"
+        ],
+
+        marketing: [
+            "marketing",
+            "digital marketing",
+            "social media marketing",
+            "content marketing"
+        ],
+
+        it: [
+            "it",
+            "it support",
+            "information technology",
+            "technical support",
+            "computer support"
+        ],
+
+        mobile: [
+            "mobile",
+            "mobile development",
+            "android",
+            "ios",
+            "react native",
+            "mobile app",
+            "app development"
+        ]
+
+    };
+
+
+
+    /* ==========================================
+       CATEGORY MATCHING
+    ========================================== */
+
+    function categoryMatches(
+        courseCategory,
+        selectedCategory
+    ) {
+
+        var course = normalize(courseCategory);
+        var selected = normalize(selectedCategory);
+
+        if (!selected) {
+            return true;
+        }
+
+        var possibleMatches =
+            categoryAliases[selected];
+
+        if (!possibleMatches) {
+
+            return (
+                course === selected ||
+                course.indexOf(selected) !== -1 ||
+                selected.indexOf(course) !== -1
+            );
+
+        }
+
+        for (
+            var i = 0; i < possibleMatches.length; i++
+        ) {
+
+            var value = normalize(
+                possibleMatches[i]
+            );
+
+            if (course === value) {
+                return true;
+            }
+
+            if (course.indexOf(value) !== -1) {
+                return true;
+            }
+
+            if (value.indexOf(course) !== -1) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+    }
+
+
+
+    /* ==========================================
        FILTER COURSES
-    ========================================= */
+    ========================================== */
 
     function filterCourses() {
 
-        const searchText = getSearchText();
-
-        let visibleCourses = 0;
-
+        var visibleCourses = 0;
 
         courseCards.forEach(function(card) {
 
-            const titleElement = card.querySelector("h3");
-            const descriptionElement =
+            var titleElement =
+                card.querySelector("h3");
+
+            var descriptionElement =
                 card.querySelector(".course-description");
-            const categoryElement =
+
+            var categoryElement =
                 card.querySelector(".course-category");
-            const levelElement =
+
+            var levelElement =
                 card.querySelector(".course-level");
 
 
-            let title = "";
-            let description = "";
-            let category = "";
-            let level = "";
+            var title = titleElement ?
+                titleElement.textContent :
+                "";
+
+            var description =
+                descriptionElement ?
+                descriptionElement.textContent :
+                "";
+
+            var category =
+                categoryElement ?
+                categoryElement.textContent :
+                "";
+
+            var level =
+                levelElement ?
+                levelElement.textContent :
+                "";
 
 
-            if (titleElement) {
-                title = titleElement.textContent
-                    .toLowerCase()
-                    .trim();
-            }
-
-
-            if (descriptionElement) {
-                description = descriptionElement.textContent
-                    .toLowerCase()
-                    .trim();
-            }
-
-
-            if (categoryElement) {
-                category = categoryElement.textContent
-                    .toLowerCase()
-                    .trim();
-            }
-
-
-            if (levelElement) {
-                level = levelElement.textContent
-                    .toLowerCase()
-                    .trim();
-            }
-
-
-            /*
-             * Search through:
-             * title
-             * description
-             * category
-             * level
-             */
-
-            const searchableText =
+            var allText = normalize(
                 title +
                 " " +
                 description +
                 " " +
                 category +
                 " " +
-                level;
+                level
+            );
 
 
-            /*
-             * SEARCH MATCH
-             */
-
-            let matchesSearch = true;
-
-            if (searchText !== "") {
-
-                matchesSearch =
-                    searchableText.includes(searchText);
-
-            }
+            var searchOkay = !activeSearch ||
+                allText.indexOf(activeSearch) !== -1;
 
 
-            /*
-             * CATEGORY MATCH
-             */
+            var categoryOkay = !activeCategory ||
+                categoryMatches(
+                    category,
+                    activeCategory
+                );
 
-            let matchesCategory = true;
-
-            if (currentCategory !== "all") {
-
-                matchesCategory =
-                    category === currentCategory;
-
-            }
-
-
-            /*
-             * SHOW OR HIDE
-             */
 
             if (
-                matchesSearch &&
-                matchesCategory
+                searchOkay &&
+                categoryOkay
             ) {
 
                 card.style.display = "";
@@ -230,187 +407,408 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
 
-        updateNoResultsMessage(visibleCourses);
+        showFilterMessage(visibleCourses);
+        updateNoResults(visibleCourses);
 
     }
 
 
-    /* =========================================
-       NO RESULTS MESSAGE
-    ========================================= */
 
-    function updateNoResultsMessage(numberOfCourses) {
+    /* ==========================================
+       FILTER MESSAGE
+    ========================================== */
 
-        const courseGrid =
-            document.querySelector(".course-grid");
+    var filterMessage = null;
+
+
+    function createFilterMessage() {
 
         if (!courseGrid) {
             return;
         }
 
 
-        let message =
-            document.getElementById("studentNoResults");
+        filterMessage =
+            document.createElement("div");
 
 
-        if (!message) {
-
-            message =
-                document.createElement("div");
-
-            message.id = "studentNoResults";
-
-            message.style.textAlign = "center";
-            message.style.padding = "50px 20px";
-            message.style.width = "100%";
-            message.style.gridColumn = "1 / -1";
-
-            const icon =
-                document.createElement("div");
-
-            icon.textContent = "🔎";
-            icon.style.fontSize = "45px";
-            icon.style.marginBottom = "15px";
+        filterMessage.style.display = "none";
+        filterMessage.style.marginBottom = "20px";
+        filterMessage.style.padding = "15px 18px";
+        filterMessage.style.borderRadius = "10px";
+        filterMessage.style.background = "#f5f5f5";
+        filterMessage.style.fontSize = "15px";
 
 
-            const heading =
-                document.createElement("h3");
+        courseGrid.parentNode.insertBefore(
+            filterMessage,
+            courseGrid
+        );
 
-            heading.textContent =
-                "No courses found";
-
-
-            const paragraph =
-                document.createElement("p");
-
-            paragraph.textContent =
-                "Try another search or choose a different category.";
+    }
 
 
-            message.appendChild(icon);
-            message.appendChild(heading);
-            message.appendChild(paragraph);
+    createFilterMessage();
 
-            courseGrid.appendChild(message);
+
+
+    /* ==========================================
+       SHOW FILTER MESSAGE
+    ========================================== */
+
+    function showFilterMessage(count) {
+
+        if (!filterMessage) {
+            return;
+        }
+
+
+        if (!activeSearch &&
+            !activeCategory
+        ) {
+
+            filterMessage.style.display = "none";
+
+            return;
 
         }
 
 
-        if (numberOfCourses === 0) {
+        filterMessage.style.display = "block";
 
-            message.style.display = "block";
+
+        var message = "";
+
+
+        if (
+            activeSearch &&
+            activeCategory
+        ) {
+
+            message =
+                "Showing " +
+                count +
+                " course" +
+                (count === 1 ? "" : "s") +
+                ' matching "' +
+                activeSearch +
+                '" in ' +
+                activeCategory +
+                ".";
+
+        } else if (activeSearch) {
+
+            message =
+                "Showing " +
+                count +
+                " course" +
+                (count === 1 ? "" : "s") +
+                ' matching "' +
+                activeSearch +
+                '".';
 
         } else {
 
-            message.style.display = "none";
+            message =
+                "Showing " +
+                count +
+                " course" +
+                (count === 1 ? "" : "s") +
+                " in " +
+                activeCategory +
+                ".";
+
+        }
+
+
+        filterMessage.textContent = message;
+
+    }
+
+
+
+    /* ==========================================
+       NO RESULTS
+    ========================================== */
+
+    var noResults = null;
+
+
+    function createNoResults() {
+
+        if (!courseGrid) {
+            return;
+        }
+
+
+        noResults =
+            document.createElement("div");
+
+
+        noResults.style.display = "none";
+        noResults.style.padding = "40px 20px";
+        noResults.style.textAlign = "center";
+        noResults.style.marginTop = "20px";
+        noResults.style.borderRadius = "12px";
+        noResults.style.background = "#f5f5f5";
+
+
+        var heading =
+            document.createElement("h3");
+
+
+        heading.textContent =
+            "No courses found";
+
+
+        var paragraph =
+            document.createElement("p");
+
+
+        paragraph.textContent =
+            "Try another search or choose another category.";
+
+
+        var button =
+            document.createElement("button");
+
+
+        button.type = "button";
+        button.textContent = "Clear filters";
+
+
+        button.style.padding = "10px 18px";
+        button.style.border = "none";
+        button.style.borderRadius = "8px";
+        button.style.cursor = "pointer";
+
+
+        button.addEventListener(
+            "click",
+            clearFilters
+        );
+
+
+        noResults.appendChild(heading);
+        noResults.appendChild(paragraph);
+        noResults.appendChild(button);
+
+
+        courseGrid.parentNode.insertBefore(
+            noResults,
+            courseGrid.nextSibling
+        );
+
+    }
+
+
+    createNoResults();
+
+
+
+    /* ==========================================
+       UPDATE NO RESULTS
+    ========================================== */
+
+    function updateNoResults(count) {
+
+        if (!noResults) {
+            return;
+        }
+
+
+        if (
+            count === 0 &&
+            (
+                activeSearch ||
+                activeCategory
+            )
+        ) {
+
+            noResults.style.display =
+                "block";
+
+        } else {
+
+            noResults.style.display =
+                "none";
 
         }
 
     }
 
 
-    /* =========================================
-       CONNECT SEARCH BOX
-    ========================================= */
 
-    function connectSearch(input) {
+    /* ==========================================
+       SEARCH INPUT SYNC
+    ========================================== */
+
+    function syncSearch(value, source) {
+
+        if (
+            desktopSearch &&
+            source !== desktopSearch
+        ) {
+
+            desktopSearch.value = value;
+
+        }
+
+
+        if (
+            mobileSearch &&
+            source !== mobileSearch
+        ) {
+
+            mobileSearch.value = value;
+
+        }
+
+
+        if (
+            mainSearch &&
+            source !== mainSearch
+        ) {
+
+            mainSearch.value = value;
+
+        }
+
+    }
+
+
+
+    /* ==========================================
+       SEARCH
+    ========================================== */
+
+    function setupSearch(input) {
 
         if (!input) {
             return;
         }
 
 
-        input.addEventListener("input", function() {
+        input.addEventListener(
+            "input",
+            function() {
 
-            /*
-             * Synchronize the other search boxes.
-             */
-
-            if (
-                navbarSearch &&
-                input !== navbarSearch
-            ) {
-
-                navbarSearch.value =
-                    input.value;
-
-            }
+                activeSearch =
+                    normalize(input.value);
 
 
-            if (
-                mobileSearch &&
-                input !== mobileSearch
-            ) {
+                syncSearch(
+                    input.value,
+                    input
+                );
 
-                mobileSearch.value =
-                    input.value;
+
+                filterCourses();
 
             }
-
-
-            if (
-                mainSearch &&
-                input !== mainSearch
-            ) {
-
-                mainSearch.value =
-                    input.value;
-
-            }
-
-
-            filterCourses();
-
-        });
-
-
-        /*
-         * Prevent the form from
-         * reloading the page.
-         */
-
-        const form = input.closest("form");
-
-        if (form) {
-
-            form.addEventListener(
-                "submit",
-                function(event) {
-
-                    event.preventDefault();
-
-                    filterCourses();
-
-                    const coursesSection =
-                        document.getElementById("courses");
-
-                    if (coursesSection) {
-
-                        coursesSection.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start"
-                        });
-
-                    }
-
-                }
-            );
-
-        }
+        );
 
     }
 
 
-    connectSearch(navbarSearch);
-    connectSearch(mobileSearch);
-    connectSearch(mainSearch);
+    setupSearch(desktopSearch);
+    setupSearch(mobileSearch);
+    setupSearch(mainSearch);
 
 
-    /* =========================================
+
+    /* ==========================================
+       SEARCH FORM SUBMIT
+    ========================================== */
+
+    var searchForms =
+        document.querySelectorAll(
+            ".navbar-search, .mobile-search, .main-search"
+        );
+
+
+    searchForms.forEach(function(form) {
+
+        form.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                var input =
+                    form.querySelector(
+                        'input[name="search"]'
+                    );
+
+
+                if (!input) {
+                    return;
+                }
+
+
+                activeSearch =
+                    normalize(input.value);
+
+
+                syncSearch(
+                    input.value,
+                    input
+                );
+
+
+                filterCourses();
+
+
+                if (courseGrid) {
+
+                    courseGrid.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+
+
+                if (mobileMenu) {
+
+                    mobileMenu.classList.remove(
+                        "open"
+                    );
+
+                }
+
+
+                if (mobileMenuBtn) {
+
+                    mobileMenuBtn.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+
+    /* ==========================================
        CATEGORY LINKS
-    ========================================= */
+       
+       ALL LINKS USING:
+       
+       /courses?category=development
+       /courses?category=cybersecurity
+       /courses?category=data
+       etc.
+       
+       ARE SUPPORTED.
+    ========================================== */
 
-    const categoryLinks =
+    var categoryLinks =
         document.querySelectorAll(
             'a[href*="category="]'
         );
@@ -422,54 +820,8 @@ document.addEventListener("DOMContentLoaded", function() {
             "click",
             function(event) {
 
-                event.preventDefault();
-
-
-                const href =
-                    link.getAttribute("href");
-
-
-                if (!href) {
-                    return;
-                }
-
-
-                /*
-                 * Find category after:
-                 * category=
-                 */
-
-                const position =
-                    href.indexOf("category=");
-
-
-                if (position === -1) {
-                    return;
-                }
-
-
-                let category =
-                    href.substring(
-                        position + 9
-                    );
-
-
-                /*
-                 * Remove anything after &
-                 */
-
-                if (category.indexOf("&") !== -1) {
-
-                    category =
-                        category.split("&")[0];
-
-                }
-
-
-                category =
-                    decodeURIComponent(category)
-                    .toLowerCase()
-                    .trim();
+                var category =
+                    getCategory(link);
 
 
                 if (!category) {
@@ -477,56 +829,69 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
 
-                currentCategory = category;
-
-
                 /*
-                 * Remove previous selected state.
+                 * If there are courses on the
+                 * homepage, filter them here.
                  */
 
-                categoryLinks.forEach(
-                    function(item) {
+                if (courseCards.length > 0) {
 
-                        item.classList.remove(
-                            "selected-category"
+                    event.preventDefault();
+
+
+                    activeCategory =
+                        category;
+
+
+                    filterCourses();
+
+
+                    /*
+                     * Scroll to courses.
+                     */
+
+                    if (courseGrid) {
+
+                        courseGrid.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+
+                    }
+
+
+                    /*
+                     * Close mobile menu.
+                     */
+
+                    if (mobileMenu) {
+
+                        mobileMenu.classList.remove(
+                            "open"
                         );
 
                     }
-                );
 
 
-                /*
-                 * Highlight selected category.
-                 */
+                    if (mobileMenuBtn) {
 
-                link.classList.add(
-                    "selected-category"
-                );
+                        mobileMenuBtn.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
 
-
-                /*
-                 * Filter courses immediately.
-                 */
-
-                filterCourses();
-
-
-                /*
-                 * Scroll to course section.
-                 */
-
-                const coursesSection =
-                    document.getElementById("courses");
-
-
-                if (coursesSection) {
-
-                    coursesSection.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
+                    }
 
                 }
+
+                /*
+                 * If there are no course cards,
+                 * DO NOT preventDefault().
+                 *
+                 * The browser will normally go to:
+                 *
+                 * /courses?category=...
+                 */
 
             }
         );
@@ -534,102 +899,42 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    /* =========================================
-       RESET / EXPLORE COURSES
-    ========================================= */
 
-    const exploreLinks =
+    /* ==========================================
+       CATEGORY CARD KEYBOARD SUPPORT
+       
+       Makes sure category cards still
+       behave correctly when focused and
+       activated from the keyboard.
+    ========================================== */
+
+    var careerCards =
         document.querySelectorAll(
-            'a[href="/courses"]'
+            ".career-card"
         );
-
-
-    exploreLinks.forEach(function(link) {
-
-        link.addEventListener(
-            "click",
-            function(event) {
-
-                /*
-                 * Only intercept this on
-                 * the homepage.
-                 */
-
-                if (
-                    window.location.pathname !== "/"
-                ) {
-                    return;
-                }
-
-
-                event.preventDefault();
-
-
-                currentCategory = "all";
-
-
-                categoryLinks.forEach(
-                    function(item) {
-
-                        item.classList.remove(
-                            "selected-category"
-                        );
-
-                    }
-                );
-
-
-                filterCourses();
-
-
-                const coursesSection =
-                    document.getElementById("courses");
-
-
-                if (coursesSection) {
-
-                    coursesSection.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-                }
-
-            }
-        );
-
-    });
-
-
-    /* =========================================
-       CAREER CARD HOVER
-    ========================================= */
-
-    const careerCards =
-        document.querySelectorAll(".career-card");
 
 
     careerCards.forEach(function(card) {
 
-        card.addEventListener(
-            "mouseenter",
-            function() {
-
-                card.classList.add(
-                    "category-hover"
-                );
-
-            }
+        card.setAttribute(
+            "role",
+            "link"
         );
 
-
         card.addEventListener(
-            "mouseleave",
-            function() {
+            "keydown",
+            function(event) {
 
-                card.classList.remove(
-                    "category-hover"
-                );
+                if (
+                    event.key === "Enter" ||
+                    event.key === " "
+                ) {
+
+                    event.preventDefault();
+
+                    card.click();
+
+                }
 
             }
         );
@@ -637,11 +942,21 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    /* =========================================
-       LEARNING OPTION HOVER
-    ========================================= */
 
-    const learningOptions =
+    /* ==========================================
+       LEARNING OPTION CARDS
+       
+       Hero cards such as:
+       
+       Development
+       Cybersecurity
+       Data & AI
+       Cloud & Networking
+       
+       Use the same category system.
+    ========================================== */
+
+    var learningOptions =
         document.querySelectorAll(
             ".learning-option"
         );
@@ -650,76 +965,38 @@ document.addEventListener("DOMContentLoaded", function() {
     learningOptions.forEach(function(option) {
 
         option.addEventListener(
-            "mouseenter",
-            function() {
-
-                option.classList.add(
-                    "learning-hover"
-                );
-
-            }
-        );
-
-
-        option.addEventListener(
-            "mouseleave",
-            function() {
-
-                option.classList.remove(
-                    "learning-hover"
-                );
-
-            }
-        );
-
-    });
-
-
-    /* =========================================
-       SMOOTH SCROLL
-    ========================================= */
-
-    const anchorLinks =
-        document.querySelectorAll(
-            'a[href^="#"]'
-        );
-
-
-    anchorLinks.forEach(function(link) {
-
-        link.addEventListener(
             "click",
             function(event) {
 
-                const targetId =
-                    link.getAttribute("href");
+                var category =
+                    getCategory(option);
 
 
-                if (!targetId ||
-                    targetId === "#"
-                ) {
+                if (!category) {
                     return;
                 }
 
 
-                const target =
-                    document.querySelector(
-                        targetId
-                    );
+                if (courseCards.length > 0) {
+
+                    event.preventDefault();
+
+                    activeCategory =
+                        category;
+
+                    filterCourses();
 
 
-                if (!target) {
-                    return;
+                    if (courseGrid) {
+
+                        courseGrid.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+
+                    }
+
                 }
-
-
-                event.preventDefault();
-
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
 
             }
         );
@@ -727,9 +1004,57 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    /* =========================================
+
+    /* ==========================================
+       CLEAR FILTERS
+    ========================================== */
+
+    function clearFilters() {
+
+        activeSearch = "";
+        activeCategory = "";
+
+
+        if (desktopSearch) {
+            desktopSearch.value = "";
+        }
+
+
+        if (mobileSearch) {
+            mobileSearch.value = "";
+        }
+
+
+        if (mainSearch) {
+            mainSearch.value = "";
+        }
+
+
+        courseCards.forEach(
+            function(card) {
+
+                card.style.display = "";
+
+            }
+        );
+
+
+        showFilterMessage(
+            courseCards.length
+        );
+
+
+        updateNoResults(
+            courseCards.length
+        );
+
+    }
+
+
+
+    /* ==========================================
        ESCAPE KEY
-    ========================================= */
+    ========================================== */
 
     document.addEventListener(
         "keydown",
@@ -740,15 +1065,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (mobileMenu) {
 
                     mobileMenu.classList.remove(
-                        "active"
+                        "open"
                     );
 
                 }
 
 
                 if (mobileMenuBtn) {
-
-                    mobileMenuBtn.textContent = "☰";
 
                     mobileMenuBtn.setAttribute(
                         "aria-expanded",
@@ -763,16 +1086,71 @@ document.addEventListener("DOMContentLoaded", function() {
     );
 
 
-    /* =========================================
-       INITIAL FILTER
-    ========================================= */
 
-    filterCourses();
+    /* ==========================================
+       INITIAL URL CATEGORY
+       
+       If the page was opened with:
+       
+       /?category=development
+       
+       or another category URL,
+       apply the category automatically.
+    ========================================== */
+
+    try {
+
+        var currentURL =
+            new URL(window.location.href);
+
+        var urlCategory =
+            currentURL.searchParams.get(
+                "category"
+            );
+
+        var urlSearch =
+            currentURL.searchParams.get(
+                "search"
+            );
 
 
-    console.log(
-        "XTP Student Dashboard JavaScript loaded successfully."
-    );
+        if (urlSearch) {
+
+            activeSearch =
+                normalize(urlSearch);
+
+            syncSearch(
+                urlSearch,
+                null
+            );
+
+        }
+
+
+        if (urlCategory) {
+
+            activeCategory =
+                normalize(urlCategory);
+
+        }
+
+
+        if (
+            activeSearch ||
+            activeCategory
+        ) {
+
+            filterCourses();
+
+        }
+
+    } catch (error) {
+
+        console.log(
+            "Could not read URL filters."
+        );
+
+    }
 
 
 });
