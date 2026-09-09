@@ -54,10 +54,10 @@ router.get("/privacy", (req, res) => {
     res.render("others/privacy")
 });
 router.get("/contact", (req, res) => {
-    res.render("others/contact")
+    res.render("others/contact", { user: req.user })
 });
 router.get("/about", (req, res) => {
-        res.render("others/about")
+        res.render("others/about", { user: req.user })
     })
     /*                                                                                 
     --------------------------------------------------------------------------         
