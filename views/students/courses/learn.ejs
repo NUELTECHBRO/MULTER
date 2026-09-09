@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        <%= course.title %> | XTP Academy
+    </title>
+
+    <link rel="stylesheet" href="/css/learn.css">
+
+</head>
+
+<body>
+
+
+    <!-- TOP NAVIGATION -->
+    <header class="learning-header">
+
+        <a href="/courses" class="back-button">
+            <span>←</span> Back to Courses
+        </a>
+
+        <a href="/" class="academy-logo">
+        XTP <span>Academy</span>
+    </a>
+
+        <div class="student-area">
+
+            <% if (user) { %>
+
+                <div class="student-avatar">
+                    <%= user.name ? user.name.charAt(0).toUpperCase() : "S" %>
+                </div>
+
+                <span class="student-name">
+                <%= user.name %>
+            </span>
+
+                <% } %>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN LEARNING AREA -->
+    <main class="learning-page">
+
+        <!-- VIDEO -->
+        <section class="video-section">
+
+            <div class="video-container">
+
+                <% if (course.video) { %>
+
+                    <video class="course-video" controls preload="metadata" playsinline>
+
+                    <source
+                        src="/<%= course.video %>"
+                        type="video/mp4"
+                    >
+
+                    Your browser does not support
+                    HTML5 video.
+
+                </video>
+
+                    <% } else { %>
+
+                        <div class="video-unavailable">
+
+                            <div class="video-icon">
+                                🎥
+                            </div>
+
+                            <h2>
+                                Video unavailable
+                            </h2>
+
+                            <p>
+                                The course video has not been uploaded yet.
+                            </p>
+
+                        </div>
+
+                        <% } %>
+
+            </div>
+
+
+            <!-- VIDEO BOTTOM BAR -->
+            <div class="video-bottom">
+
+                <div>
+                    <span class="watching-label">
+                    NOW LEARNING
+                </span>
+
+                    <h1>
+                        <%= course.title %>
+                    </h1>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- COURSE INFORMATION -->
+        <aside class="course-sidebar">
+
+            <div class="course-card">
+
+                <% if (course.thumbnail) { %>
+
+                    <div class="course-thumbnail">
+
+                        <img src="/uploads/<%= course.thumbnail %>" alt="<%= course.title %>">
+
+                    </div>
+
+                    <% } %>
+
+
+                        <div class="course-content">
+
+                            <span class="course-category">
+                    <%= course.category %>
+                </span>
+
+                            <h2>
+                                <%= course.title %>
+                            </h2>
+
+                            <div class="course-details">
+
+                                <div class="detail">
+
+                                    <span class="detail-icon">
+                            📚
+                        </span>
+
+                                    <div>
+                                        <small>Level</small>
+
+                                        <strong>
+                                <%= course.level %>
+                            </strong>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="detail">
+
+                                    <span class="detail-icon">
+                            🎓
+                        </span>
+
+                                    <div>
+                                        <small>Access</small>
+
+                                        <strong>
+                                Free Course
+                            </strong>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+            <div class="description-card">
+
+                <h3>
+                    About This Course
+                </h3>
+
+                <p>
+                    <%= course.description %>
+                </p>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+            <div class="learning-actions">
+
+                <a href="/courses" class="courses-button">
+                ← Browse More Courses
+            </a>
+
+                <a href="/" class="home-button">
+                Go Home
+            </a>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+
+    <footer class="learning-footer">
+
+        <p>
+            ©
+            <%= new Date().getFullYear() %>
+                XTP Academy. Learn. Build. Grow.
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

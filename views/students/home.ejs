@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="XTP Concept Academy - Learn practical skills, build projects and grow your future.">
+
+    <title>XTP Concept Academy | Student Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/students.css">
+
+</head>
+
+<body>
+
+
+    <!-- ANNOUNCEMENT -->
+
+    <div class="announcement">
+
+        <div class="container announcement-container">
+
+            <p>
+                🚀 Keep learning. Keep building. Keep growing.
+            </p>
+
+            <a href="/courses">
+            Explore Courses →
+        </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="container nav-container">
+
+            <!-- BRAND -->
+
+            <a href="/" class="brand">
+
+                <div class="brand-logo">
+                    X
+                </div>
+
+                <div class="brand-text">
+
+                    <strong>
+                    XTP
+                </strong>
+
+                    <span>
+                    CONCEPT ACADEMY
+                </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- DESKTOP SEARCH -->
+
+            <form action="/courses" method="GET" class="search-form" id="studentNavbarSearch">
+
+                <span class="search-icon">
+                🔍
+            </span>
+
+                <input type="search" name="search" placeholder="Search for courses, skills or topics..." autocomplete="off" aria-label="Search for courses">
+
+                <button type="submit">
+                Search
+            </button>
+
+            </form>
+
+
+            <!-- NAV LINKS -->
+
+            <nav class="nav-links">
+
+                <a href="/">
+                Home
+            </a>
+
+                <a href="/courses">
+                Courses
+            </a>
+
+                <a href="/categories">
+                Categories
+            </a>
+
+                <a href="/about">
+                About
+            </a>
+
+            </nav>
+
+
+            <!-- USER -->
+
+            <div class="student-account">
+
+                <div class="student-avatar">
+                    <%= user.name.charAt(0).toUpperCase() %>
+                </div>
+
+                <div class="student-name">
+
+                    <span>
+                    Welcome
+                </span>
+
+                    <strong>
+                    <%= user.name %>
+                </strong>
+
+                </div>
+
+                <a href="/logout" class="logout-btn">
+                Logout
+            </a>
+
+            </div>
+
+
+            <!-- MOBILE MENU BUTTON -->
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Open navigation menu" aria-expanded="false">
+            ☰
+        </button>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <form action="/courses" method="GET" class="mobile-search" id="studentMobileSearch">
+
+                <input type="search" name="search" placeholder="Search courses..." autocomplete="off" aria-label="Search courses">
+
+                <button type="submit" aria-label="Search">
+                🔍
+            </button>
+
+            </form>
+
+
+            <a href="/">
+            Home
+        </a>
+
+            <a href="/courses">
+            Browse Courses
+        </a>
+
+            <a href="/categories">
+            Categories
+        </a>
+
+            <a href="/about">
+            About XTP
+        </a>
+
+
+            <div class="mobile-user">
+
+                <div class="student-avatar">
+                    <%= user.name.charAt(0).toUpperCase() %>
+                </div>
+
+                <div>
+
+                    <span>
+                    Logged in as
+                </span>
+
+                    <strong>
+                    <%= user.name %>
+                </strong>
+
+                </div>
+
+            </div>
+
+
+            <a href="/logout" class="mobile-logout">
+            Logout
+        </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="container hero-container">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+
+                    <span>
+                    ✦
+                </span> Welcome back,
+                    <%= user.name %>
+
+                </div>
+
+
+                <h1>
+
+                    Keep learning.
+
+                    <span>
+                    Build your future.
+                </span>
+
+                </h1>
+
+
+                <p>
+
+                    Continue developing practical skills through courses designed to help you learn, practice and build real-world knowledge.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a href="/courses" class="hero-primary-btn">
+
+                    Explore Courses
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+
+                    <a href="#courses" class="hero-secondary-btn">
+
+                    View Free Courses
+
+                </a>
+
+                </div>
+
+
+                <!-- STATS -->
+
+                <div class="hero-stats">
+
+                    <div class="hero-stat">
+
+                        <strong>
+                        <%= data ? data.length : 0 %>
+                    </strong>
+
+                        <span>
+                        Available Courses
+                    </span>
+
+                    </div>
+
+
+                    <div class="hero-stat">
+
+                        <strong>
+                        Free
+                    </strong>
+
+                        <span>
+                        Learning
+                    </span>
+
+                    </div>
+
+
+                    <div class="hero-stat">
+
+                        <strong>
+                        100%
+                    </strong>
+
+                        <span>
+                        Practical
+                    </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO CARD -->
+
+            <div class="hero-visual">
+
+                <div class="student-dashboard-card">
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+
+                            <span>
+                            YOUR LEARNING
+                        </span>
+
+                            <h2>
+                                Start learning today
+                            </h2>
+
+                        </div>
+
+                        <div class="dashboard-icon">
+                            📚
+                        </div>
+
+                    </div>
+
+
+                    <div class="learning-box">
+
+                        <div class="learning-icon">
+                            🚀
+                        </div>
+
+                        <div>
+
+                            <strong>
+                            Practical Skills
+                        </strong>
+
+                            <span>
+                            Learn by doing
+                        </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="learning-box">
+
+                        <div class="learning-icon">
+                            💻
+                        </div>
+
+                        <div>
+
+                            <strong>
+                            Build Projects
+                        </strong>
+
+                            <span>
+                            Apply what you learn
+                        </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="learning-box">
+
+                        <div class="learning-icon">
+                            🏆
+                        </div>
+
+                        <div>
+
+                            <strong>
+                            Earn Certificates
+                        </strong>
+
+                            <span>
+                            Complete your learning
+                        </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK SEARCH -->
+
+    <section class="quick-search-section">
+
+        <div class="container">
+
+            <div class="quick-search-box">
+
+                <div>
+
+                    <span class="section-tag">
+                    FIND YOUR NEXT SKILL
+                </span>
+
+                    <h2>
+                        What do you want to learn?
+                    </h2>
+
+                </div>
+
+
+                <form action="/courses" method="GET" class="large-search" id="studentMainSearch">
+
+                    <input type="search" name="search" placeholder="Try JavaScript, Python, Graphics Design..." autocomplete="off" aria-label="Search available courses">
+
+                    <button type="submit">
+                    Search Courses →
+                </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- COURSES -->
+
+    <section class="section featured-courses-section" id="courses">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-tag">
+                    START LEARNING
+                </span>
+
+                    <h2>
+                        Available courses
+                    </h2>
+
+                    <p>
+                        Choose a course and start building valuable skills.
+                    </p>
+
+                </div>
+
+
+                <a href="/courses" class="view-all">
+                Browse All Courses →
+            </a>
+
+            </div>
+
+
+            <!-- SEARCH RESULTS STATUS -->
+
+            <div id="studentSearchStatus" class="student-search-status" aria-live="polite" hidden></div>
+
+
+            <div class="courses-grid" id="studentCoursesGrid">
+
+                <% if (!data || data.length === 0) { %>
+
+                    <div class="no-courses" id="studentNoCourses">
+
+                        <div class="no-courses-icon">
+                            📚
+                        </div>
+
+                        <h3>
+                            No courses available yet
+                        </h3>
+
+                        <p>
+                            New courses will appear here when they are published.
+                        </p>
+
+                    </div>
+
+                    <% } else { %>
+
+                        <% data.forEach(datum => { %>
+
+                            <article class="course-card" data-course-title="<%= datum.title %>" data-course-description="<%= datum.description %>" data-course-category="<%= datum.category %>" data-course-level="<%= datum.level %>">
+
+                                <!-- THUMBNAIL -->
+
+                                <a href="/courses/<%= datum._id %>" class="course-thumbnail">
+
+                            <img
+                                src="/<%= datum.thumbnail %>"
+                                alt="<%= datum.title %>"
+                                loading="lazy"
+                            >
+
+                            <div class="course-image-overlay">
+                                <%= datum.category %>
+                            </div>
+
+                        </a>
+
+
+                                <!-- COURSE DETAILS -->
+
+                                <div class="course-details">
+
+                                    <span class="course-category">
+                                <%= datum.category %>
+                            </span>
+
+
+                                    <h3>
+
+                                        <a href="/courses/<%= datum._id %>">
+
+                                            <%= datum.title %>
+
+                                        </a>
+
+                                    </h3>
+
+
+                                    <p class="course-description">
+
+                                        <%= datum.description.length > 100
+                                    ? datum.description.substring(0, 100) + "..."
+                                    : datum.description
+                                %>
+
+                                    </p>
+
+
+                                    <p class="course-author">
+                                        XTP Concept Academy
+                                    </p>
+
+
+                                    <div class="course-rating-row">
+
+                                        <strong>
+                                    4.9
+                                </strong>
+
+                                        <span class="stars">
+                                    ★★★★★
+                                </span>
+
+                                        <small>
+                                    Student Rating
+                                </small>
+
+                                    </div>
+
+
+                                    <div class="course-bottom">
+
+                                        <div class="course-price-row">
+
+                                            <strong class="free-price">
+                                        Free
+                                    </strong>
+
+                                        </div>
+
+
+                                        <span class="course-level">
+                                    <%= datum.level %>
+                                </span>
+
+                                    </div>
+
+
+                                    <a href="/courses/<%= datum._id %>/learn" class="course-start-btn">
+                                Start Learning →
+                            </a>
+
+                                </div>
+
+                            </article>
+
+                            <% }) %>
+
+                                <% } %>
+
+            </div>
+
+
+            <!-- NO SEARCH RESULTS -->
+
+            <div class="no-courses" id="studentNoSearchResults" hidden>
+
+                <div class="no-courses-icon">
+                    🔍
+                </div>
+
+                <h3>
+                    No matching courses found
+                </h3>
+
+                <p>
+                    Try searching for another course name, category, skill or topic.
+                </p>
+
+            </div>
+
+
+            <div class="courses-action">
+
+                <a href="/courses" class="browse-courses-btn">
+                Explore All Courses →
+            </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+
+    <section class="section categories-section">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-tag">
+                    EXPLORE
+                </span>
+
+                    <h2>
+                        Find your area of interest
+                    </h2>
+
+                    <p>
+                        Explore courses based on the skills you want to develop.
+                    </p>
+
+                </div>
+
+
+                <a href="/categories" class="view-all">
+                View All →
+            </a>
+
+            </div>
+
+
+            <div class="categories-grid">
+
+                <a href="/courses?category=development" class="category-box">
+
+                    <div class="category-icon">
+                        &lt;/&gt;
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Development
+                        </h3>
+
+                        <p>
+                            Web, Mobile & Software
+                        </p>
+
+                    </div>
+
+                    <span>
+                    →
+                </span>
+
+                </a>
+
+
+                <a href="/courses?category=design" class="category-box">
+
+                    <div class="category-icon">
+                        ✦
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Graphics & Design
+                        </h3>
+
+                        <p>
+                            UI, UX & Creative Design
+                        </p>
+
+                    </div>
+
+                    <span>
+                    →
+                </span>
+
+                </a>
+
+
+                <a href="/courses?category=business" class="category-box">
+
+                    <div class="category-icon">
+                        ◈
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Business
+                        </h3>
+
+                        <p>
+                            Entrepreneurship & Growth
+                        </p>
+
+                    </div>
+
+                    <span>
+                    →
+                </span>
+
+                </a>
+
+
+                <a href="/courses?category=data" class="category-box">
+
+                    <div class="category-icon">
+                        AI
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Data & AI
+                        </h3>
+
+                        <p>
+                            Data Science & Artificial Intelligence
+                        </p>
+
+                    </div>
+
+                    <span>
+                    →
+                </span>
+
+                </a>
+
+
+                <a href="/courses?category=marketing" class="category-box">
+
+                    <div class="category-icon">
+                        ◎
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Digital Marketing
+                        </h3>
+
+                        <p>
+                            Marketing & Social Media
+                        </p>
+
+                    </div>
+
+                    <span>
+                    →
+                </span>
+
+                </a>
+
+
+                <a href="/courses?category=computer" class="category-box">
+
+                    <div class="category-icon">
+                        ⌘
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Computer Skills
+                        </h3>
+
+                        <p>
+                            Essential Digital Skills
+                        </p>
+
+                    </div>
+
+                    <span>
+                    →
+                </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WHY XTP -->
+
+    <section class="why-section">
+
+        <div class="container why-container">
+
+            <div class="why-content">
+
+                <span class="section-tag">
+                WHY XTP CONCEPT ACADEMY
+            </span>
+
+
+                <h2>
+
+                    Don't just watch.
+
+                    <span>
+                    Build real skills.
+                </span>
+
+                </h2>
+
+
+                <p>
+
+                    Our courses are designed to help you understand concepts, practice what you learn and build useful skills.
+
+                </p>
+
+
+                <div class="benefits-grid">
+
+                    <div class="benefit-item">
+
+                        <div class="benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Practical Learning
+                            </h3>
+
+                            <p>
+                                Learn by building and working on practical projects.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="benefit-item">
+
+                        <div class="benefit-icon">
+                            ★
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Quality Courses
+                            </h3>
+
+                            <p>
+                                Structured lessons designed for beginners and growing professionals.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="benefit-item">
+
+                        <div class="benefit-icon">
+                            ⚡
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Learn at Your Pace
+                            </h3>
+
+                            <p>
+                                Continue learning whenever you are ready.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="benefit-item">
+
+                        <div class="benefit-icon">
+                            ◈
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Certificate
+                            </h3>
+
+                            <p>
+                                Complete your learning journey and earn recognition for your achievement.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats-panel">
+
+                <div class="big-stat">
+
+                    <strong>
+                    <%= data ? data.length : 0 %>
+                </strong>
+
+                    <span>
+                    Available Courses
+                </span>
+
+                </div>
+
+
+                <div class="small-stats">
+
+                    <div>
+
+                        <strong>
+                        Free
+                    </strong>
+
+                        <span>
+                        Courses
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        100%
+                    </strong>
+
+                        <span>
+                        Practical
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        4.9
+                    </strong>
+
+                        <span>
+                        Rating
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        XTP
+                    </strong>
+
+                        <span>
+                        Academy
+                    </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="student-message">
+
+                    <span>
+                    ✦
+                </span>
+
+                    <p>
+                        Your future is built one skill at a time.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="section how-section">
+
+        <div class="container">
+
+            <div class="how-header">
+
+                <span class="section-tag">
+                KEEP LEARNING
+            </span>
+
+                <h2>
+                    Start learning in three simple steps
+                </h2>
+
+            </div>
+
+
+            <div class="steps-grid">
+
+                <div class="step-card">
+
+                    <span class="step-number">
+                    01
+                </span>
+
+                    <div class="step-icon">
+                        🔍
+                    </div>
+
+                    <h3>
+                        Find a Course
+                    </h3>
+
+                    <p>
+                        Browse the available courses and choose the skill you want to learn.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <span class="step-number">
+                    02
+                </span>
+
+                    <div class="step-icon">
+                        📚
+                    </div>
+
+                    <h3>
+                        Open the Course
+                    </h3>
+
+                    <p>
+                        Select a course to view its information and begin learning.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <span class="step-number">
+                    03
+                </span>
+
+                    <div class="step-icon">
+                        🚀
+                    </div>
+
+                    <h3>
+                        Start Learning
+                    </h3>
+
+                    <p>
+                        Watch the lessons, practice and develop your skills.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL CTA -->
+
+    <section class="final-cta-section">
+
+        <div class="container">
+
+            <div class="final-cta">
+
+                <div>
+
+                    <span class="section-tag light-tag">
+                    KEEP BUILDING
+                </span>
+
+                    <h2>
+                        Ready to learn something new?
+                    </h2>
+
+                    <p>
+                        Choose a course and continue developing practical skills.
+                    </p>
+
+                </div>
+
+
+                <div class="final-cta-buttons">
+
+                    <a href="/courses" class="cta-register">
+                    Explore Courses →
+                </a>
+
+                    <a href="/logout" class="cta-courses">
+                    Logout
+                </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <!-- BRAND -->
+
+                <div class="footer-brand">
+
+                    <a href="/" class="brand">
+
+                        <div class="brand-logo">
+                            X
+                        </div>
+
+                        <div class="brand-text">
+
+                            <strong>
+                            XTP
+                        </strong>
+
+                            <span>
+                            CONCEPT ACADEMY
+                        </span>
+
+                        </div>
+
+                    </a>
+
+
+                    <p>
+                        Learn practical skills. Build your knowledge. Create your future.
+                    </p>
+
+                </div>
+
+
+                <!-- PLATFORM -->
+
+                <div class="footer-column">
+
+                    <h3>
+                        Platform
+                    </h3>
+
+                    <a href="/">
+                    Home
+                </a>
+
+                    <a href="/courses">
+                    Browse Courses
+                </a>
+
+                    <a href="/categories">
+                    Categories
+                </a>
+
+                    <a href="/logout">
+                    Logout
+                </a>
+
+                </div>
+
+
+                <!-- LEARNING -->
+
+                <div class="footer-column">
+
+                    <h3>
+                        Learning
+                    </h3>
+
+                    <a href="/courses?category=development">
+                    Development
+                </a>
+
+                    <a href="/courses?category=design">
+                    Design
+                </a>
+
+                    <a href="/courses?category=business">
+                    Business
+                </a>
+
+                    <a href="/courses?category=data">
+                    Data & AI
+                </a>
+
+                </div>
+
+
+                <!-- SUPPORT -->
+
+                <div class="footer-column">
+
+                    <h3>
+                        Support
+                    </h3>
+
+                    <a href="/about">
+                    About Us
+                </a>
+
+                    <a href="/contact">
+                    Contact
+                </a>
+
+                    <a href="/privacy">
+                    Privacy Policy
+                </a>
+
+                    <a href="/terms">
+                    Terms & Conditions
+                </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <p>
+
+                    ©
+                    <%= new Date().getFullYear() %>
+                        XTP Concept Academy. All Rights Reserved.
+
+                </p>
+
+                <p>
+                    Learn. Build. Grow.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="/js/studenthome.js"></script>
+
+
+</body>
+
+</html>

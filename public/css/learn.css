@@ -1,0 +1,456 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient( 135deg, #f5f7ff 0%, #f9f5ff 50%, #eef7ff 100%);
+    color: #172033;
+    min-height: 100vh;
+}
+
+
+/* =========================
+  HEADER
+  ========================= */
+
+.learning-header {
+    height: 72px;
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid #e8eaf2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(15px);
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #4f46e5;
+    font-size: 15px;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.back-button:hover {
+    color: #7c3aed;
+    transform: translateX(-3px);
+}
+
+.academy-logo {
+    text-decoration: none;
+    font-size: 23px;
+    font-weight: 900;
+    color: #4f46e5;
+    letter-spacing: -0.5px;
+}
+
+.academy-logo span {
+    color: #ec4899;
+}
+
+.student-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.student-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    background: linear-gradient( 135deg, #4f46e5, #9333ea, #ec4899);
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.25);
+}
+
+.student-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #334155;
+}
+
+
+/* =========================
+  MAIN
+  ========================= */
+
+.learning-page {
+    width: 92%;
+    max-width: 1400px;
+    margin: 38px auto;
+    display: grid;
+    grid-template-columns: minmax(0, 2.2fr) minmax(320px, 0.8fr);
+    gap: 28px;
+    align-items: start;
+}
+
+
+/* =========================
+  VIDEO
+  ========================= */
+
+.video-section {
+    min-width: 0;
+    background: #111827;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 70px rgba(30, 41, 59, 0.18);
+}
+
+.video-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #050505;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.course-video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #000;
+}
+
+.video-unavailable {
+    text-align: center;
+    color: white;
+    padding: 30px;
+}
+
+.video-icon {
+    font-size: 54px;
+    margin-bottom: 15px;
+}
+
+.video-unavailable h2 {
+    margin-bottom: 8px;
+    font-size: 23px;
+}
+
+.video-unavailable p {
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+
+/* =========================
+  VIDEO INFORMATION
+  ========================= */
+
+.video-bottom {
+    padding: 25px 28px;
+    background: linear-gradient( 135deg, #111827, #1e1b4b);
+    color: white;
+}
+
+.watching-label {
+    display: inline-block;
+    color: #a5b4fc;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    margin-bottom: 8px;
+}
+
+.video-bottom h1 {
+    font-size: 26px;
+    line-height: 1.3;
+    font-weight: 800;
+}
+
+
+/* =========================
+  SIDEBAR
+  ========================= */
+
+.course-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.course-card,
+.description-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid #e7e9f2;
+    box-shadow: 0 15px 45px rgba(79, 70, 229, 0.07);
+}
+
+.course-thumbnail {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #eef2ff;
+}
+
+.course-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.course-card:hover .course-thumbnail img {
+    transform: scale(1.04);
+}
+
+.course-content {
+    padding: 24px;
+}
+
+.course-category {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 50px;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 13px;
+}
+
+.course-content h2 {
+    color: #111827;
+    font-size: 22px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+  COURSE DETAILS
+  ========================= */
+
+.course-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #edf0f5;
+}
+
+.detail-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #eef2ff;
+    font-size: 17px;
+}
+
+.detail small {
+    display: block;
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.detail strong {
+    display: block;
+    color: #334155;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+
+/* =========================
+  DESCRIPTION
+  ========================= */
+
+.description-card {
+    padding: 25px;
+}
+
+.description-card h3 {
+    color: #111827;
+    font-size: 19px;
+    margin-bottom: 13px;
+}
+
+.description-card p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* =========================
+  BUTTONS
+  ========================= */
+
+.learning-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.courses-button,
+.home-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+    transition: 0.25s ease;
+}
+
+.courses-button {
+    color: white;
+    background: linear-gradient( 135deg, #4f46e5, #7c3aed);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
+}
+
+.courses-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(79, 70, 229, 0.28);
+}
+
+.home-button {
+    color: #4f46e5;
+    background: white;
+    border: 1px solid #dfe3ef;
+}
+
+.home-button:hover {
+    background: #f8f9ff;
+    border-color: #c7ccff;
+}
+
+
+/* =========================
+  FOOTER
+  ========================= */
+
+.learning-footer {
+    width: 92%;
+    max-width: 1400px;
+    margin: 0 auto 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e2e6ef;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+
+/* =========================
+  TABLET
+  ========================= */
+
+@media (max-width: 1000px) {
+    .learning-page {
+        grid-template-columns: 1fr;
+        width: 94%;
+        margin-top: 25px;
+    }
+    .course-sidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+    .learning-actions {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* =========================
+  MOBILE
+  ========================= */
+
+@media (max-width: 650px) {
+    .learning-header {
+        height: 64px;
+        padding: 0 18px;
+    }
+    .academy-logo {
+        font-size: 19px;
+    }
+    .student-name {
+        display: none;
+    }
+    .student-avatar {
+        width: 35px;
+        height: 35px;
+    }
+    .back-button {
+        font-size: 13px;
+    }
+    .learning-page {
+        width: 100%;
+        margin: 0;
+        gap: 15px;
+    }
+    .video-section {
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .video-container {
+        aspect-ratio: 16 / 9;
+    }
+    .video-bottom {
+        padding: 20px;
+    }
+    .video-bottom h1 {
+        font-size: 21px;
+    }
+    .course-sidebar {
+        width: 94%;
+        margin: 0 auto;
+        display: flex;
+    }
+    .course-card,
+    .description-card {
+        border-radius: 16px;
+    }
+    .learning-actions {
+        display: flex;
+    }
+    .learning-footer {
+        width: 94%;
+    }
+}

@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>XTP Concept Academy | Upload Course</title>
+
+    <link rel="stylesheet" href="/css/upload-course.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+    <div class="admin-layout">
+
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar" id="sidebar">
+
+
+            <!-- BRAND -->
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    X
+                </div>
+
+                <div class="brand-text">
+
+                    <h2>XTP</h2>
+
+                    <span>
+                    CONCEPT ACADEMY
+                </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- MAIN MENU -->
+
+            <div class="sidebar-section">
+
+                <p class="section-title">
+                    MAIN MENU
+                </p>
+
+
+                <nav class="sidebar-nav">
+
+
+                    <a href="/" class="nav-item">
+
+                        <i class="fa-solid fa-grid-2"></i>
+
+                        <span>
+                        Dashboard
+                    </span>
+
+                    </a>
+
+
+                    <a href="/admin/courses/upload" class="nav-item active">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                        <span>
+                        Upload Courses
+                    </span>
+
+                    </a>
+
+
+                    <a href="/admin/courses" class="nav-item">
+
+                        <i class="fa-solid fa-book-open"></i>
+
+                        <span>
+                        Manage Courses
+                    </span>
+
+                    </a>
+
+
+                    <a href="/admin/students" class="nav-item">
+
+                        <i class="fa-solid fa-user-graduate"></i>
+
+                        <span>
+                        Students
+                    </span>
+
+                    </a>
+
+
+                    <a href="/admin/payments" class="nav-item">
+
+                        <i class="fa-solid fa-credit-card"></i>
+
+                        <span>
+                        Payments
+                    </span>
+
+                    </a>
+
+
+                </nav>
+
+            </div>
+
+
+            <!-- SYSTEM -->
+
+            <div class="sidebar-section second-menu">
+
+                <p class="section-title">
+                    SYSTEM
+                </p>
+
+
+                <nav class="sidebar-nav">
+
+
+                    <a href="/admin/settings" class="nav-item">
+
+                        <i class="fa-solid fa-gear"></i>
+
+                        <span>
+                        Settings
+                    </span>
+
+                    </a>
+
+
+                    <a href="/logout" class="nav-item logout">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        <span>
+                        Logout
+                    </span>
+
+                    </a>
+
+
+                </nav>
+
+            </div>
+
+
+            <!-- SIDEBAR BOTTOM -->
+
+            <div class="sidebar-bottom">
+
+
+                <div class="support-card">
+
+                    <div class="support-icon">
+
+                        <i class="fa-solid fa-circle-question"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        Need Help?
+                    </strong>
+
+                        <small>
+                        Contact Academy Support
+                    </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sidebar-footer">
+
+                    <span>
+                    © 2026 XTP Concept Academy
+                </span>
+
+                </div>
+
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main class="main-content">
+
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+
+                <div class="topbar-left">
+
+
+                    <button class="menu-toggle" id="menuToggle">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+
+                    <div>
+
+                        <span class="breadcrumb">
+                        Admin / Courses / Upload
+                    </span>
+
+                        <h1>
+                            Upload Course
+                        </h1>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="topbar-right">
+
+
+                    <button class="icon-button" title="Notifications">
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                    <div class="admin-profile">
+
+
+                        <div class="admin-avatar">
+                            AD
+                        </div>
+
+
+                        <div class="admin-info">
+
+                            <strong>
+                            Academy Admin
+                        </strong>
+
+                            <span>
+                            Administrator
+                        </span>
+
+                        </div>
+
+
+                        <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </header>
+
+
+
+            <!-- ================= PAGE CONTENT ================= -->
+
+            <section class="page-content">
+
+
+                <!-- PAGE INTRO -->
+
+                <div class="page-intro">
+
+
+                    <div>
+
+                        <span class="page-label">
+                        COURSE MANAGEMENT
+                    </span>
+
+
+                        <h2>
+                            Create New Course
+                        </h2>
+
+
+                        <p>
+                            Add a new course to XTP Concept Academy. Provide the course information, pricing, thumbnail and learning content.
+                        </p>
+
+                    </div>
+
+
+                    <a href="/admin/courses" class="secondary-button">
+
+                        <i class="fa-solid fa-arrow-left"></i> Manage Courses
+
+                    </a>
+
+
+                </div>
+
+
+
+                <!-- ================= FORM ================= -->
+
+                <form action="/admin/courses/upload" enctype="multipart/form-data" method="POST">
+
+
+                    <div class="content-grid">
+
+
+                        <!-- ================= LEFT COLUMN ================= -->
+
+                        <div class="main-column">
+
+
+                            <!-- BASIC INFORMATION -->
+
+                            <div class="panel">
+
+
+                                <div class="panel-header">
+
+
+                                    <div>
+
+                                        <span class="panel-label">
+                                        COURSE INFORMATION
+                                    </span>
+
+                                        <h3>
+                                            Basic Information
+                                        </h3>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- TITLE -->
+
+                                <div class="form-group">
+
+
+                                    <label for="title">
+                                    Course Title
+                                </label>
+
+
+                                    <input type="text" id="title" name="title" placeholder="e.g. Complete Web Development" required>
+
+
+                                    <small>
+                                    Choose a clear and descriptive
+                                    title for your course.
+                                </small>
+
+
+                                </div>
+
+
+
+                                <!-- CATEGORY + LEVEL -->
+
+                                <div class="form-row">
+
+
+                                    <div class="form-group">
+
+
+                                        <label for="category">
+                                        Category
+                                    </label>
+
+
+                                        <select id="category" name="category" required>
+
+
+                                        <option value="">
+                                            Select category
+                                        </option>
+
+
+                                        <option value="web-development">
+                                            Web Development
+                                        </option>
+
+
+                                        <option value="javascript">
+                                            JavaScript
+                                        </option>
+
+
+                                        <option value="python">
+                                            Python
+                                        </option>
+
+
+                                        <option value="design">
+                                            UI/UX Design
+                                        </option>
+
+
+                                        <option value="database">
+                                            Database
+                                        </option>
+
+
+                                        <option value="mobile-development">
+                                            Mobile Development
+                                        </option>
+
+
+                                        <option value="other">
+                                            Other
+                                        </option>
+
+
+                                    </select>
+
+
+                                    </div>
+
+
+
+                                    <div class="form-group">
+
+
+                                        <label for="level">
+                                        Course Level
+                                    </label>
+
+
+                                        <select id="level" name="level" required>
+
+
+                                        <option value="">
+                                            Select level
+                                        </option>
+
+
+                                        <option value="beginner">
+                                            Beginner
+                                        </option>
+
+
+                                        <option value="intermediate">
+                                            Intermediate
+                                        </option>
+
+
+                                        <option value="advanced">
+                                            Advanced
+                                        </option>
+
+
+                                    </select>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- DESCRIPTION -->
+
+                                <div class="form-group">
+
+
+                                    <label for="description">
+                                    Course Description
+                                </label>
+
+
+                                    <textarea id="description" name="description" rows="7" placeholder="Describe what students will learn from this course..." required></textarea>
+
+
+                                    <small>
+                                    Explain the course content,
+                                    learning objectives and expected
+                                    outcome.
+                                </small>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- ================= ACCESS & PRICING ================= -->
+
+                            <div class="panel">
+
+
+                                <div class="panel-header">
+
+
+                                    <div>
+
+                                        <span class="panel-label">
+                                        COURSE ACCESS
+                                    </span>
+
+                                        <h3>
+                                            Access & Pricing
+                                        </h3>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- FREE COURSE SETTING -->
+
+                                <div class="free-course-setting">
+
+
+                                    <div class="setting-icon">
+
+                                        <i class="fa-solid fa-unlock"></i>
+
+                                    </div>
+
+
+                                    <div class="setting-info">
+
+                                        <strong>
+                                        Free Course
+                                    </strong>
+
+
+                                        <span>
+                                        Allow students to access
+                                        this course without payment.
+                                    </span>
+
+                                    </div>
+
+
+                                    <label class="switch">
+
+
+                                    <input
+                                        type="checkbox"
+                                        id="freeCourse"
+                                        name="isFree"
+                                        value="true">
+
+
+                                    <span class="slider"></span>
+
+
+                                </label>
+
+
+                                </div>
+
+
+
+                                <!-- PAID PRICE -->
+
+                                <div class="price-section" id="priceSection">
+
+
+                                    <div class="price-box">
+
+
+                                        <div class="price-icon">
+
+                                            <i class="fa-solid fa-naira-sign"></i>
+
+                                        </div>
+
+
+                                        <div class="price-content">
+
+
+                                            <label for="price">
+                                            Course Price
+                                        </label>
+
+
+                                            <div class="price-input">
+
+
+                                                <span>
+                                                ₦
+                                            </span>
+
+
+                                                <input type="number" id="price" name="price" placeholder="50000" min="0">
+
+
+                                            </div>
+
+
+                                            <small>
+                                            Students will need to pay
+                                            this amount before accessing
+                                            the full course.
+                                        </small>
+
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- FREE MESSAGE -->
+
+                                <div class="free-message" id="freeMessage">
+
+
+                                    <div class="free-message-icon">
+
+                                        <i class="fa-solid fa-gift"></i>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <strong>
+                                        This course is free
+                                    </strong>
+
+
+                                        <span>
+                                        Students will be able to access
+                                        the course without making a
+                                        payment.
+                                    </span>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- ================= COURSE VIDEO ================= -->
+
+                            <div class="panel">
+
+
+                                <div class="panel-header">
+
+
+                                    <div>
+
+                                        <span class="panel-label">
+                                        COURSE CONTENT
+                                    </span>
+
+                                        <h3>
+                                            Course Video
+                                        </h3>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="upload-box">
+
+
+                                    <div class="upload-icon">
+
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                                    </div>
+
+
+                                    <h4>
+                                        Upload Course Video
+                                    </h4>
+
+
+                                    <p>
+                                        Upload the main course video for your students.
+                                    </p>
+
+
+                                    <label class="upload-button">
+
+
+                                    <i class="fa-solid fa-folder-open"></i>
+
+                                    Choose Video
+
+
+                                    <input
+                                        type="file"
+                                        name="video"
+                                        id="video"
+                                        accept="video/*"
+                                        required>
+
+
+                                </label>
+
+
+                                    <span class="file-name" id="videoName">
+
+                                    No video selected
+
+                                </span>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- ================= THUMBNAIL ================= -->
+
+                            <div class="panel">
+
+
+                                <div class="panel-header">
+
+
+                                    <div>
+
+                                        <span class="panel-label">
+                                        COURSE APPEARANCE
+                                    </span>
+
+                                        <h3>
+                                            Course Thumbnail
+                                        </h3>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="thumbnail-upload">
+
+
+                                    <div class="thumbnail-preview" id="thumbnailPreview">
+
+
+                                        <div>
+
+                                            <i class="fa-solid fa-image"></i>
+
+                                            <span>
+                                            Preview
+                                        </span>
+
+                                        </div>
+
+
+                                    </div>
+
+
+
+                                    <div class="thumbnail-info">
+
+
+                                        <h4>
+                                            Upload Course Thumbnail
+                                        </h4>
+
+
+                                        <p>
+                                            Use a clear image that represents your course.
+                                        </p>
+
+
+                                        <label class="outline-upload">
+
+
+                                        <i class="fa-solid fa-image"></i>
+
+                                        Choose Image
+
+
+                                        <input
+                                            type="file"
+                                            name="thumbnail"
+                                            id="thumbnail"
+                                            accept="image/*">
+
+
+                                    </label>
+
+
+                                        <small>
+                                        JPG, PNG or WEBP recommended.
+                                    </small>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- ================= RIGHT COLUMN ================= -->
+
+                        <aside class="side-column">
+
+
+                            <!-- PUBLISH -->
+
+                            <div class="panel publish-panel">
+
+
+                                <div class="panel-header">
+
+
+                                    <div>
+
+                                        <span class="panel-label">
+                                        COURSE STATUS
+                                    </span>
+
+                                        <h3>
+                                            Publish Course
+                                        </h3>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="status-box">
+
+
+                                    <div class="status-icon">
+
+                                        <i class="fa-solid fa-circle-check"></i>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <strong>
+                                        Ready to publish
+                                    </strong>
+
+                                        <span>
+                                        Review your information before
+                                        publishing.
+                                    </span>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="publish-actions">
+
+
+                                    <button type="submit" name="status" value="published" class="publish-button">
+
+
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                                    Publish Course
+
+
+                                </button>
+
+
+
+                                    <button type="submit" name="status" value="draft" class="draft-button">
+
+
+                                    <i class="fa-regular fa-file"></i>
+
+                                    Save as Draft
+
+
+                                </button>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- CHECKLIST -->
+
+                            <div class="panel">
+
+
+                                <div class="panel-header">
+
+
+                                    <div>
+
+                                        <span class="panel-label">
+                                        CHECKLIST
+                                    </span>
+
+                                        <h3>
+                                            Course Requirements
+                                        </h3>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="check-list">
+
+
+                                    <div class="check-item">
+
+                                        <div class="check-circle">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
+
+                                        <span>
+                                        Course title
+                                    </span>
+
+                                    </div>
+
+
+                                    <div class="check-item">
+
+                                        <div class="check-circle">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
+
+                                        <span>
+                                        Description
+                                    </span>
+
+                                    </div>
+
+
+                                    <div class="check-item">
+
+                                        <div class="check-circle">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
+
+                                        <span>
+                                        Course category
+                                    </span>
+
+                                    </div>
+
+
+                                    <div class="check-item">
+
+                                        <div class="check-circle">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
+
+                                        <span>
+                                        Course price or free access
+                                    </span>
+
+                                    </div>
+
+
+                                    <div class="check-item">
+
+                                        <div class="check-circle">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
+
+                                        <span>
+                                        Course video
+                                    </span>
+
+                                    </div>
+
+
+                                    <div class="check-item">
+
+                                        <div class="check-circle">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
+
+                                        <span>
+                                        Course thumbnail
+                                    </span>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- TIP -->
+
+                            <div class="tip-card">
+
+
+                                <div class="tip-icon">
+
+                                    <i class="fa-solid fa-lightbulb"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                    Course Tip
+                                </strong>
+
+
+                                    <p>
+                                        A good course description should clearly explain what students will learn and what they can achieve.
+                                    </p>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </aside>
+
+
+                    </div>
+
+
+                </form>
+
+
+
+                <!-- FOOTER -->
+
+                <footer class="page-footer">
+
+
+                    <span>
+
+                    © 2026
+                    <strong>
+                        XTP Concept Academy
+                    </strong>.
+
+                    All rights reserved.
+
+                </span>
+
+
+                    <div>
+
+                        <span>
+                        Admin Portal
+                    </span>
+
+                        <span>
+                        •
+                    </span>
+
+                        <span>
+                        Version 1.0.0
+                    </span>
+
+                    </div>
+
+
+                </footer>
+
+
+            </section>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+        /* SIDEBAR */
+
+        const menuToggle =
+            document.getElementById("menuToggle");
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+
+        if (menuToggle) {
+
+            menuToggle.addEventListener("click", () => {
+
+                sidebar.classList.toggle("open");
+
+            });
+
+        }
+
+
+
+        /* VIDEO FILE */
+
+        const videoInput =
+            document.getElementById("video");
+
+        const videoName =
+            document.getElementById("videoName");
+
+
+        if (videoInput) {
+
+            videoInput.addEventListener("change", () => {
+
+
+                if (videoInput.files.length > 0) {
+
+                    videoName.textContent =
+                        videoInput.files[0].name;
+
+                } else {
+
+                    videoName.textContent =
+                        "No video selected";
+
+                }
+
+
+            });
+
+        }
+
+
+
+        /* THUMBNAIL PREVIEW */
+
+        const thumbnailInput =
+            document.getElementById("thumbnail");
+
+        const thumbnailPreview =
+            document.getElementById("thumbnailPreview");
+
+
+        if (thumbnailInput) {
+
+            thumbnailInput.addEventListener("change", () => {
+
+
+                const file =
+                    thumbnailInput.files[0];
+
+
+                if (!file) {
+
+                    return;
+
+                }
+
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload = function(event) {
+
+
+                    thumbnailPreview.innerHTML =
+
+                        `<img
+                        src="${event.target.result}"
+                        alt="Course thumbnail">`;
+
+                };
+
+
+                reader.readAsDataURL(file);
+
+
+            });
+
+        }
+
+
+
+        /* FREE / PAID COURSE */
+
+        const freeCourse =
+            document.getElementById("freeCourse");
+
+        const priceSection =
+            document.getElementById("priceSection");
+
+        const freeMessage =
+            document.getElementById("freeMessage");
+
+        const priceInput =
+            document.getElementById("price");
+
+
+        function updateCoursePricing() {
+
+
+            if (freeCourse.checked) {
+
+
+                /* FREE COURSE */
+
+                priceSection.classList.add("hidden");
+
+                freeMessage.classList.add("show");
+
+
+                /* Disable price */
+
+                priceInput.disabled = true;
+
+                priceInput.required = false;
+
+                priceInput.value = "";
+
+
+            } else {
+
+
+                /* PAID COURSE */
+
+                priceSection.classList.remove("hidden");
+
+                freeMessage.classList.remove("show");
+
+
+                /* Enable price */
+
+                priceInput.disabled = false;
+
+                priceInput.required = true;
+
+
+            }
+
+        }
+
+
+        freeCourse.addEventListener(
+            "change",
+            updateCoursePricing
+        );
+
+
+        /* INITIAL STATE */
+
+        updateCoursePricing();
+    </script>
+
+
+</body>
+
+</html>

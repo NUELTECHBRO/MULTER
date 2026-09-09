@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>XTP Concept Academy | Manage Courses</title>
+
+    <link rel="stylesheet" href="/css/manage-courses.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    X
+                </div>
+
+                <div class="brand-text">
+
+                    <h2>XTP</h2>
+
+                    <span>
+                CONCEPT ACADEMY
+            </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-section">
+
+                <p class="section-title">
+                    MAIN MENU
+                </p>
+
+
+                <nav class="sidebar-nav">
+
+                    <a href="/" class="nav-item">
+
+                        <i class="fa-solid fa-table-cells-large"></i>
+
+                        <span>
+                    Dashboard
+                </span>
+
+                    </a>
+
+
+                    <a href="/admin/courses/upload" class="nav-item">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                        <span>
+                    Upload Courses
+                </span>
+
+                    </a>
+
+
+                    <a href="/admin/courses" class="nav-item active">
+
+                        <i class="fa-solid fa-book-open"></i>
+
+                        <span>
+                    Manage Courses
+                </span>
+
+                    </a>
+
+
+                    <a href="/admin/students" class="nav-item">
+
+                        <i class="fa-solid fa-user-graduate"></i>
+
+                        <span>
+                    Students
+                </span>
+
+                    </a>
+
+
+                    <a href="/admin/payments" class="nav-item">
+
+                        <i class="fa-solid fa-credit-card"></i>
+
+                        <span>
+                    Payments
+                </span>
+
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <div class="sidebar-section second-menu">
+
+                <p class="section-title">
+                    SYSTEM
+                </p>
+
+
+                <nav class="sidebar-nav">
+
+                    <a href="/admin/settings" class="nav-item">
+
+                        <i class="fa-solid fa-gear"></i>
+
+                        <span>
+                    Settings
+                </span>
+
+                    </a>
+
+
+                    <a href="/logout" class="nav-item logout">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        <span>
+                    Logout
+                </span>
+
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="support-card">
+
+                    <div class="support-icon">
+
+                        <i class="fa-solid fa-circle-question"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                    Need Help?
+                </strong>
+
+                        <small>
+                    Contact Academy Support
+                </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sidebar-footer">
+
+                    © 2026 XTP Concept Academy
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- MAIN -->
+
+        <main class="main-content">
+
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button class="menu-toggle" id="menuToggle">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+                    <div>
+
+                        <span class="breadcrumb">
+                    Admin / Courses / Manage
+                </span>
+
+                        <h1>
+                            Manage Courses
+                        </h1>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <button class="icon-button" title="Notifications">
+
+                <i class="fa-regular fa-bell"></i>
+
+                <span class="notification-dot"></span>
+
+            </button>
+
+
+                    <div class="admin-profile">
+
+                        <div class="admin-avatar">
+                            AD
+                        </div>
+
+                        <div class="admin-info">
+
+                            <strong>
+                        Academy Admin
+                    </strong>
+
+                            <span>
+                        Administrator
+                    </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- CONTENT -->
+
+            <section class="page-content">
+
+
+                <div class="page-intro">
+
+                    <div>
+
+                        <span class="page-label">
+                    COURSE MANAGEMENT
+                </span>
+
+                        <h2>
+                            Your Courses
+                        </h2>
+
+                        <p>
+                            View, edit and manage all courses published on XTP Concept Academy.
+                        </p>
+
+                    </div>
+
+
+                    <a href="/admin/courses/upload" class="primary-button">
+
+                        <i class="fa-solid fa-plus"></i> Add Course
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- TOOLBAR -->
+
+                <div class="toolbar">
+
+                    <div class="search-box">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input type="text" id="courseSearch" placeholder="Search courses...">
+
+                    </div>
+
+
+                    <div class="course-count">
+
+                        <strong id="courseCount">
+                    <%= data.length %>
+                </strong> Courses
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- COURSES -->
+
+                <div class="courses-grid" id="coursesGrid">
+
+                    <% if (data.length > 0) { %>
+
+                        <% data.forEach(function(course) { %>
+
+                            <article class="course-card" data-title="<%= course.title %>" data-category="<%= course.category %>" data-level="<%= course.level %>">
+
+
+                                <!-- IMAGE -->
+
+                                <div class="course-image">
+
+                                    <img src="/<%= course.thumbnail %>" alt="<%= course.title %>">
+
+
+                                    <span class="level-badge <%= course.level %>">
+
+                                <%= course.level %>
+
+                            </span>
+
+
+                                    <div class="image-overlay">
+
+                                        <a href="/courses/<%= course._id %>/learn" target="_blank" class="preview-button">
+
+                                            <i class="fa-solid fa-play"></i> View Course
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- BODY -->
+
+                                <div class="course-body">
+
+
+                                    <span class="category">
+
+                                <%= course.category.replace(/-/g, " ") %>
+
+                            </span>
+
+
+                                    <h3>
+                                        <%= course.title %>
+                                    </h3>
+
+
+                                    <p>
+                                        <%= course.description %>
+                                    </p>
+
+
+                                    <div class="course-meta">
+
+                                        <span>
+
+                                    <i class="fa-solid fa-video"></i>
+
+                                    Course Video
+
+                                </span>
+
+
+                                        <span>
+
+                                    <i class="fa-solid fa-image"></i>
+
+                                    Thumbnail
+
+                                </span>
+
+                                    </div>
+
+
+                                    <!-- ACTIONS -->
+
+                                    <div class="course-actions">
+
+
+                                        <button type="button" class="edit-button" data-id="<%= course._id %>" data-title="<%= course.title %>" data-category="<%= course.category %>" data-level="<%= course.level %>" data-description="<%= course.description %>" data-thumbnail="<%= course.thumbnail %>"
+                                            data-video="<%= course.video %>">
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                    Edit
+
+                                </button>
+
+
+                                        <form action="/admin/courses/delete/<%= course._id %>" method="POST" class="delete-form">
+
+                                            <button type="submit" class="delete-button">
+
+                                        <i class="fa-solid fa-trash"></i>
+
+                                        Delete
+
+                                    </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                            <% }); %>
+
+                                <% } else { %>
+
+
+                                    <div class="empty-state">
+
+                                        <div class="empty-icon">
+
+                                            <i class="fa-solid fa-book-open"></i>
+
+                                        </div>
+
+                                        <h3>
+                                            No courses yet
+                                        </h3>
+
+                                        <p>
+                                            You haven't uploaded any courses yet.
+                                        </p>
+
+                                        <a href="/admin/courses/upload" class="primary-button">
+
+                                            <i class="fa-solid fa-plus"></i> Upload Your First Course
+
+                                        </a>
+
+                                    </div>
+
+
+                                    <% } %>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+
+    </div>
+
+    <!-- EDIT MODAL -->
+
+    <div class="modal" id="editModal">
+
+
+        <div class="modal-backdrop"></div>
+
+
+        <div class="modal-container">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span>
+                COURSE MANAGEMENT
+            </span>
+
+                    <h2>
+                        Edit Course
+                    </h2>
+
+                </div>
+
+
+                <button type="button" class="close-modal" id="closeModal">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+            </div>
+
+
+
+            <form id="editForm" method="POST" enctype="multipart/form-data">
+
+
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+
+                        <label>
+                    Course Title
+                </label>
+
+                        <input type="text" name="title" id="editTitle" required>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                        Category
+                    </label>
+
+                            <select name="category" id="editCategory" required>
+
+                        <option value="web-development">
+                            Web Development
+                        </option>
+
+                        <option value="javascript">
+                            JavaScript
+                        </option>
+
+                        <option value="python">
+                            Python
+                        </option>
+
+                        <option value="design">
+                            UI/UX Design
+                        </option>
+
+                        <option value="database">
+                            Database
+                        </option>
+
+                        <option value="mobile-development">
+                            Mobile Development
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                        Level
+                    </label>
+
+                            <select name="level" id="editLevel" required>
+
+                        <option value="beginner">
+                            Beginner
+                        </option>
+
+                        <option value="intermediate">
+                            Intermediate
+                        </option>
+
+                        <option value="advanced">
+                            Advanced
+                        </option>
+
+                    </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                    Description
+                </label>
+
+                        <textarea name="description" id="editDescription" rows="6" required></textarea>
+
+                    </div>
+
+
+                    <div class="replacement-grid">
+
+
+                        <div class="replacement-box">
+
+                            <div class="replacement-icon">
+
+                                <i class="fa-solid fa-video"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                            Replace Video
+                        </strong>
+
+                                <span id="currentVideo">
+                            Current video
+                        </span>
+
+                            </div>
+
+                            <label class="file-button">
+
+                        Choose Video
+
+                        <input
+                            type="file"
+                            name="video"
+                            accept="video/*"
+                        >
+
+                    </label>
+
+                        </div>
+
+
+
+                        <div class="replacement-box">
+
+                            <div class="replacement-icon">
+
+                                <i class="fa-solid fa-image"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                            Replace Thumbnail
+                        </strong>
+
+                                <span id="currentThumbnail">
+                            Current thumbnail
+                        </span>
+
+                            </div>
+
+                            <label class="file-button">
+
+                        Choose Image
+
+                        <input
+                            type="file"
+                            name="thumbnail"
+                            accept="image/*"
+                        >
+
+                    </label>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="modal-footer">
+
+                    <button type="button" class="cancel-button" id="cancelModal">
+                Cancel
+            </button>
+
+
+                    <button type="submit" class="save-button">
+
+                <i class="fa-solid fa-check"></i>
+
+                Save Changes
+
+            </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+    <script src="/js/manage-courses.js"></script>
+
+</body>
+
+</html>

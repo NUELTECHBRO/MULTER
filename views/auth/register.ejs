@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | XTP Concept Academy</title>
+
+    <meta name="description" content="Create your XTP Concept Academy account and start learning today.">
+
+    <link rel="stylesheet" href="/css/register.css">
+</head>
+
+<body>
+
+    <!-- ================================
+         PAGE WRAPPER
+    ================================= -->
+    <div class="register-page">
+
+        <!-- ================================
+             LEFT SIDE - BRANDING
+        ================================= -->
+        <section class="register-brand">
+
+            <div class="brand-content">
+
+                <!-- Logo -->
+                <a href="/" class="brand-logo">
+                    <div class="logo-box">
+                        X
+                    </div>
+
+                    <div class="brand-name">
+                        <strong>XTP</strong>
+                        <span>Concept Academy</span>
+                    </div>
+                </a>
+
+
+                <!-- Main Message -->
+                <div class="brand-message">
+
+                    <span class="brand-badge">
+                        LEARN • BUILD • GROW
+                    </span>
+
+                    <h1>
+                        Build the skills
+                        <span>that build your future.</span>
+                    </h1>
+
+                    <p>
+                        Join XTP Concept Academy and gain access to practical courses, expert knowledge, and learning resources designed to help you grow.
+                    </p>
+
+                </div>
+
+
+                <!-- Benefits -->
+                <div class="brand-benefits">
+
+                    <div class="benefit">
+                        <div class="benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Learn Practical Skills</strong>
+                            <p>
+                                Learn through real-world projects and practical lessons.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="benefit">
+                        <div class="benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Learn at Your Own Pace</strong>
+                            <p>
+                                Study whenever and wherever works best for you.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="benefit">
+                        <div class="benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Grow Your Career</strong>
+                            <p>
+                                Develop valuable skills that can create new opportunities.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             RIGHT SIDE - REGISTER FORM
+        ================================= -->
+        <section class="register-section">
+
+            <div class="register-container">
+
+                <!-- Mobile Logo -->
+                <a href="/" class="mobile-brand">
+
+                    <div class="logo-box">
+                        X
+                    </div>
+
+                    <div class="brand-name">
+                        <strong>XTP</strong>
+                        <span>Concept Academy</span>
+                    </div>
+
+                </a>
+
+
+                <!-- Form Header -->
+                <div class="form-header">
+
+                    <span class="form-label">
+                        GET STARTED
+                    </span>
+
+                    <h2>
+                        Create your account
+                    </h2>
+
+                    <p>
+                        Join thousands of learners building their future with practical skills.
+                    </p>
+
+                </div>
+
+
+                <!-- Server Error -->
+                <% if (typeof error !== 'undefined' && error) { %>
+
+                    <div class="alert alert-error">
+
+                        <span class="alert-icon">!</span>
+
+                        <div>
+                            <strong>Registration failed</strong>
+                            <p>
+                                <%= error %>
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <% } %>
+
+
+                        <!-- Server Success -->
+                        <% if (typeof success !== 'undefined' && success) { %>
+
+                            <div class="alert alert-success">
+
+                                <span class="alert-icon">✓</span>
+
+                                <div>
+                                    <strong>Success</strong>
+                                    <p>
+                                        <%= success %>
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <% } %>
+
+
+                                <!-- ================================
+                     REGISTER FORM
+                ================================= -->
+                                <form action="/register" method="POST" class="register-form" id="registerForm">
+
+                                    <!-- Name -->
+                                    <div class="form-group">
+
+                                        <label for="name">
+                            Full Name
+                        </label>
+
+                                        <div class="input-wrapper">
+
+                                            <span class="input-icon">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <circle cx="12" cy="8" r="4"></circle>
+                                    <path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"></path>
+                                </svg>
+                            </span>
+
+                                            <input type="text" id="name" name="name" placeholder="Enter your full name" autocomplete="name" required>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Email -->
+                                    <div class="form-group">
+
+                                        <label for="email">
+                            Email Address
+                        </label>
+
+                                        <div class="input-wrapper">
+
+                                            <span class="input-icon">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="5"
+                                        width="18"
+                                        height="14"
+                                        rx="2"
+                                    ></rect>
+
+                                    <path d="m3 7 9 6 9-6"></path>
+                                </svg>
+                            </span>
+
+                                            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Password -->
+                                    <div class="form-group">
+
+                                        <div class="label-row">
+
+                                            <label for="password">
+                                Password
+                            </label>
+
+                                            <span class="password-hint">
+                                Minimum 6 characters
+                            </span>
+
+                                        </div>
+
+
+                                        <div class="input-wrapper">
+
+                                            <span class="input-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <rect
+                                        x="4"
+                                        y="10"
+                                        width="16"
+                                        height="11"
+                                        rx="2"
+                                    ></rect>
+
+                                    <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                                </svg>
+
+                            </span>
+
+
+                                            <input type="password" id="password" name="password" placeholder="Create a strong password" autocomplete="new-password" minlength="6" required>
+
+
+                                            <button type="button" class="password-toggle" id="passwordToggle" aria-label="Show password">
+                                <svg
+                                    id="eyeIcon"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+
+                                        </div>
+
+
+                                        <!-- Password Strength -->
+                                        <div class="password-strength">
+
+                                            <div class="strength-bars">
+
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+
+                                            </div>
+
+                                            <span id="strengthText" class="strength-text">
+                                Enter a password
+                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Confirm Password -->
+                                    <div class="form-group">
+
+                                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                                        <div class="input-wrapper">
+
+                                            <span class="input-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path d="M20 11a8.1 8.1 0 0 0-15.5-2"></path>
+                                    <path d="M4 5v4h4"></path>
+                                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2"></path>
+                                    <path d="M20 19v-4h-4"></path>
+                                </svg>
+
+                            </span>
+
+
+                                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat your password" autocomplete="new-password" minlength="6" required>
+
+
+                                            <button type="button" class="password-toggle" id="confirmPasswordToggle" aria-label="Show password">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+
+                            </button>
+
+                                        </div>
+
+                                        <small id="passwordMatch" class="password-match"></small>
+
+                                    </div>
+
+
+                                    <!-- Terms -->
+                                    <div class="terms-group">
+
+                                        <label class="checkbox-container">
+
+                            <input
+                                type="checkbox"
+                                name="terms"
+                                id="terms"
+                                required
+                            >
+
+                            <span class="custom-checkbox">
+                                ✓
+                            </span>
+
+                            <span class="terms-text">
+                                I agree to the
+                                <a href="/terms">
+                                    Terms of Service
+                                </a>
+                                and
+                                <a href="/privacy">
+                                    Privacy Policy
+                                </a>.
+                            </span>
+
+                        </label>
+
+                                    </div>
+
+
+                                    <!-- Submit -->
+                                    <button type="submit" class="register-button">
+
+                        <span>
+                            Create Account
+                        </span>
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path d="M5 12h14"></path>
+                            <path d="m13 6 6 6-6 6"></path>
+                        </svg>
+
+                    </button>
+
+                                </form>
+
+
+                                <!-- Login -->
+                                <div class="login-prompt">
+
+                                    Already have an account?
+
+                                    <a href="/login">
+                        Sign in
+                    </a>
+
+                                </div>
+
+
+                                <!-- Security Notice -->
+                                <div class="security-notice">
+
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect
+                            x="4"
+                            y="10"
+                            width="16"
+                            height="11"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                    </svg>
+
+                                    <span>
+                        Your information is securely protected.
+                    </span>
+
+                                </div>
+
+
+                                <!-- Footer -->
+                                <footer class="register-footer">
+
+                                    <p>
+                                        ©
+                                        <%= new Date().getFullYear() %>
+                                            XTP Concept Academy. All rights reserved.
+                                    </p>
+
+                                </footer>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script src="/js/register.js"></script>
+
+</body>
+
+</html>

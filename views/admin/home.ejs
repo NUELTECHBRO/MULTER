@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XTP Concept Academy | Admin Dashboard</title>
+
+
+    <link rel="stylesheet" href="/css/admin.css">
+
+
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="brand">
+                <div class="brand-logo">X</div>
+
+                <div class="brand-text">
+                    <h2>XTP</h2>
+                    <span>CONCEPT ACADEMY</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <p class="section-title">MAIN MENU</p>
+
+                <nav class="sidebar-nav">
+
+                    <a href="/admin" class="nav-item active">
+                        <i class="fa-solid fa-grid-2"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="/admin/courses/upload" class="nav-item">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Upload Courses</span>
+                    </a>
+
+                    <a href="/admin/courses" class="nav-item">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Manage Courses</span>
+                    </a>
+
+                    <a href="/admin/students" class="nav-item">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>Students</span>
+                    </a>
+
+                    <a href="/admin/payments" class="nav-item">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span>Payments</span>
+                    </a>
+
+                </nav>
+            </div>
+
+            <div class="sidebar-section second-menu">
+                <p class="section-title">SYSTEM</p>
+
+                <nav class="sidebar-nav">
+
+                    <a href="/admin/settings" class="nav-item">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </a>
+
+                    <a href="/logout" class="nav-item logout">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+
+                </nav>
+            </div>
+
+            <div class="sidebar-bottom">
+
+                <div class="support-card">
+                    <div class="support-icon">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </div>
+
+                    <div>
+                        <strong>Need Help?</strong>
+                        <small>Contact Academy Support</small>
+                    </div>
+                </div>
+
+                <div class="sidebar-footer">
+                    <span>© 2026 XTP Concept Academy</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+                    <div>
+                        <span class="breadcrumb">Admin / Dashboard</span>
+                        <h1>Dashboard</h1>
+                    </div>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <button class="icon-button" title="Notifications">
+                <i class="fa-regular fa-bell"></i>
+                <span class="notification-dot"></span>
+            </button>
+
+                    <div class="admin-profile">
+
+                        <div class="admin-avatar">
+                            AD
+                        </div>
+
+                        <div class="admin-info">
+                            <strong>Academy Admin</strong>
+                            <span>Administrator</span>
+                        </div>
+
+                        <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- DASHBOARD -->
+            <section class="dashboard-content">
+
+                <!-- WELCOME -->
+                <div class="welcome-section">
+
+                    <div>
+                        <span class="welcome-label">WELCOME BACK 👋</span>
+                        <h2>Good day,
+                            <%= user.name%>
+                        </h2>
+                        <p>
+                            Here's what's happening across XTP Concept Academy today.
+                        </p>
+                    </div>
+
+                    <a href="/admin/courses/upload" class="primary-button">
+                        <i class="fa-solid fa-plus"></i> Create New Course
+                    </a>
+
+                </div>
+
+
+                <!-- STATISTICS -->
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <div class="stat-icon students">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+
+                            <span class="trend positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        12.5%
+                    </span>
+                        </div>
+
+                        <span class="stat-label">Total Students</span>
+
+                        <div class="stat-value">
+                            6
+                        </div>
+
+                        <span class="stat-description">
+                    Compared with last month
+                </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <div class="stat-icon courses">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+
+                            <span class="trend positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        8.2%
+                    </span>
+                        </div>
+
+                        <span class="stat-label">Published Courses</span>
+
+                        <div class="stat-value">0</div>
+
+                        <span class="stat-description">
+                    0 courses added this month
+                </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <div class="stat-icon revenue">
+                                <i class="fa-solid fa-naira-sign"></i>
+                            </div>
+
+                            <span class="trend positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        18.4%
+                    </span>
+                        </div>
+
+                        <span class="stat-label">Total Revenue</span>
+
+                        <div class="stat-value">₦0.00M</div>
+
+                        <span class="stat-description">
+                    Revenue generated this month
+                </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <div class="stat-icon enrollment">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+
+                            <span class="trend positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        15.8%
+                    </span>
+                        </div>
+
+                        <span class="stat-label">Enrollments</span>
+
+                        <div class="stat-value">0</div>
+
+                        <span class="stat-description">
+                    Total course enrollments
+                </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CHART + QUICK ACTIONS -->
+                <div class="dashboard-row">
+
+                    <div class="panel revenue-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <span class="panel-label">REVENUE OVERVIEW</span>
+                                <h3>Revenue Performance</h3>
+                            </div>
+
+                            <select class="period-select">
+                        <option>Last 7 months</option>
+                        <option>Last 30 days</option>
+                        <option>This year</option>
+                    </select>
+
+                        </div>
+
+                        <div class="revenue-summary">
+
+                            <strong>₦0,000,000</strong>
+
+                            <span class="positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        18.4%
+                    </span>
+
+                        </div>
+
+                        <div class="chart">
+
+                            <div class="chart-y">
+                                <span>₦3M</span>
+                                <span>₦2M</span>
+                                <span>₦1M</span>
+                                <span>₦0</span>
+                            </div>
+
+                            <div class="chart-area">
+
+                                <svg viewBox="0 0 700 260" preserveAspectRatio="none" class="revenue-chart">
+
+                            <defs>
+                                <linearGradient id="chartGradient"
+                                                x1="0"
+                                                y1="0"
+                                                x2="0"
+                                                y2="1">
+
+                                    <stop offset="0%"
+                                          stop-opacity=".20"/>
+
+                                    <stop offset="100%"
+                                          stop-opacity="0"/>
+
+                                </linearGradient>
+                            </defs>
+
+                            <path
+                                class="chart-fill"
+                                d="M0,210
+                                   C80,180 90,190 150,150
+                                   C220,105 240,160 300,120
+                                   C360,80 390,125 450,75
+                                   C520,35 560,90 610,50
+                                   C650,20 680,45 700,20
+                                   L700,260 L0,260 Z"/>
+
+                            <path
+                                class="chart-line"
+                                d="M0,210
+                                   C80,180 90,190 150,150
+                                   C220,105 240,160 300,120
+                                   C360,80 390,125 450,75
+                                   C520,35 560,90 610,50
+                                   C650,20 680,45 700,20"/>
+
+                        </svg>
+
+                                <div class="chart-months">
+                                    <span>Feb</span>
+                                    <span>Mar</span>
+                                    <span>Apr</span>
+                                    <span>May</span>
+                                    <span>Jun</span>
+                                    <span>Jul</span>
+                                    <span>Aug</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUICK ACTIONS -->
+                    <div class="panel quick-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <span class="panel-label">QUICK ACTIONS</span>
+                                <h3>Manage Academy</h3>
+                            </div>
+
+                        </div>
+
+                        <div class="quick-actions">
+
+                            <a href="/admin/courses/upload" class="quick-action">
+                                <div class="quick-icon">
+                                    <i class="fa-solid fa-plus"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Create Course</strong>
+                                    <span>Add a new course</span>
+                                </div>
+
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+
+
+                            <a href="/admin/courses" class="quick-action">
+                                <div class="quick-icon">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Manage Courses</strong>
+                                    <span>Edit existing courses</span>
+                                </div>
+
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+
+
+                            <a href="/admin/students" class="quick-action">
+                                <div class="quick-icon">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+
+                                <div>
+                                    <strong>View Students</strong>
+                                    <span>Manage academy students</span>
+                                </div>
+
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+
+
+                            <a href="/admin/payments" class="quick-action">
+                                <div class="quick-icon">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Transactions</strong>
+                                    <span>View recent payments</span>
+                                </div>
+
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOWER ROW -->
+                <div class="dashboard-row lower-row">
+
+                    <!-- RECENT STUDENTS -->
+                    <div class="panel students-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <span class="panel-label">STUDENTS</span>
+                                <h3>Recent Students</h3>
+                            </div>
+
+                            <a href="/admin/students" class="view-all">
+                        View All
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                        </div>
+
+
+                        <div class="student-list">
+
+                            <div class="student-item">
+
+                                <div class="student-avatar">JD</div>
+
+                                <div class="student-details">
+                                    <strong>John David</strong>
+                                    <span>Web Development</span>
+                                </div>
+
+                                <span class="status active-status">
+                            Active
+                        </span>
+
+                            </div>
+
+
+                            <div class="student-item">
+
+                                <div class="student-avatar">AM</div>
+
+                                <div class="student-details">
+                                    <strong>Amaka Michael</strong>
+                                    <span>JavaScript Masterclass</span>
+                                </div>
+
+                                <span class="status active-status">
+                            Active
+                        </span>
+
+                            </div>
+
+
+                            <div class="student-item">
+
+                                <div class="student-avatar">CO</div>
+
+                                <div class="student-details">
+                                    <strong>Chinedu Okafor</strong>
+                                    <span>Python Programming</span>
+                                </div>
+
+                                <span class="status pending-status">
+                            Pending
+                        </span>
+
+                            </div>
+
+
+                            <div class="student-item">
+
+                                <div class="student-avatar">SA</div>
+
+                                <div class="student-details">
+                                    <strong>Sarah Anderson</strong>
+                                    <span>UI/UX Design</span>
+                                </div>
+
+                                <span class="status active-status">
+                            Active
+                        </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOP COURSES -->
+                    <div class="panel courses-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <span class="panel-label">COURSES</span>
+                                <h3>Top Performing Courses</h3>
+                            </div>
+
+                            <a href="/admin/courses" class="view-all">
+                        View All
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                        </div>
+
+
+                        <div class="course-list">
+
+                            <div class="course-item">
+
+                                <div class="course-number">01</div>
+
+                                <div class="course-info">
+                                    <strong>Complete Web Development</strong>
+                                    <span>842 students enrolled</span>
+                                </div>
+
+                                <div class="course-revenue">
+                                    <strong>₦840K</strong>
+                                    <span>Revenue</span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="course-item">
+
+                                <div class="course-number">02</div>
+
+                                <div class="course-info">
+                                    <strong>JavaScript Masterclass</strong>
+                                    <span>621 students enrolled</span>
+                                </div>
+
+                                <div class="course-revenue">
+                                    <strong>₦620K</strong>
+                                    <span>Revenue</span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="course-item">
+
+                                <div class="course-number">03</div>
+
+                                <div class="course-info">
+                                    <strong>Python Programming</strong>
+                                    <span>489 students enrolled</span>
+                                </div>
+
+                                <div class="course-revenue">
+                                    <strong>₦490K</strong>
+                                    <span>Revenue</span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="course-item">
+
+                                <div class="course-number">04</div>
+
+                                <div class="course-info">
+                                    <strong>UI/UX Design Fundamentals</strong>
+                                    <span>352 students enrolled</span>
+                                </div>
+
+                                <div class="course-revenue">
+                                    <strong>₦350K</strong>
+                                    <span>Revenue</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FOOTER -->
+                <footer class="dashboard-footer">
+
+                    <span>
+                © 2026 <strong>XTP Concept Academy</strong>. All rights reserved.
+            </span>
+
+                    <div>
+                        <span>Admin Portal</span>
+                        <span>•</span>
+                        <span>Version 1.0.0</span>
+                    </div>
+
+                </footer>
+
+            </section>
+
+        </main>
+
+
+    </div>
+
+    <script src="/js/admin.js"></script>
+
+</body>
+
+</html>
