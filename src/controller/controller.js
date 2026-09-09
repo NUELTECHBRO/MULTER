@@ -59,9 +59,7 @@ const coursesController = async(req, res) => {
         }
 
         // GUEST
-        return res.render("guests/home", {
-            user: null
-        });
+        return res.redirect("/login");
 
     } catch (error) {
 
