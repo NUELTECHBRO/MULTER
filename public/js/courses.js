@@ -1,295 +1,544 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const coursesGrid = document.getElementById("coursesGrid");
-    const clearFilters = document.getElementById("clearFilters");
-    const filterEmpty = document.getElementById("filterEmpty");
-    const resetSearch = document.getElementById("resetSearch");
-    const courseSort = document.getElementById("courseSort");
-    const filterButtons = document.querySelectorAll(".filter-btn");
-    const searchInput = document.querySelector(".nav-search input[name='search']");
 
 
-    if (!coursesGrid) {
-        return;
-    }
+    /* =========================
+       MOBILE SIDEBAR
+    ========================= */
 
-    let courseCards = Array.from(
-        coursesGrid.querySelectorAll(".course-card")
-    );
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
 
-    let currentLevel = "all";
-    let currentSearch = "";
-    let currentSort = "default";
+    if (menuToggle && sidebar) {
 
-    function normalizeText(value) {
-        return String(value || "")
-            .toLowerCase()
-            .trim()
-            .replace(/\s+/g, " ");
-    }
-
-    function getCourseText(card) {
-        const title = card.dataset.title || "";
-        const category = card.dataset.category || "";
-        const level = card.dataset.level || "";
-
-        const descriptionElement =
-            card.querySelector(".course-description");
-
-        let description = "";
-
-        if (descriptionElement) {
-            description = descriptionElement.textContent || "";
-        }
-
-        return normalizeText(
-            title +
-            " " +
-            category +
-            " " +
-            level +
-            " " +
-            description
-        );
-    }
-
-    function matchesLevel(card) {
-        if (currentLevel === "all") {
-            return true;
-        }
-
-        const courseLevel = normalizeText(
-            card.dataset.level || ""
-        );
-
-        return courseLevel === currentLevel;
-    }
-
-    function matchesSearch(card) {
-        if (!currentSearch) {
-            return true;
-        }
-
-        const courseText = getCourseText(card);
-        const searchWords = currentSearch.split(" ");
-
-        return searchWords.every(function(word) {
-            return courseText.includes(word);
-        });
-    }
-
-    function sortCourses() {
-        const cards = Array.from(
-            coursesGrid.querySelectorAll(".course-card")
-        );
-
-        if (currentSort === "az") {
-            cards.sort(function(a, b) {
-                const titleA = normalizeText(
-                    a.dataset.title || ""
-                );
-
-                const titleB = normalizeText(
-                    b.dataset.title || ""
-                );
-
-                return titleA.localeCompare(titleB);
-            });
-        } else if (currentSort === "za") {
-            cards.sort(function(a, b) {
-                const titleA = normalizeText(
-                    a.dataset.title || ""
-                );
-
-                const titleB = normalizeText(
-                    b.dataset.title || ""
-                );
-
-                return titleB.localeCompare(titleA);
-            });
-        } else {
-            cards.sort(function(a, b) {
-                const numberElementA =
-                    a.querySelector(".course-number");
-
-                const numberElementB =
-                    b.querySelector(".course-number");
-
-                let numberA = 0;
-                let numberB = 0;
-
-                if (numberElementA) {
-                    numberA = Number(
-                        numberElementA.textContent.trim()
-                    ) || 0;
-                }
-
-                if (numberElementB) {
-                    numberB = Number(
-                        numberElementB.textContent.trim()
-                    ) || 0;
-                }
-
-                return numberA - numberB;
-            });
-        }
-
-        cards.forEach(function(card) {
-            coursesGrid.appendChild(card);
+        menuToggle.addEventListener("click", function() {
+            sidebar.classList.toggle("open");
         });
 
-        courseCards = Array.from(
-            coursesGrid.querySelectorAll(".course-card")
-        );
     }
 
-    function updateResultCount(visibleCount) {
-        const resultText =
-            document.querySelector(".result-bar span");
 
-        if (!resultText) {
+    document.addEventListener("click", function(event) {
+
+        if (!sidebar || !menuToggle) {
             return;
         }
 
-        resultText.innerHTML =
-            "Showing <strong id=\"visibleCourseCount\">" +
-            visibleCount +
-            "</strong> " +
-            (visibleCount === 1 ? "course" : "courses");
-    }
-
-    function applyFilters() {
-        let visibleCount = 0;
-
-        courseCards.forEach(function(card) {
-            const searchMatch = matchesSearch(card);
-            const levelMatch = matchesLevel(card);
-
-            if (searchMatch && levelMatch) {
-                card.style.display = "";
-                visibleCount++;
-            } else {
-                card.style.display = "none";
-            }
-        });
-
-        updateResultCount(visibleCount);
-
-        if (filterEmpty) {
-            if (visibleCount === 0) {
-                filterEmpty.style.display = "block";
-            } else {
-                filterEmpty.style.display = "none";
-            }
+        if (
+            sidebar.classList.contains("open") &&
+            !sidebar.contains(event.target) &&
+            !menuToggle.contains(event.target)
+        ) {
+            sidebar.classList.remove("open");
         }
-    }
 
-    if (searchInput) {
-        searchInput.addEventListener("input", function() {
-            currentSearch = normalizeText(
-                searchInput.value
-            );
-
-            applyFilters();
-        });
-
-        searchInput.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-
-                currentSearch = normalizeText(
-                    searchInput.value
-                );
-
-                applyFilters();
-            }
-        });
-    }
-
-    const urlParams =
-        new URLSearchParams(window.location.search);
-
-    const urlSearch =
-        urlParams.get("search");
-
-    if (urlSearch && searchInput) {
-        searchInput.value = urlSearch;
-
-        currentSearch =
-            normalizeText(urlSearch);
-    }
-
-    filterButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            filterButtons.forEach(function(item) {
-                item.classList.remove("active");
-            });
-
-            button.classList.add("active");
-
-            currentLevel =
-                normalizeText(
-                    button.dataset.filter || "all"
-                );
-
-            applyFilters();
-        });
     });
 
-    if (courseSort) {
-        courseSort.addEventListener("change", function() {
-            currentSort = courseSort.value;
 
-            sortCourses();
-            applyFilters();
-        });
+    /* =========================
+       COURSE ELEMENTS
+    ========================= */
+
+    const grid = document.getElementById("coursesGrid");
+
+    const filterButtons =
+        document.querySelectorAll(".filter-btn");
+
+    const visibleCourseCount =
+        document.getElementById("visibleCourseCount");
+
+    const clearFilters =
+        document.getElementById("clearFilters");
+
+    const filterEmpty =
+        document.getElementById("filterEmpty");
+
+    const resetSearch =
+        document.getElementById("resetSearch");
+
+    const courseSort =
+        document.getElementById("courseSort");
+
+
+    /* =========================
+       SEARCH INPUTS
+    ========================= */
+
+    const searchInputs =
+        document.querySelectorAll(
+            'input[name="search"]'
+        );
+
+
+    let currentFilter = "all";
+
+    let currentSearch = "";
+
+
+    /* =========================
+       GET COURSE CARDS
+    ========================= */
+
+    function getCourseCards() {
+
+        if (!grid) {
+            return [];
+        }
+
+        return Array.from(
+            grid.querySelectorAll(".course-card")
+        );
+
     }
 
-    function resetAllFilters() {
-        currentLevel = "all";
-        currentSearch = "";
-        currentSort = "default";
 
-        if (searchInput) {
-            searchInput.value = "";
+    /* =========================
+       SEARCH + FILTER
+    ========================= */
+
+    function updateCourses() {
+
+        if (!grid) {
+            return;
         }
 
-        if (courseSort) {
-            courseSort.value = "default";
-        }
+        const cards = getCourseCards();
 
-        filterButtons.forEach(function(button) {
-            button.classList.remove("active");
+        let visibleCards = 0;
+
+
+        cards.forEach(function(card) {
+
+            const title =
+                (card.dataset.title || "").toLowerCase();
+
+            const category =
+                (card.dataset.category || "").toLowerCase();
+
+            const level =
+                (card.dataset.level || "").toLowerCase();
+
+            const descriptionElement =
+                card.querySelector(".course-description");
+
+            const description =
+                descriptionElement ?
+                descriptionElement.textContent.toLowerCase() :
+                "";
+
+
+            const searchText =
+                currentSearch.toLowerCase().trim();
+
+
+            /* =========================
+               SEARCH MATCH
+            ========================= */
+
+            const matchesSearch =
+                searchText === "" ||
+                title.includes(searchText) ||
+                category.includes(searchText) ||
+                level.includes(searchText) ||
+                description.includes(searchText);
+
+
+            /* =========================
+               LEVEL FILTER
+            ========================= */
+
+            let matchesFilter = true;
+
+
+            if (currentFilter !== "all") {
+
+                matchesFilter =
+                    level.includes(currentFilter);
+
+            }
+
+
+            /* =========================
+               SHOW / HIDE
+            ========================= */
+
+            if (
+                matchesSearch &&
+                matchesFilter
+            ) {
+
+                card.style.display = "";
+
+                visibleCards++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
         });
+
+
+        /* =========================
+           UPDATE COUNT
+        ========================= */
+
+        if (visibleCourseCount) {
+
+            visibleCourseCount.textContent =
+                visibleCards;
+
+        }
+
+
+        /* =========================
+           EMPTY MESSAGE
+        ========================= */
+
+        if (filterEmpty) {
+
+            filterEmpty.style.display =
+                visibleCards === 0 ?
+                "block" :
+                "none";
+
+        }
+
+    }
+
+
+    /* =========================
+       LIVE SEARCH
+    ========================= */
+
+    searchInputs.forEach(function(input) {
+
+        input.addEventListener(
+            "input",
+            function() {
+
+                currentSearch =
+                    input.value;
+
+                /* Keep both search boxes synchronized */
+
+                searchInputs.forEach(function(otherInput) {
+
+                    if (otherInput !== input) {
+
+                        otherInput.value =
+                            input.value;
+
+                    }
+
+                });
+
+
+                updateCourses();
+
+            }
+        );
+
+    });
+
+
+    /* =========================
+       PREVENT SEARCH FORM RELOAD
+    ========================= */
+
+    searchInputs.forEach(function(input) {
+
+        const form =
+            input.closest("form");
+
+        if (form) {
+
+            form.addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+                    currentSearch =
+                        input.value;
+
+                    updateCourses();
+
+                }
+            );
+
+        }
+
+    });
+
+
+    /* =========================
+       FILTER BUTTONS
+    ========================= */
+
+    filterButtons.forEach(function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                filterButtons.forEach(
+                    function(btn) {
+
+                        btn.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                button.classList.add("active");
+
+
+                currentFilter =
+                    button.dataset.filter || "all";
+
+
+                updateCourses();
+
+            }
+        );
+
+    });
+
+
+    /* =========================
+       SORT COURSES
+    ========================= */
+
+    if (courseSort && grid) {
+
+        courseSort.addEventListener(
+            "change",
+            function() {
+
+                const cards =
+                    getCourseCards();
+
+                const sortValue =
+                    courseSort.value;
+
+
+                if (sortValue === "az") {
+
+                    cards.sort(function(a, b) {
+
+                        return (
+                                a.dataset.title || ""
+                            )
+                            .toLowerCase()
+                            .localeCompare(
+                                (
+                                    b.dataset.title || ""
+                                ).toLowerCase()
+                            );
+
+                    });
+
+                }
+
+
+                if (sortValue === "za") {
+
+                    cards.sort(function(a, b) {
+
+                        return (
+                                b.dataset.title || ""
+                            )
+                            .toLowerCase()
+                            .localeCompare(
+                                (
+                                    a.dataset.title || ""
+                                ).toLowerCase()
+                            );
+
+                    });
+
+                }
+
+
+                cards.forEach(function(card) {
+
+                    grid.appendChild(card);
+
+                });
+
+
+                updateCourses();
+
+            }
+        );
+
+    }
+
+
+    /* =========================
+       CLEAR EVERYTHING
+    ========================= */
+
+    function resetFilters() {
+
+        currentFilter = "all";
+
+        currentSearch = "";
+
+
+        /* Reset filter buttons */
+
+        filterButtons.forEach(
+            function(button) {
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
 
         const allButton =
             document.querySelector(
-                ".filter-btn[data-filter='all']"
+                '.filter-btn[data-filter="all"]'
             );
 
+
         if (allButton) {
+
             allButton.classList.add("active");
+
         }
 
-        sortCourses();
-        applyFilters();
+
+        /* Reset search boxes */
+
+        searchInputs.forEach(
+            function(input) {
+
+                input.value = "";
+
+            }
+        );
+
+
+        /* Reset sorting */
+
+        if (courseSort) {
+
+            courseSort.value = "default";
+
+        }
+
+
+        /* Show all cards */
+
+        if (grid) {
+
+            const cards =
+                getCourseCards();
+
+            cards.forEach(function(card) {
+
+                card.style.display = "";
+
+            });
+
+        }
+
+
+        updateCourses();
+
     }
+
+
+    /* =========================
+       CLEAR FILTER BUTTON
+    ========================= */
 
     if (clearFilters) {
+
         clearFilters.addEventListener(
             "click",
-            resetAllFilters
+            resetFilters
         );
+
     }
+
+
+    /* =========================
+       SHOW ALL COURSES
+    ========================= */
 
     if (resetSearch) {
+
         resetSearch.addEventListener(
             "click",
-            resetAllFilters
+            resetFilters
         );
+
     }
 
-    sortCourses();
-    applyFilters();
+
+    /* =========================
+       COURSE BUTTON LOADING
+    ========================= */
+
+    const startButtons =
+        document.querySelectorAll(
+            ".start-course"
+        );
+
+
+    startButtons.forEach(function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                button.classList.add(
+                    "loading"
+                );
+
+            }
+        );
+
+    });
+
+
+    /* =========================
+       ESCAPE KEY
+    ========================= */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape" &&
+                sidebar &&
+                sidebar.classList.contains("open")
+            ) {
+
+                sidebar.classList.remove(
+                    "open"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       INITIALIZE
+    ========================= */
+
+    updateCourses();
 
 
 });

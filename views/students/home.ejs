@@ -1,15 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
+
 
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="XTP Concept Academy - Learn technology, business and digital skills. Build practical skills and prepare for your future career.">
+    <meta name="description" content="XTP Concept Academy Student Dashboard">
 
-    <meta name="theme-color" content="#635bff">
+    <meta name="theme-color" content="#111827">
 
     <title>XTP Concept Academy | Student Dashboard</title>
 
@@ -21,1890 +23,1545 @@
 
     <link rel="stylesheet" href="/css/students.css">
 
-</head>
 
+</head>
 
 <body>
 
 
-    <!-- =====================================================
-     ANNOUNCEMENT
-===================================================== -->
+    <div class="student-layout">
 
-    <div class="announcement">
+        <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
-        <div class="container announcement-inner">
+        <aside class="sidebar" id="studentSidebar">
 
-            <div class="announcement-message">
 
-                <span class="announcement-dot"></span>
+            <div class="brand">
 
-                <span>
-                Learn skills. Build projects. Grow your career.
-            </span>
+                <a href="/" class="brand-link">
 
-            </div>
-
-            <a href="/courses">
-            Explore courses →
-        </a>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-     NAVBAR
-===================================================== -->
-
-    <header class="navbar">
-
-        <div class="container nav-container">
-
-
-            <!-- BRAND -->
-
-            <a href="/" class="brand">
-
-                <div class="brand-logo">
-                    X
-                </div>
-
-                <div class="brand-text">
-
-                    <strong>
-                    XTP
-                </strong>
-
-                    <span>
-                    CONCEPT ACADEMY
-                </span>
-
-                </div>
-
-            </a>
-
-
-
-            <!-- SEARCH -->
-
-            <form action="/courses" method="GET" class="navbar-search">
-
-                <span class="search-symbol">
-                ⌕
-            </span>
-
-                <input type="search" name="search" placeholder="Search courses, skills and careers..." autocomplete="off" aria-label="Search courses">
-
-                <button type="submit">
-                Search
-            </button>
-
-            </form>
-
-
-
-            <!-- NAVIGATION -->
-
-            <nav class="nav-links">
-
-                <a href="/" class="active">
-                Home
-            </a>
-
-                <a href="/courses">
-                Courses
-            </a>
-
-                <a href="/categories">
-                Categories
-            </a>
-
-                <a href="/about">
-                About
-            </a>
-
-            </nav>
-
-
-
-            <!-- ACCOUNT -->
-
-            <div class="account-area">
-
-                <div class="account-avatar">
-
-                    <%= user.name.charAt(0).toUpperCase() %>
-
-                </div>
-
-                <div class="account-info">
-
-                    <span>
-                    Welcome back
-                </span>
-
-                    <strong>
-                    <%= user.name %>
-                </strong>
-
-                </div>
-
-                <a href="/logout" class="logout-link">
-                Logout
-            </a>
-
-            </div>
-
-
-
-            <!-- MOBILE BUTTON -->
-
-            <button type="button" class="mobile-menu-button" id="mobileMenuBtn" aria-label="Open navigation" aria-expanded="false">
-            ☰
-        </button>
-
-        </div>
-
-
-
-        <!-- MOBILE MENU -->
-
-        <div class="mobile-menu" id="mobileMenu">
-
-            <form action="/courses" method="GET" class="mobile-search">
-
-                <input type="search" name="search" placeholder="Search courses...">
-
-                <button type="submit">
-                Search
-            </button>
-
-            </form>
-
-
-            <a href="/">
-            Home
-        </a>
-
-            <a href="/courses">
-            Courses
-        </a>
-
-            <a href="/categories">
-            Categories
-        </a>
-
-            <a href="/about">
-            About
-        </a>
-
-            <a href="/logout" class="mobile-logout">
-            Logout
-        </a>
-
-        </div>
-
-    </header>
-
-
-
-    <!-- =====================================================
-     HERO
-===================================================== -->
-
-    <section class="hero">
-
-        <div class="hero-background-shape shape-one"></div>
-
-        <div class="hero-background-shape shape-two"></div>
-
-
-        <div class="container hero-container">
-
-
-            <div class="hero-content">
-
-
-                <div class="welcome-pill">
-
-                    <span>
-                    ✦
-                </span> Welcome back,
-                    <%= user.name %>
-
-                </div>
-
-
-
-                <h1>
-
-                    Learn skills that
-                    <span>
-                    create opportunities.
-                </span>
-
-                </h1>
-
-
-
-                <p>
-
-                    Explore technology, cybersecurity, data, artificial intelligence, cloud computing, design, business and other practical skills designed to help you build your future.
-
-                </p>
-
-
-
-                <div class="hero-actions">
-
-                    <a href="/courses" class="primary-button">
-                    Explore Courses
-
-                    <span>
-                        →
-                    </span>
-
-                </a>
-
-
-                    <a href="#career-paths" class="secondary-button">
-                    Explore Career Paths
-                </a>
-
-                </div>
-
-
-
-                <!-- HERO TRUST -->
-
-                <div class="hero-trust">
-
-                    <div class="trust-avatars">
-
-                        <span>
+                    <div class="brand-logo">
                         X
-                    </span>
+                    </div>
 
-                        <span>
-                        T
-                    </span>
+                    <div class="brand-text">
 
-                        <span>
-                        P
-                    </span>
+                        <strong>XTP</strong>
+
+                        <span>CONCEPT ACADEMY</span>
 
                     </div>
 
-                    <div>
+                </a>
 
-                        <strong>
-                        Practical learning
-                    </strong>
+            </div>
 
-                        <small>
-                        Learn skills you can actually use
-                    </small>
 
+            <div class="sidebar-section">
+
+                <span class="sidebar-title">
+                LEARNING
+            </span>
+
+                <nav class="sidebar-nav">
+
+                    <a href="/" class="nav-item active">
+
+                        <span class="nav-icon">⌂</span>
+
+                        <span>Dashboard</span>
+
+                    </a>
+
+
+                    <a href="/courses" class="nav-item">
+
+                        <span class="nav-icon">▤</span>
+
+                        <span>Courses</span>
+
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <div class="sidebar-section">
+
+                <span class="sidebar-title">
+                ACCOUNT
+            </span>
+
+                <nav class="sidebar-nav">
+
+                    <a href="/about" class="nav-item">
+
+                        <span class="nav-icon">?</span>
+
+                        <span>About Academy</span>
+
+                    </a>
+
+
+                    <a href="/contact" class="nav-item">
+
+                        <span class="nav-icon">✉</span>
+
+                        <span>Support</span>
+
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="support-card">
+
+                    <div class="support-icon">
+                        ✦
                     </div>
+
+                    <strong>
+                    Keep learning
+                </strong>
+
+                    <small>
+                    One skill can create a new opportunity.
+                </small>
 
                 </div>
 
 
+                <a href="/logout" class="nav-item logout-item">
 
-                <!-- HERO STATS -->
+                    <span class="nav-icon">↪</span>
 
-                <div class="hero-stats">
+                    <span>Logout</span>
 
-                    <div>
-
-                        <strong>
-                        <%= data ? data.length : 0 %>+
-                    </strong>
-
-                        <span>
-                        Courses
-                    </span>
-
-                    </div>
+                </a>
 
 
-                    <div>
-
-                        <strong>
-                        12+
-                    </strong>
-
-                        <span>
-                        Career Areas
-                    </span>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                        100%
-                    </strong>
-
-                        <span>
-                        Practical Focus
-                    </span>
-
-                    </div>
-
+                <div class="sidebar-footer">
+                    XTP Concept Academy
                 </div>
 
             </div>
 
 
-
-            <!-- HERO VISUAL -->
-
-            <div class="hero-visual">
+        </aside>
 
 
-                <div class="learning-dashboard">
+        <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+        <main class="main-content">
 
 
-                    <div class="dashboard-top">
+            <!-- TOPBAR -->
 
-                        <div>
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button type="button" class="menu-toggle" id="mobileMenuBtn" aria-label="Open menu">
+
+                    ☰
+
+                </button>
+
+                    <div class="page-heading">
+
+                        <span class="breadcrumb">
+                        Student Portal / Dashboard
+                    </span>
+
+                        <h1>
+                            Dashboard
+                        </h1>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <form action="/courses" method="GET" class="topbar-search">
+
+                        <span>
+                        ⌕
+                    </span>
+
+                        <input type="search" name="search" id="studentNavbarSearch" placeholder="Search courses..." autocomplete="off">
+
+                    </form>
+
+
+                    <div class="profile">
+
+                        <div class="profile-avatar">
+
+                            <%= user.name.charAt(0).toUpperCase() %>
+
+                        </div>
+
+                        <div class="profile-info">
 
                             <span>
-                            YOUR LEARNING SPACE
+                            Welcome back
                         </span>
 
-                            <h2>
-                                Build your future
-                            </h2>
+                            <strong>
+                            <%= user.name %>
+                        </strong>
 
                         </div>
 
-                        <div class="dashboard-icon">
-                            ✦
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =====================================================
+             DASHBOARD CONTENT
+        ====================================================== -->
+
+            <div class="dashboard-content">
+
+
+                <!-- WELCOME -->
+
+                <section class="welcome-section">
+
+                    <div>
+
+                        <span class="welcome-label">
+                        YOUR LEARNING SPACE
+                    </span>
+
+                        <h2>
+                            Welcome back,
+                            <%= user.name %> 👋
+                        </h2>
+
+                        <p>
+                            Continue learning, explore new skills and build your future with XTP Concept Academy.
+                        </p>
+
+                    </div>
+
+                    <a href="/courses" class="primary-button">
+
+                    Explore Courses
+
+                    <span>→</span>
+
+                </a>
+
+                </section>
+
+
+                <!-- =================================================
+                 STATS
+            ================================================== -->
+
+                <section class="stats-grid">
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon purple">
+                            ▣
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                            Available Courses
+                        </span>
+
+                            <strong>
+                            <%= data ? data.length : 0 %>
+                        </strong>
+
+                            <small>
+                            Courses ready to explore
+                        </small>
+
                         </div>
 
                     </div>
 
 
+                    <div class="stat-card">
 
-                    <div class="progress-card">
+                        <div class="stat-icon blue">
+                            ◎
+                        </div>
 
-                        <div class="progress-header">
+                        <div class="stat-content">
+
+                            <span>
+                            Career Areas
+                        </span>
+
+                            <strong>
+                            12+
+                        </strong>
+
+                            <small>
+                            Different paths to explore
+                        </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon green">
+                            ✓
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                            Learning Focus
+                        </span>
+
+                            <strong>
+                            100%
+                        </strong>
+
+                            <small>
+                            Practical learning approach
+                        </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon orange">
+                            ★
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                            Learning Model
+                        </span>
+
+                            <strong>
+                            4 Steps
+                        </strong>
+
+                            <small>
+                            Learn → Practice → Build → Grow
+                        </small>
+
+                        </div>
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                 MAIN DASHBOARD ROW
+            ================================================== -->
+
+                <div class="dashboard-row">
+
+
+                    <!-- LEARNING PANEL -->
+
+                    <section class="panel learning-panel">
+
+                        <div class="panel-header">
 
                             <div>
 
-                                <span>
-                                Learning Journey
+                                <span class="panel-label">
+                                LEARNING JOURNEY
                             </span>
 
-                                <strong>
-                                Keep going
+                                <h2>
+                                    Keep building your skills
+                                </h2>
+
+                            </div>
+
+                            <span class="panel-icon">
+                            ✦
+                        </span>
+
+                        </div>
+
+
+                        <div class="learning-progress">
+
+                            <div class="progress-top">
+
+                                <div>
+
+                                    <strong>
+                                    Your learning journey
+                                </strong>
+
+                                    <span>
+                                    Learn → Practice → Build → Grow
+                                </span>
+
+                                </div>
+
+                                <strong class="progress-value">
+                                75%
                             </strong>
 
                             </div>
 
-                            <span class="progress-percent">
-                            75%
+
+                            <div class="progress-track">
+
+                                <span style="width: 75%;"></span>
+
+                            </div>
+
+
+                            <div class="progress-footer">
+
+                                <span>
+                                Keep going — you're making progress.
+                            </span>
+
+                                <a href="/courses">
+                                Continue →
+                            </a>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="learning-model-grid">
+
+                            <div class="model-item active">
+
+                                <span>01</span>
+
+                                <strong>Learn</strong>
+
+                                <small>Understand concepts</small>
+
+                            </div>
+
+                            <div class="model-item">
+
+                                <span>02</span>
+
+                                <strong>Practice</strong>
+
+                                <small>Test your knowledge</small>
+
+                            </div>
+
+                            <div class="model-item">
+
+                                <span>03</span>
+
+                                <strong>Build</strong>
+
+                                <small>Create projects</small>
+
+                            </div>
+
+                            <div class="model-item">
+
+                                <span>04</span>
+
+                                <strong>Grow</strong>
+
+                                <small>Develop your career</small>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- QUICK ACTIONS -->
+
+                    <section class="panel quick-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-label">
+                                QUICK ACTIONS
+                            </span>
+
+                                <h2>
+                                    Get started
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+                            <a href="/courses" class="quick-action">
+
+                                <div class="quick-icon">
+                                    ▤
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                    Browse Courses
+                                </strong>
+
+                                    <span>
+                                    Find something new to learn
+                                </span>
+
+                                </div>
+
+                                <b>→</b>
+
+                            </a>
+
+
+                            <a href="#career-paths" class="quick-action">
+
+                                <div class="quick-icon">
+                                    ◎
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                    Career Paths
+                                </strong>
+
+                                    <span>
+                                    Choose your direction
+                                </span>
+
+                                </div>
+
+                                <b>→</b>
+
+                            </a>
+
+
+                            <a href="/categories" class="quick-action">
+
+                                <div class="quick-icon">
+                                    ◈
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                    Categories
+                                </strong>
+
+                                    <span>
+                                    Explore different skills
+                                </span>
+
+                                </div>
+
+                                <b>→</b>
+
+                            </a>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <!-- =================================================
+                 COURSES
+            ================================================== -->
+
+                <section class="panel courses-panel" id="courses">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="panel-label">
+                            AVAILABLE COURSES
                         </span>
 
+                            <h2>
+                                Courses for your growth
+                            </h2>
+
+                            <p>
+                                Explore practical courses and start developing useful skills.
+                            </p>
+
                         </div>
 
-
-                        <div class="progress-bar">
-
-                            <span></span>
-
-                        </div>
-
-                        <small>
-                        Learn → Practice → Build → Grow
-                    </small>
+                        <a href="/courses" class="panel-link">
+                        View all →
+                    </a>
 
                     </div>
 
 
+                    <% if (!data || data.length === 0) { %>
 
-                    <div class="learning-options">
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                📚
+                            </div>
+
+                            <h3>
+                                No courses available yet
+                            </h3>
+
+                            <p>
+                                New courses will appear here when they are published.
+                            </p>
+
+                            <a href="/courses" class="primary-button">
+                            Browse Courses
+                        </a>
+
+                        </div>
+
+                        <% } else { %>
+
+                            <div class="course-grid">
+
+                                <% data.forEach(datum => { %>
+
+                                    <article class="course-card">
+
+                                        <a href="/courses/<%= datum._id %>/learn" class="course-image">
+
+                                    <img
+                                        src="/<%= datum.thumbnail %>"
+                                        alt="<%= datum.title %>"
+                                        loading="lazy"
+                                    >
+
+                                    <div class="course-overlay">
+
+                                        <span>
+                                            <%= datum.category %>
+                                        </span>
+
+                                    </div>
+
+                                </a>
 
 
-                        <a href="/courses?category=development" class="learning-option">
+                                        <div class="course-content">
 
-                            <div class="option-icon development-icon">
+                                            <div class="course-top">
+
+                                                <span class="course-category">
+                                            <%= datum.category %>
+                                        </span>
+
+                                                <span class="course-level">
+                                            <%= datum.level %>
+                                        </span>
+
+                                            </div>
+
+
+                                            <h3>
+
+                                                <a href="/courses/<%= datum._id %>">
+                                                    <%= datum.title %>
+                                                </a>
+
+                                            </h3>
+
+
+                                            <p>
+
+                                                <%= datum.description &&
+                                        datum.description.length > 110
+                                        ? datum.description.substring(0, 110) + "..."
+                                        : datum.description %>
+
+                                            </p>
+
+
+                                            <div class="course-meta">
+
+                                                <span>
+                                            ★ 4.9
+                                        </span>
+
+                                                <span>
+                                            XTP Academy
+                                        </span>
+
+                                            </div>
+
+
+                                            <div class="course-footer">
+
+                                                <strong>
+                                            Free
+                                        </strong>
+
+                                                <a href="/courses/<%= datum._id %>/learn" class="course-button">
+                                            Start Learning
+                                        </a>
+
+                                            </div>
+
+                                        </div>
+
+                                    </article>
+
+                                    <% }) %>
+
+                            </div>
+
+                            <% } %>
+
+
+                                <div class="center-button">
+
+                                    <a href="/courses" class="outline-button">
+                        Explore Every Course →
+                    </a>
+
+                                </div>
+
+                </section>
+
+
+                <!-- =================================================
+                 CAREER PATHS
+            ================================================== -->
+
+                <section class="panel career-panel" id="career-paths">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="panel-label">
+                            CAREER PATHS
+                        </span>
+
+                            <h2>
+                                Choose your direction
+                            </h2>
+
+                            <p>
+                                Explore technology, business, creative and digital career paths.
+                            </p>
+
+                        </div>
+
+                        <a href="/categories" class="panel-link">
+                        View all →
+                    </a>
+
+                    </div>
+
+
+                    <div class="career-grid">
+
+
+                        <a href="/courses?category=development" class="career-card">
+
+                            <div class="career-icon purple">
                                 &lt;/&gt;
                             </div>
 
                             <div>
 
-                                <strong>
-                                Development
-                            </strong>
+                                <span>01</span>
 
-                                <span>
-                                Build software
-                            </span>
+                                <h3>
+                                    Software Development
+                                </h3>
+
+                                <p>
+                                    Web, backend, mobile and software engineering.
+                                </p>
 
                             </div>
 
-                            <b>
-                            →
-                        </b>
+                            <strong>→</strong>
 
                         </a>
 
 
+                        <a href="/courses?category=cybersecurity" class="career-card">
 
-                        <a href="/courses?category=cybersecurity" class="learning-option">
-
-                            <div class="option-icon security-icon">
+                            <div class="career-icon red">
                                 🛡
                             </div>
 
                             <div>
 
-                                <strong>
-                                Cybersecurity
-                            </strong>
+                                <span>02</span>
 
-                                <span>
-                                Protect systems
-                            </span>
+                                <h3>
+                                    Cybersecurity
+                                </h3>
+
+                                <p>
+                                    Security fundamentals and responsible defense.
+                                </p>
 
                             </div>
 
-                            <b>
-                            →
-                        </b>
+                            <strong>→</strong>
 
                         </a>
 
 
+                        <a href="/courses?category=hacking" class="career-card">
 
-                        <a href="/courses?category=data" class="learning-option">
+                            <div class="career-icon dark">
+                                ⚡
+                            </div>
 
-                            <div class="option-icon data-icon">
+                            <div>
+
+                                <span>03</span>
+
+                                <h3>
+                                    Ethical Hacking
+                                </h3>
+
+                                <p>
+                                    Responsible security testing and penetration concepts.
+                                </p>
+
+                            </div>
+
+                            <strong>→</strong>
+
+                        </a>
+
+
+                        <a href="/courses?category=data" class="career-card">
+
+                            <div class="career-icon blue">
                                 ◫
                             </div>
 
                             <div>
 
-                                <strong>
-                                Data & AI
-                            </strong>
+                                <span>04</span>
 
-                                <span>
-                                Turn data into insight
-                            </span>
+                                <h3>
+                                    Data Analysis
+                                </h3>
+
+                                <p>
+                                    Excel, SQL, visualization and data insights.
+                                </p>
 
                             </div>
 
-                            <b>
-                            →
-                        </b>
+                            <strong>→</strong>
 
                         </a>
 
 
+                        <a href="/courses?category=ai" class="career-card">
 
-                        <a href="/courses?category=cloud" class="learning-option">
+                            <div class="career-icon violet">
+                                AI
+                            </div>
 
-                            <div class="option-icon cloud-icon">
+                            <div>
+
+                                <span>05</span>
+
+                                <h3>
+                                    AI & Machine Learning
+                                </h3>
+
+                                <p>
+                                    Artificial intelligence and intelligent applications.
+                                </p>
+
+                            </div>
+
+                            <strong>→</strong>
+
+                        </a>
+
+
+                        <a href="/courses?category=cloud" class="career-card">
+
+                            <div class="career-icon cyan">
                                 ☁
                             </div>
 
                             <div>
 
-                                <strong>
-                                Cloud & Networking
-                            </strong>
+                                <span>06</span>
 
-                                <span>
-                                Build digital infrastructure
+                                <h3>
+                                    Cloud Computing
+                                </h3>
+
+                                <p>
+                                    Cloud infrastructure and modern deployment.
+                                </p>
+
+                            </div>
+
+                            <strong>→</strong>
+
+                        </a>
+
+
+                        <a href="/courses?category=networking" class="career-card">
+
+                            <div class="career-icon green">
+                                ◎
+                            </div>
+
+                            <div>
+
+                                <span>07</span>
+
+                                <h3>
+                                    Networking
+                                </h3>
+
+                                <p>
+                                    Networks, servers and digital connectivity.
+                                </p>
+
+                            </div>
+
+                            <strong>→</strong>
+
+                        </a>
+
+
+                        <a href="/courses?category=design" class="career-card">
+
+                            <div class="career-icon orange">
+                                ✦
+                            </div>
+
+                            <div>
+
+                                <span>08</span>
+
+                                <h3>
+                                    UI/UX & Design
+                                </h3>
+
+                                <p>
+                                    User experience, interfaces and creative design.
+                                </p>
+
+                            </div>
+
+                            <strong>→</strong>
+
+                        </a>
+
+
+                        <a href="/courses?category=business" class="career-card">
+
+                            <div class="career-icon gold">
+                                ◈
+                            </div>
+
+                            <div>
+
+                                <span>09</span>
+
+                                <h3>
+                                    Business & Entrepreneurship
+                                </h3>
+
+                                <p>
+                                    Entrepreneurship and digital business opportunities.
+                                </p>
+
+                            </div>
+
+                            <strong>→</strong>
+
+                        </a>
+
+
+                        <a href="/courses?category=marketing" class="career-card">
+
+                            <div class="career-icon pink">
+                                ◎
+                            </div>
+
+                            <div>
+
+                                <span>10</span>
+
+                                <h3>
+                                    Digital Marketing
+                                </h3>
+
+                                <p>
+                                    Social media, content, branding and online growth.
+                                </p>
+
+                            </div>
+
+                            <strong>→</strong>
+
+                        </a>
+
+
+                        <a href="/courses?category=it" class="career-card">
+
+                            <div class="career-icon slate">
+                                ⌘
+                            </div>
+
+                            <div>
+
+                                <span>11</span>
+
+                                <h3>
+                                    IT Support
+                                </h3>
+
+                                <p>
+                                    Computer support and IT fundamentals.
+                                </p>
+
+                            </div>
+
+                            <strong>→</strong>
+
+                        </a>
+
+
+                        <a href="/courses?category=mobile" class="career-card">
+
+                            <div class="career-icon teal">
+                                ▣
+                            </div>
+
+                            <div>
+
+                                <span>12</span>
+
+                                <h3>
+                                    Mobile Development
+                                </h3>
+
+                                <p>
+                                    Android, iOS and cross-platform applications.
+                                </p>
+
+                            </div>
+
+                            <strong>→</strong>
+
+                        </a>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                 SKILLS
+            ================================================== -->
+
+                <section class="skills-panel">
+
+                    <div class="skills-content">
+
+                        <span class="panel-label light">
+                        SKILLS FOR THE FUTURE
+                    </span>
+
+                        <h2>
+                            Build a complete digital skill set.
+                        </h2>
+
+                        <p>
+                            Technology careers are bigger than programming. Explore the skills you need for the modern digital world.
+                        </p>
+
+                    </div>
+
+
+                    <div class="skills-list">
+
+                        <span>JavaScript</span>
+                        <span>Python</span>
+                        <span>Cybersecurity</span>
+                        <span>Ethical Hacking</span>
+                        <span>Data Analysis</span>
+                        <span>SQL</span>
+                        <span>Artificial Intelligence</span>
+                        <span>Machine Learning</span>
+                        <span>Cloud Computing</span>
+                        <span>Networking</span>
+                        <span>UI/UX</span>
+                        <span>Graphics Design</span>
+                        <span>Digital Marketing</span>
+                        <span>IT Support</span>
+                        <span>Mobile Development</span>
+                        <span>Entrepreneurship</span>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                 WHY XTP
+            ================================================== -->
+
+                <div class="dashboard-row lower-row">
+
+
+                    <section class="panel benefits-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-label">
+                                WHY XTP ACADEMY
                             </span>
 
-                            </div>
-
-                            <b>
-                            →
-                        </b>
-
-                        </a>
-
-                    </div>
-
-
-
-                    <div class="dashboard-footer">
-
-                        <span>
-                        ✦
-                    </span> Your next opportunity can start with one skill.
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-     QUICK SEARCH
-===================================================== -->
-
-    <section class="search-section">
-
-        <div class="container">
-
-            <div class="search-panel">
-
-                <div class="search-panel-content">
-
-                    <span class="section-label">
-                    FIND YOUR NEXT SKILL
-                </span>
-
-                    <h2>
-                        What do you want to learn?
-                    </h2>
-
-                    <p>
-                        Search across technology, business, creative and digital career skills.
-                    </p>
-
-                </div>
-
-
-                <form action="/courses" method="GET" class="main-search">
-
-                    <span>
-                    ⌕
-                </span>
-
-                    <input type="search" name="search" placeholder="Try Python, cybersecurity, Excel, cloud, UI/UX..." autocomplete="off">
-
-                    <button type="submit">
-                    Search Courses →
-                </button>
-
-                </form>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-     CAREER AREAS
-===================================================== -->
-
-    <section class="section career-section" id="career-paths">
-
-        <div class="container">
-
-
-            <div class="section-heading">
-
-                <div>
-
-                    <span class="section-label">
-                    EXPLORE CAREERS
-                </span>
-
-                    <h2>
-                        Choose a direction. Build the skills.
-                    </h2>
-
-                    <p>
-                        You don't have to be a programmer to build a career in technology. Discover different paths and find the area that interests you.
-                    </p>
-
-                </div>
-
-                <a href="/categories" class="section-link">
-                View all areas →
-            </a>
-
-            </div>
-
-
-
-            <div class="career-grid">
-
-
-                <a href="/courses?category=development" class="career-card">
-
-                    <div class="career-icon purple">
-                        &lt;/&gt;
-                    </div>
-
-                    <div>
-
-                        <span>
-                        01
-                    </span>
-
-                        <h3>
-                            Software Development
-                        </h3>
-
-                        <p>
-                            Web, backend, mobile and software engineering.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=cybersecurity" class="career-card">
-
-                    <div class="career-icon red">
-                        🛡
-                    </div>
-
-                    <div>
-
-                        <span>
-                        02
-                    </span>
-
-                        <h3>
-                            Cybersecurity
-                        </h3>
-
-                        <p>
-                            Security fundamentals, defense and ethical security.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=hacking" class="career-card">
-
-                    <div class="career-icon dark">
-                        ⚡
-                    </div>
-
-                    <div>
-
-                        <span>
-                        03
-                    </span>
-
-                        <h3>
-                            Ethical Hacking
-                        </h3>
-
-                        <p>
-                            Learn responsible security testing and penetration testing concepts.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=data" class="career-card">
-
-                    <div class="career-icon blue">
-                        ◫
-                    </div>
-
-                    <div>
-
-                        <span>
-                        04
-                    </span>
-
-                        <h3>
-                            Data Analysis
-                        </h3>
-
-                        <p>
-                            Excel, SQL, visualization, statistics and insights.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=ai" class="career-card">
-
-                    <div class="career-icon violet">
-                        AI
-                    </div>
-
-                    <div>
-
-                        <span>
-                        05
-                    </span>
-
-                        <h3>
-                            AI & Machine Learning
-                        </h3>
-
-                        <p>
-                            Artificial intelligence, machine learning and intelligent applications.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=cloud" class="career-card">
-
-                    <div class="career-icon cyan">
-                        ☁
-                    </div>
-
-                    <div>
-
-                        <span>
-                        06
-                    </span>
-
-                        <h3>
-                            Cloud Computing
-                        </h3>
-
-                        <p>
-                            Cloud infrastructure, deployment and modern systems.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=networking" class="career-card">
-
-                    <div class="career-icon green">
-                        ◎
-                    </div>
-
-                    <div>
-
-                        <span>
-                        07
-                    </span>
-
-                        <h3>
-                            Networking
-                        </h3>
-
-                        <p>
-                            Networks, infrastructure, servers and connectivity.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=design" class="career-card">
-
-                    <div class="career-icon orange">
-                        ✦
-                    </div>
-
-                    <div>
-
-                        <span>
-                        08
-                    </span>
-
-                        <h3>
-                            UI/UX & Design
-                        </h3>
-
-                        <p>
-                            User experience, interfaces, graphics and creative design.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=business" class="career-card">
-
-                    <div class="career-icon gold">
-                        ◈
-                    </div>
-
-                    <div>
-
-                        <span>
-                        09
-                    </span>
-
-                        <h3>
-                            Business & Entrepreneurship
-                        </h3>
-
-                        <p>
-                            Business thinking, entrepreneurship and digital opportunities.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=marketing" class="career-card">
-
-                    <div class="career-icon pink">
-                        ◎
-                    </div>
-
-                    <div>
-
-                        <span>
-                        10
-                    </span>
-
-                        <h3>
-                            Digital Marketing
-                        </h3>
-
-                        <p>
-                            Social media, content, branding and online growth.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=it" class="career-card">
-
-                    <div class="career-icon slate">
-                        ⌘
-                    </div>
-
-                    <div>
-
-                        <span>
-                        11
-                    </span>
-
-                        <h3>
-                            IT Support
-                        </h3>
-
-                        <p>
-                            Computer support, troubleshooting and IT fundamentals.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-
-                <a href="/courses?category=mobile" class="career-card">
-
-                    <div class="career-icon teal">
-                        ▣
-                    </div>
-
-                    <div>
-
-                        <span>
-                        12
-                    </span>
-
-                        <h3>
-                            Mobile Development
-                        </h3>
-
-                        <p>
-                            Create Android, iOS and cross-platform applications.
-                        </p>
-
-                    </div>
-
-                    <strong>
-                    →
-                </strong>
-
-                </a>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-     COURSE SECTION
-===================================================== -->
-
-    <section class="section courses-section" id="courses">
-
-        <div class="container">
-
-
-            <div class="section-heading">
-
-                <div>
-
-                    <span class="section-label">
-                    LEARN SOMETHING NEW
-                </span>
-
-                    <h2>
-                        Courses built for your growth
-                    </h2>
-
-                    <p>
-                        Explore available courses and start developing practical skills.
-                    </p>
-
-                </div>
-
-                <a href="/courses" class="section-link">
-                Browse all courses →
-            </a>
-
-            </div>
-
-
-
-            <% if (!data || data.length === 0) { %>
-
-
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        📚
-                    </div>
-
-                    <h3>
-                        No courses available yet
-                    </h3>
-
-                    <p>
-                        New courses will appear here when they are published.
-                    </p>
-
-                    <a href="/courses" class="primary-button">
-                    Browse Courses
-                </a>
-
-                </div>
-
-
-                <% } else { %>
-
-
-                    <div class="course-grid">
-
-
-                        <% data.forEach(datum => { %>
-
-
-                            <article class="course-card">
-
-
-                                <a href="/courses/<%= datum._id %>/learn" class="course-image">
-
-                            <img
-                                src="/<%= datum.thumbnail %>"
-                                alt="<%= datum.title %>"
-                                loading="lazy"
-                            >
-
-
-                            <div class="course-overlay">
-
-                                <span>
-                                    <%= datum.category %>
-                                </span>
+                                <h2>
+                                    Turn knowledge into ability.
+                                </h2>
+
+                                <p>
+                                    Our learning approach focuses on useful knowledge and practical application.
+                                </p>
 
                             </div>
 
-                        </a>
+                        </div>
 
 
+                        <div class="benefit-grid">
 
-                                <div class="course-content">
+                            <div class="benefit">
 
+                                <div class="benefit-icon">
+                                    ✓
+                                </div>
 
-                                    <div class="course-top-row">
-
-                                        <span class="course-category">
-                                    <%= datum.category %>
-                                </span>
-
-                                        <span class="course-level">
-                                    <%= datum.level %>
-                                </span>
-
-                                    </div>
-
-
+                                <div>
 
                                     <h3>
-
-                                        <a href="/courses/<%= datum._id %>">
-                                            <%= datum.title %>
-                                        </a>
-
+                                        Practical Skills
                                     </h3>
 
-
-
-                                    <p class="course-description">
-
-                                        <%= datum.description &&
-                                datum.description.length > 110
-                                ? datum.description.substring(0, 110) + "..."
-                                : datum.description %>
-
+                                    <p>
+                                        Focus on useful knowledge and practical application.
                                     </p>
-
-
-
-                                    <div class="course-meta">
-
-                                        <span>
-                                    ✦ 4.9
-                                </span>
-
-                                        <span>
-                                    •
-                                </span>
-
-                                        <span>
-                                    XTP Academy
-                                </span>
-
-                                    </div>
-
-
-
-                                    <div class="course-footer">
-
-                                        <div>
-
-                                            <strong class="course-price">
-                                        Free
-                                    </strong>
-
-                                        </div>
-
-
-                                        <a href="/courses/<%= datum._id %>/learn" class="course-button">
-                                    Start Learning
-                                </a>
-
-                                    </div>
-
 
                                 </div>
 
-
-                            </article>
-
-
-                            <% }) %>
+                            </div>
 
 
-                    </div>
+                            <div class="benefit">
+
+                                <div class="benefit-icon">
+                                    ⚡
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        Learn at Your Pace
+                                    </h3>
+
+                                    <p>
+                                        Continue learning whenever you are ready.
+                                    </p>
+
+                                </div>
+
+                            </div>
 
 
-                    <% } %>
+                            <div class="benefit">
+
+                                <div class="benefit-icon">
+                                    ◈
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        Multiple Career Paths
+                                    </h3>
+
+                                    <p>
+                                        Explore technology, business and creative careers.
+                                    </p>
+
+                                </div>
+
+                            </div>
 
 
+                            <div class="benefit">
 
-                        <div class="center-button">
+                                <div class="benefit-icon">
+                                    ★
+                                </div>
 
-                            <a href="/courses" class="outline-button">
-                Explore Every Course →
-            </a>
+                                <div>
+
+                                    <h3>
+                                        Career Growth
+                                    </h3>
+
+                                    <p>
+                                        Build skills that prepare you for future opportunities.
+                                    </p>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
+                    </section>
 
-        </div>
 
-    </section>
+                    <section class="panel model-panel">
 
-
-
-    <!-- =====================================================
-     SKILLS
-===================================================== -->
-
-    <section class="skills-section">
-
-        <div class="container">
-
-
-            <div class="skills-heading">
-
-                <span class="section-label light-label">
-                SKILLS FOR THE FUTURE
-            </span>
-
-                <h2>
-                    Learn more than just programming.
-                </h2>
-
-                <p>
-                    Technology careers are bigger than writing code. Build a complete skill set for the modern digital world.
-                </p>
-
-            </div>
-
-
-
-            <div class="skills-list">
-
-
-                <span>
-                JavaScript
-            </span>
-
-                <span>
-                Python
-            </span>
-
-                <span>
-                Cybersecurity
-            </span>
-
-                <span>
-                Ethical Hacking
-            </span>
-
-                <span>
-                Data Analysis
-            </span>
-
-                <span>
-                SQL
-            </span>
-
-                <span>
-                Artificial Intelligence
-            </span>
-
-                <span>
-                Machine Learning
-            </span>
-
-                <span>
-                Cloud Computing
-            </span>
-
-                <span>
-                Networking
-            </span>
-
-                <span>
-                UI/UX
-            </span>
-
-                <span>
-                Graphics Design
-            </span>
-
-                <span>
-                Digital Marketing
-            </span>
-
-                <span>
-                IT Support
-            </span>
-
-                <span>
-                Mobile Development
-            </span>
-
-                <span>
-                Entrepreneurship
-            </span>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-     WHY XTP
-===================================================== -->
-
-    <section class="section why-section">
-
-        <div class="container why-container">
-
-
-            <div class="why-content">
-
-                <span class="section-label">
-                WHY XTP ACADEMY
-            </span>
-
-                <h2>
-                    Don't just consume knowledge.
-                    <span>
-                    Turn it into ability.
-                </span>
-                </h2>
-
-                <p>
-                    XTP Concept Academy is designed around practical learning. The goal is not simply to finish videos. The goal is to develop skills that you can use.
-                </p>
-
-
-
-                <div class="benefit-grid">
-
-
-                    <div class="benefit">
-
-                        <div class="benefit-icon">
-                            ✓
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Practical Skills
-                            </h3>
-
-                            <p>
-                                Focus on useful knowledge and practical application.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="benefit">
-
-                        <div class="benefit-icon">
-                            ⚡
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Learn at Your Pace
-                            </h3>
-
-                            <p>
-                                Learn whenever you are ready and continue from where you stopped.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="benefit">
-
-                        <div class="benefit-icon">
-                            ◈
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Multiple Career Paths
-                            </h3>
-
-                            <p>
-                                Explore technology, business, creative and digital careers.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="benefit">
-
-                        <div class="benefit-icon">
-                            ★
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Career Growth
-                            </h3>
-
-                            <p>
-                                Build skills that can help you prepare for future opportunities.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-
-
-            <div class="why-panel">
-
-
-                <div class="why-panel-header">
-
-                    <span>
-                    XTP LEARNING MODEL
-                </span>
-
-                    <div>
-                        ✦
-                    </div>
-
-                </div>
-
-
-                <div class="learning-model">
-
-                    <div class="model-number">
-                        01
-                    </div>
-
-                    <div>
-
-                        <strong>
-                        Learn
-                    </strong>
-
-                        <span>
-                        Understand the concept.
-                    </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="model-line"></div>
-
-
-                <div class="learning-model">
-
-                    <div class="model-number">
-                        02
-                    </div>
-
-                    <div>
-
-                        <strong>
-                        Practice
-                    </strong>
-
-                        <span>
-                        Test your understanding.
-                    </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="model-line"></div>
-
-
-                <div class="learning-model">
-
-                    <div class="model-number">
-                        03
-                    </div>
-
-                    <div>
-
-                        <strong>
-                        Build
-                    </strong>
-
-                        <span>
-                        Turn knowledge into projects.
-                    </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="model-line"></div>
-
-
-                <div class="learning-model">
-
-                    <div class="model-number">
-                        04
-                    </div>
-
-                    <div>
-
-                        <strong>
-                        Grow
-                    </strong>
-
-                        <span>
-                        Keep developing your career.
-                    </span>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-     HOW IT WORKS
-===================================================== -->
-
-    <section class="section process-section">
-
-        <div class="container">
-
-
-            <div class="center-heading">
-
-                <span class="section-label">
-                SIMPLE PROCESS
-            </span>
-
-                <h2>
-                    Your learning journey starts here.
-                </h2>
-
-                <p>
-                    Go from discovering a skill to building your knowledge in a few simple steps.
-                </p>
-
-            </div>
-
-
-
-            <div class="process-grid">
-
-
-                <div class="process-card">
-
-                    <span class="process-number">
-                    01
-                </span>
-
-                    <div class="process-icon">
-                        ⌕
-                    </div>
-
-                    <h3>
-                        Choose a Skill
-                    </h3>
-
-                    <p>
-                        Explore different career areas and find something you want to learn.
-                    </p>
-
-                </div>
-
-
-
-                <div class="process-card">
-
-                    <span class="process-number">
-                    02
-                </span>
-
-                    <div class="process-icon">
-                        📚
-                    </div>
-
-                    <h3>
-                        Learn
-                    </h3>
-
-                    <p>
-                        Follow lessons and develop your understanding of the subject.
-                    </p>
-
-                </div>
-
-
-
-                <div class="process-card">
-
-                    <span class="process-number">
-                    03
-                </span>
-
-                    <div class="process-icon">
-                        ⚙
-                    </div>
-
-                    <h3>
-                        Practice
-                    </h3>
-
-                    <p>
-                        Apply what you learn through exercises and practical activities.
-                    </p>
-
-                </div>
-
-
-
-                <div class="process-card">
-
-                    <span class="process-number">
-                    04
-                </span>
-
-                    <div class="process-icon">
-                        🚀
-                    </div>
-
-                    <h3>
-                        Build Your Future
-                    </h3>
-
-                    <p>
-                        Continue improving your skills and prepare for future opportunities.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-     FINAL CTA
-===================================================== -->
-
-    <section class="final-cta-section">
-
-        <div class="container">
-
-            <div class="final-cta">
-
-
-                <div class="cta-content">
-
-                    <span class="section-label light-label">
-                    YOUR FUTURE STARTS WITH A SKILL
-                </span>
-
-                    <h2>
-                        What will you learn next?
-                    </h2>
-
-                    <p>
-                        Whether you want to become a developer, cybersecurity professional, data analyst, designer, cloud engineer, entrepreneur or digital professional, start building today.
-                    </p>
-
-                </div>
-
-
-
-                <div class="cta-actions">
-
-                    <a href="/courses" class="cta-primary">
-                    Explore Courses →
-                </a>
-
-                    <a href="/categories" class="cta-secondary">
-                    Explore Career Areas
-                </a>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-     FOOTER
-===================================================== -->
-
-    <footer class="footer">
-
-        <div class="container">
-
-
-            <div class="footer-grid">
-
-
-                <div class="footer-brand">
-
-
-                    <a href="/" class="brand footer-logo">
-
-                        <div class="brand-logo">
-                            X
-                        </div>
-
-                        <div class="brand-text">
-
-                            <strong>
-                            XTP
-                        </strong>
+                        <div class="model-header">
 
                             <span>
-                            CONCEPT ACADEMY
+                            XTP LEARNING MODEL
                         </span>
+
+                            <div>
+                                ✦
+                            </div>
 
                         </div>
 
-                    </a>
+
+                        <div class="model-step">
+
+                            <span>01</span>
+
+                            <div>
+
+                                <strong>Learn</strong>
+
+                                <small>
+                                Understand the concept.
+                            </small>
+
+                            </div>
+
+                        </div>
 
 
-                    <p>
-                        Learn practical technology, digital and business skills. Build knowledge. Create opportunities.
-                    </p>
+                        <div class="model-line"></div>
 
 
-                    <div class="footer-badge">
-                        Learn • Build • Grow
+                        <div class="model-step">
+
+                            <span>02</span>
+
+                            <div>
+
+                                <strong>Practice</strong>
+
+                                <small>
+                                Test your understanding.
+                            </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="model-line"></div>
+
+
+                        <div class="model-step">
+
+                            <span>03</span>
+
+                            <div>
+
+                                <strong>Build</strong>
+
+                                <small>
+                                Turn knowledge into projects.
+                            </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="model-line"></div>
+
+
+                        <div class="model-step">
+
+                            <span>04</span>
+
+                            <div>
+
+                                <strong>Grow</strong>
+
+                                <small>
+                                Keep developing your career.
+                            </small>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <!-- =================================================
+                 PROCESS
+            ================================================== -->
+
+                <section class="panel process-panel">
+
+                    <div class="panel-header centered">
+
+                        <div>
+
+                            <span class="panel-label">
+                            SIMPLE PROCESS
+                        </span>
+
+                            <h2>
+                                Your learning journey starts here.
+                            </h2>
+
+                            <p>
+                                Go from discovering a skill to building your knowledge in four simple steps.
+                            </p>
+
+                        </div>
+
                     </div>
 
 
-                </div>
+                    <div class="process-grid">
 
 
+                        <div class="process-card">
 
-                <div class="footer-column">
+                            <span>01</span>
 
-                    <h3>
-                        Platform
-                    </h3>
+                            <div class="process-icon">
+                                ⌕
+                            </div>
 
-                    <a href="/">
-                    Home
-                </a>
+                            <h3>
+                                Choose a Skill
+                            </h3>
 
-                    <a href="/courses">
-                    Courses
-                </a>
+                            <p>
+                                Explore different career areas and find something you want to learn.
+                            </p>
 
-                    <a href="/categories">
-                    Categories
-                </a>
-
-                    <a href="/about">
-                    About XTP
-                </a>
-
-                </div>
+                        </div>
 
 
+                        <div class="process-card">
 
-                <div class="footer-column">
+                            <span>02</span>
 
-                    <h3>
+                            <div class="process-icon">
+                                📚
+                            </div>
+
+                            <h3>
+                                Learn
+                            </h3>
+
+                            <p>
+                                Follow lessons and develop your understanding.
+                            </p>
+
+                        </div>
+
+
+                        <div class="process-card">
+
+                            <span>03</span>
+
+                            <div class="process-icon">
+                                ⚙
+                            </div>
+
+                            <h3>
+                                Practice
+                            </h3>
+
+                            <p>
+                                Apply what you learn through practical activities.
+                            </p>
+
+                        </div>
+
+
+                        <div class="process-card">
+
+                            <span>04</span>
+
+                            <div class="process-icon">
+                                🚀
+                            </div>
+
+                            <h3>
+                                Build Your Future
+                            </h3>
+
+                            <p>
+                                Continue improving your skills and prepare for opportunities.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                 CTA
+            ================================================== -->
+
+                <section class="final-cta">
+
+                    <div>
+
+                        <span class="panel-label light">
+                        YOUR FUTURE STARTS WITH A SKILL
+                    </span>
+
+                        <h2>
+                            What will you learn next?
+                        </h2>
+
+                        <p>
+                            Start building practical skills today and prepare yourself for future opportunities.
+                        </p>
+
+                    </div>
+
+
+                    <div class="cta-actions">
+
+                        <a href="/courses" class="cta-primary">
+                        Explore Courses →
+                    </a>
+
+                        <a href="/categories" class="cta-secondary">
                         Career Areas
-                    </h3>
+                    </a>
 
-                    <a href="/courses?category=development">
-                    Development
-                </a>
+                    </div>
 
-                    <a href="/courses?category=cybersecurity">
-                    Cybersecurity
-                </a>
-
-                    <a href="/courses?category=data">
-                    Data & AI
-                </a>
-
-                    <a href="/courses?category=cloud">
-                    Cloud & Networking
-                </a>
-
-                </div>
+                </section>
 
 
+                <!-- FOOTER -->
 
-                <div class="footer-column">
+                <footer class="footer">
 
-                    <h3>
-                        More Skills
-                    </h3>
+                    <div>
 
-                    <a href="/courses?category=design">
-                    UI/UX & Design
-                </a>
+                        <strong>
+                        XTP Concept Academy
+                    </strong>
 
-                    <a href="/courses?category=marketing">
-                    Digital Marketing
-                </a>
+                        <p>
+                            Learn. Build. Grow.
+                        </p>
 
-                    <a href="/courses?category=business">
-                    Business
-                </a>
+                    </div>
 
-                    <a href="/courses?category=it">
-                    IT Support
-                </a>
+                    <div>
 
-                </div>
+                        <a href="/about">
+                        About
+                    </a>
 
+                        <a href="/contact">
+                        Contact
+                    </a>
 
+                        <a href="/privacy">
+                        Privacy
+                    </a>
 
-                <div class="footer-column">
+                        <a href="/terms">
+                        Terms
+                    </a>
 
-                    <h3>
-                        Support
-                    </h3>
+                    </div>
 
-                    <a href="/about">
-                    About Us
-                </a>
+                    <span>
+                    © <%= new Date().getFullYear() %> XTP Concept Academy. All Rights Reserved.
+                </span>
 
-                    <a href="/contact">
-                    Contact
-                </a>
-
-                    <a href="/privacy">
-                    Privacy Policy
-                </a>
-
-                    <a href="/terms">
-                    Terms & Conditions
-                </a>
-
-                </div>
+                </footer>
 
 
             </div>
 
+        </main>
 
-
-            <div class="footer-bottom">
-
-                <p>
-
-                    ©
-                    <%= new Date().getFullYear() %>
-                        XTP Concept Academy. All Rights Reserved.
-
-                </p>
-
-                <p>
-                    Learn. Build. Grow.
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </footer>
-
+    </div>
 
 
     <script src="/js/studenthome.js"></script>

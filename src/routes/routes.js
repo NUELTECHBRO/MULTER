@@ -47,12 +47,23 @@ router.get(
     "/courses",
     coursesController
 );
-
-/*                                                                                 
---------------------------------------------------------------------------         
-ADMIN COURSE UPLOAD                                                                
---------------------------------------------------------------------------         
-*/
+router.get("/terms", (req, res) => {
+    res.render("others/terms")
+});
+router.get("/privacy", (req, res) => {
+    res.render("others/privacy")
+});
+router.get("/contact", (req, res) => {
+    res.render("others/contact")
+});
+router.get("/about", (req, res) => {
+        res.render("others/about")
+    })
+    /*                                                                                 
+    --------------------------------------------------------------------------         
+    ADMIN COURSE UPLOAD                                                                
+    --------------------------------------------------------------------------         
+    */
 
 router.get(
     "/admin/courses/upload",

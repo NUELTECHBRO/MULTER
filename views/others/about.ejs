@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>About Academy</title>
+
+    <link rel="stylesheet" href="/css/about.css">
+
+
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+                <div class="brand-logo">X</div>
+
+                <div class="brand-text">
+                    <h2>XTP Academy</h2>
+                    <span>LEARN • BUILD • GROW</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <div class="nav-section">
+                    <span class="nav-title">LEARNING</span>
+
+                    <a href="/" class="nav-item">
+                        <span class="nav-icon">⌂</span>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="/courses" class="nav-item">
+                        <span class="nav-icon">▣</span>
+                        <span>Courses</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-title">ACCOUNT</span>
+
+                    <a href="/about" class="nav-item active">
+                        <span class="nav-icon">ⓘ</span>
+                        <span>About Academy</span>
+                    </a>
+
+                    <a href="/contact" class="nav-item">
+                        <span class="nav-icon">✉</span>
+                        <span>Support</span>
+                    </a>
+                </div>
+
+            </nav>
+
+            <div class="sidebar-support">
+                <div class="support-icon">?</div>
+
+                <div>
+                    <strong>Need Help?</strong>
+                    <p>We're here to help you.</p>
+                </div>
+
+                <a href="/contact">Contact Us</a>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="/logout" class="logout-link">
+                    <span>↪</span> Logout
+                </a>
+
+                <p>© 2026 XTP Academy</p>
+            </div>
+
+        </aside>
+
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <button class="menu-toggle" id="menuToggle">
+            ☰
+        </button>
+
+                <div class="breadcrumb">
+                    <span>Academy</span>
+                    <b>/</b>
+                    <strong>About</strong>
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="profile">
+                        <div class="profile-avatar">
+                            <%= user && user.name ? user.name.charAt(0).toUpperCase() : "U" %>
+                        </div>
+
+                        <div class="profile-info">
+                            <strong>
+                        <%= user && user.name ? user.name : "Student" %>
+                    </strong>
+
+                            <span>Student</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <section class="page-content">
+
+                <div class="page-heading">
+
+                    <div>
+                        <span class="section-label">ABOUT THE ACADEMY</span>
+
+                        <h1>Learn. Build. Grow.</h1>
+
+                        <p>
+                            Discover more about XTP Academy and our mission to help students develop practical technology skills.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <section class="hero-card">
+
+                    <div class="hero-content">
+
+                        <span class="hero-label">WELCOME TO XTP ACADEMY</span>
+
+                        <h2>
+                            Building the next generation of
+                            <span>technology creators.</span>
+                        </h2>
+
+                        <p>
+                            XTP Academy is a technology learning platform focused on helping students gain practical skills in programming, web development and modern technology.
+                        </p>
+
+                        <p>
+                            Our goal is simple: make technology education easier to understand, practical to learn and useful in the real world.
+                        </p>
+
+                        <a href="/courses" class="primary-btn">
+                    Explore Courses
+                    <span>→</span>
+                </a>
+
+                    </div>
+
+                    <div class="hero-visual">
+
+                        <div class="visual-card card-one">
+                            <span>01</span>
+                            <strong>Learn</strong>
+                            <p>Build strong technology foundations.</p>
+                        </div>
+
+                        <div class="visual-card card-two">
+                            <span>02</span>
+                            <strong>Build</strong>
+                            <p>Turn your knowledge into real projects.</p>
+                        </div>
+
+                        <div class="visual-card card-three">
+                            <span>03</span>
+                            <strong>Grow</strong>
+                            <p>Develop skills for your future.</p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section class="info-grid">
+
+                    <article class="info-card">
+
+                        <div class="info-icon">◎</div>
+
+                        <h3>Our Mission</h3>
+
+                        <p>
+                            To provide accessible and practical technology education that helps learners understand concepts, build projects and become confident creators.
+                        </p>
+
+                    </article>
+
+
+                    <article class="info-card">
+
+                        <div class="info-icon">◆</div>
+
+                        <h3>Our Vision</h3>
+
+                        <p>
+                            To create a community where young people can learn technology, discover their potential and use their skills to solve real-world problems.
+                        </p>
+
+                    </article>
+
+
+                    <article class="info-card">
+
+                        <div class="info-icon">✓</div>
+
+                        <h3>What We Teach</h3>
+
+                        <p>
+                            Our learning content covers programming, web development, frontend technologies and other practical digital skills.
+                        </p>
+
+                    </article>
+
+                </section>
+
+
+                <section class="values-section">
+
+                    <div class="section-header">
+
+                        <span class="section-label">OUR VALUES</span>
+
+                        <h2>What we believe in</h2>
+
+                        <p>
+                            The principles that guide the way we teach and build our academy.
+                        </p>
+
+                    </div>
+
+
+                    <div class="values-grid">
+
+                        <div class="value-item">
+                            <div class="value-number">01</div>
+                            <div>
+                                <h3>Practical Learning</h3>
+                                <p>
+                                    We believe students learn best by building and practicing what they have been taught.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="value-item">
+                            <div class="value-number">02</div>
+                            <div>
+                                <h3>Consistency</h3>
+                                <p>
+                                    Technology skills grow through continuous practice, curiosity and improvement.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="value-item">
+                            <div class="value-number">03</div>
+                            <div>
+                                <h3>Creativity</h3>
+                                <p>
+                                    We encourage learners to experiment, create and develop their own ideas.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="value-item">
+                            <div class="value-number">04</div>
+                            <div>
+                                <h3>Growth</h3>
+                                <p>
+                                    Every project is an opportunity to learn something new and become better.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section class="cta-card">
+
+                    <div>
+                        <span class="section-label light-label">START LEARNING</span>
+
+                        <h2>Ready to build your future with technology?</h2>
+
+                        <p>
+                            Explore our courses and start developing practical technology skills today.
+                        </p>
+                    </div>
+
+                    <a href="/courses" class="cta-btn">
+                View Courses →
+            </a>
+
+                </section>
+
+
+                <footer class="page-footer">
+
+                    <div>
+                        <strong>XTP Academy</strong>
+                        <span>Learn • Build • Grow</span>
+                    </div>
+
+                    <div class="footer-links">
+                        <a href="/terms">Terms</a>
+                        <a href="/privacy">Privacy</a>
+                        <a href="/contact">Support</a>
+                    </div>
+
+                    <p>© 2026 XTP Academy. All rights reserved.</p>
+
+                </footer>
+
+            </section>
+
+        </main>
+
+
+    </div>
+
+    <script src="/js/about.js"></script>
+
+</body>
+
+</html>

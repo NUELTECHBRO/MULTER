@@ -17,410 +17,495 @@
 <body>
 
 
-    <!-- =========================
-     ANNOUNCEMENT
-========================== -->
+    <div class="student-layout">
 
-    <div class="announcement">
-        <span>Learn practical skills. Build real projects. Grow with XTP Academy.</span>
-    </div>
+        <aside class="sidebar" id="sidebar">
 
+            <div class="sidebar-brand">
 
-    <!-- =========================
-     NAVBAR
-========================== -->
-
-    <nav class="navbar">
-
-        <div class="navbar-inner">
-
-            <a href="/" class="brand">
-                <span class="brand-mark">X</span>
-                <span>XTP Academy</span>
-            </a>
-
-
-            <div class="nav-search">
-                <form action="/courses" method="GET">
-                    <input type="search" name="search" placeholder="Search courses..." value="<%= typeof search !== 'undefined' ? search : '' %>">
-                </form>
-            </div>
-
-
-            <div class="nav-links">
-                <a href="/">Home</a>
-                <a href="/courses" class="active">Courses</a>
-                <a href="/dashboard">Dashboard</a>
-            </div>
-
-
-            <div class="student-account">
-
-                <div class="student-avatar">
-                    <%= user.name ? user.name.charAt(0).toUpperCase() : "S" %>
-                </div>
-
-                <span class="student-name">
-                <%= user.name %>
-            </span>
-
-                <a href="/logout" class="logout-btn">
-                Logout
-            </a>
-
-            </div>
-
-        </div>
-
-    </nav>
-
-
-    <!-- =========================
-     PAGE HEADER
-========================== -->
-
-    <main>
-
-        <section class="courses-header">
-
-            <div class="courses-header-inner">
-
-                <div class="header-content">
-
-                    <div class="page-label">
-                        <span></span> XTP LEARNING LIBRARY
-                    </div>
-
-                    <h1>
-                        Explore courses<br>
-                        <span>and start learning.</span>
-                    </h1>
-
-                    <p>
-                        Browse our available courses and choose a skill you want to develop. Learn at your own pace and build practical knowledge.
-                    </p>
-
-                </div>
-
-
-                <div class="course-count-box">
-
-                    <strong>
-                    <%= data && data.length ? data.length : 0 %>
-                </strong>
-
-                    <span>
-                    Available Courses
-                </span>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-         COURSE CONTROLS
-    ========================== -->
-
-        <section class="course-library">
-
-            <div class="library-top">
-
-                <div>
-
-                    <span class="library-label">
-                    COURSE LIBRARY
-                </span>
-
-                    <h2>
-                        All available courses
-                    </h2>
-
-                </div>
-
-
-                <div class="library-sort">
-
-                    <label for="courseSort">
-                    Sort
-                </label>
-
-                    <select id="courseSort">
-                    <option value="default">Recommended</option>
-                    <option value="az">Name A-Z</option>
-                    <option value="za">Name Z-A</option>
-                </select>
-
-                </div>
-
-            </div>
-
-
-            <!-- =========================
-             FILTERS
-        ========================== -->
-
-            <div class="filters">
-
-                <button type="button" class="filter-btn active" data-filter="all">
-                All Courses
-            </button>
-
-                <button type="button" class="filter-btn" data-filter="beginner">
-                Beginner
-            </button>
-
-                <button type="button" class="filter-btn" data-filter="intermediate">
-                Intermediate
-            </button>
-
-                <button type="button" class="filter-btn" data-filter="advanced">
-                Advanced
-            </button>
-
-            </div>
-
-
-            <!-- =========================
-             SEARCH RESULT
-        ========================== -->
-
-            <div class="result-bar">
-
-                <span>
-                Showing
-                <strong id="visibleCourseCount">
-                    <%= data && data.length ? data.length : 0 %>
-                </strong>
-                courses
-            </span>
-
-                <button type="button" id="clearFilters" class="clear-filter">
-                Clear filters
-            </button>
-
-            </div>
-
-
-            <!-- =========================
-             COURSES GRID
-        ========================== -->
-
-            <% if (data && data.length > 0) { %>
-
-                <div class="courses-grid" id="coursesGrid">
-
-                    <% data.forEach((course, index) => { %>
-
-                        <article class="course-card" data-title="<%= course.title %>" data-category="<%= course.category %>" data-level="<%= course.level %>">
-
-                            <!-- Thumbnail -->
-
-                            <div class="course-thumbnail">
-
-                                <img src="/<%= course.thumbnail %>" alt="<%= course.title %>">
-
-                                <div class="free-badge">
-                                    FREE
-                                </div>
-
-                                <div class="course-number">
-                                    <%= String(index + 1).padStart(2, "0") %>
-                                </div>
-
-                            </div>
-
-
-                            <!-- Content -->
-
-                            <div class="course-content">
-
-                                <div class="course-meta">
-
-                                    <span class="course-category">
-                                    <%= course.category || "General" %>
-                                </span>
-
-                                    <% if (course.level) { %>
-
-                                        <span class="course-level">
-                                        <%= course.level %>
-                                    </span>
-
-                                        <% } %>
-
-                                </div>
-
-
-                                <h3 class="course-title">
-                                    <%= course.title %>
-                                </h3>
-
-
-                                <p class="course-description">
-                                    <%= course.description || "Learn practical skills and build your knowledge with this course." %>
-                                </p>
-
-
-                                <div class="course-footer">
-
-                                    <span class="course-access">
-                                    Free access
-                                </span>
-
-                                    <a href="/courses/<%= course._id %>/learn" class="start-course">
-                                    Start learning
-                                    <span>→</span>
-                                </a>
-
-                                </div>
-
-                            </div>
-
-                        </article>
-
-                        <% }) %>
-
-                </div>
-
-
-                <!-- =========================
-                 NO FILTER RESULTS
-            ========================== -->
-
-                <div class="filter-empty" id="filterEmpty" style="display: none;">
-
-                    <div class="empty-icon">
-                        ⌕
-                    </div>
-
-                    <h3>
-                        No matching courses
-                    </h3>
-
-                    <p>
-                        We couldn't find a course matching your current filters.
-                    </p>
-
-                    <button type="button" id="resetSearch">
-                    Show all courses
-                </button>
-
-                </div>
-
-                <% } else { %>
-
-
-                    <!-- =========================
-                 NO COURSES AVAILABLE
-            ========================== -->
-
-                    <div class="empty-state">
-
-                        <div class="empty-icon">
-                            +
-                        </div>
-
-                        <h2>
-                            No courses available yet
-                        </h2>
-
-                        <p>
-                            New learning content will appear here when courses are published.
-                        </p>
-
-                        <a href="/" class="empty-home-btn">
-                    Back to dashboard
+                <a href="/" class="brand">
+                    <span class="brand-mark">X</span>
+                    <span>XTP Academy</span>
                 </a>
 
-                    </div>
-
-                    <% } %>
+            </div>
 
 
-                        <!-- =========================
-             LEARNING NOTE
-        ========================== -->
+            <div class="sidebar-section">
 
-                        <div class="learning-note">
+                <span class="sidebar-title">
+                LEARNING
+            </span>
 
-                            <div class="note-icon">
-                                ✓
-                            </div>
+                <a href="/" class="sidebar-link">
+                    <span class="sidebar-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
 
-                            <div>
-
-                                <strong>
-                    Learn at your own pace
-                </strong>
-
-                                <p>
-                                    Your available courses are free to access. Choose a course and start building your skills.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-     FOOTER
-========================== -->
-
-    <footer>
-
-        <div class="footer-inner">
-
-            <div class="footer-main">
-
-                <div class="footer-brand">
-
-                    <div class="brand footer-brand-logo">
-                        <span class="brand-mark">X</span>
-                        <span>XTP Academy</span>
-                    </div>
-
-                    <p>
-                        Practical learning for students who want to build useful skills and create real things.
-                    </p>
-
-                </div>
-
-
-                <div class="footer-links">
-
-                    <div class="footer-column">
-
-                        <h4>Platform</h4>
-
-                        <a href="/">Home</a>
-                        <a href="/courses">Courses</a>
-                        <a href="/dashboard">Dashboard</a>
-
-                    </div>
-
-
-                    <div class="footer-column">
-
-                        <h4>Account</h4>
-
-                        <a href="/dashboard">My Dashboard</a>
-                        <a href="/logout">Logout</a>
-
-                    </div>
-
-                </div>
+                <a href="/courses" class="sidebar-link active">
+                    <span class="sidebar-icon">▣</span>
+                    <span>Courses</span>
+                </a>
 
             </div>
 
 
-            <div class="footer-bottom">
+            <div class="sidebar-section">
+
+                <span class="sidebar-title">
+                ACCOUNT
+            </span>
+
+                <a href="/about" class="sidebar-link">
+                    <span class="sidebar-icon">ⓘ</span>
+                    <span>About Academy</span>
+                </a>
+
+                <a href="/contact" class="sidebar-link">
+                    <span class="sidebar-icon">?</span>
+                    <span>Support</span>
+                </a>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-support">
+
+                    <div class="support-icon">
+                        ?
+                    </div>
+
+                    <div>
+                        <strong>Need help?</strong>
+                        <span>Contact our support team.</span>
+                    </div>
+
+                </div>
+
+
+                <a href="/logout" class="sidebar-logout">
+                    <span>↪</span>
+                    <span>Logout</span>
+                </a>
+
+
+                <div class="sidebar-footer">
+                    XTP Academy
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button class="menu-toggle" id="menuToggle">
+                    ☰
+                </button>
+
+                    <div class="breadcrumb">
+                        Student Portal <span>/</span> Courses
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <form action="/courses" method="GET" class="topbar-search">
+
+                        <span>⌕</span>
+
+                        <input type="search" name="search" placeholder="Search courses..." value="<%= typeof search !== 'undefined' ? search : '' %>">
+
+                    </form>
+
+
+                    <div class="topbar-profile">
+
+                        <div class="profile-avatar">
+                            <%= user.name ? user.name.charAt(0).toUpperCase() : "S" %>
+                        </div>
+
+                        <div class="profile-info">
+
+                            <strong>
+                            <%= user.name %>
+                        </strong>
+
+                            <span>
+                            Student
+                        </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <div class="dashboard-content">
+
+
+                <section class="page-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                        XTP LEARNING LIBRARY
+                    </span>
+
+                        <h1>
+                            Explore courses
+                        </h1>
+
+                        <p>
+                            Choose a course, learn practical skills and build your knowledge at your own pace.
+                        </p>
+
+                    </div>
+
+
+                    <div class="course-count-card">
+
+                        <span class="count-number">
+                        <%= data && data.length ? data.length : 0 %>
+                    </span>
+
+                        <span class="count-label">
+                        Available Courses
+                    </span>
+
+                    </div>
+
+                </section>
+
+
+                <section class="content-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="panel-label">
+                            COURSE LIBRARY
+                        </span>
+
+                            <h2>
+                                All available courses
+                            </h2>
+
+                        </div>
+
+
+                        <div class="sort-box">
+
+                            <label for="courseSort">
+                            Sort
+                        </label>
+
+                            <select id="courseSort">
+
+                            <option value="default">
+                                Recommended
+                            </option>
+
+                            <option value="az">
+                                Name A-Z
+                            </option>
+
+                            <option value="za">
+                                Name Z-A
+                            </option>
+
+                        </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <form action="/courses" method="GET" class="course-search">
+
+                        <div class="search-input-wrapper">
+
+                            <span>⌕</span>
+
+                            <input type="search" name="search" placeholder="Search for a course..." value="<%= typeof search !== 'undefined' ? search : '' %>">
+
+                        </div>
+
+                        <button type="submit">
+                        Search
+                    </button>
+
+                    </form>
+
+
+                    <div class="filters">
+
+                        <button type="button" class="filter-btn active" data-filter="all">
+                        All Courses
+                    </button>
+
+                        <button type="button" class="filter-btn" data-filter="beginner">
+                        Beginner
+                    </button>
+
+                        <button type="button" class="filter-btn" data-filter="intermediate">
+                        Intermediate
+                    </button>
+
+                        <button type="button" class="filter-btn" data-filter="advanced">
+                        Advanced
+                    </button>
+
+                    </div>
+
+
+                    <div class="result-bar">
+
+                        <span>
+                        Showing
+
+                        <strong id="visibleCourseCount">
+                            <%= data && data.length ? data.length : 0 %>
+                        </strong>
+
+                        courses
+                    </span>
+
+                        <button type="button" id="clearFilters" class="clear-filter">
+                        Clear filters
+                    </button>
+
+                    </div>
+
+
+                    <% if (data && data.length > 0) { %>
+
+                        <div class="courses-grid" id="coursesGrid">
+
+                            <% data.forEach((course, index) => { %>
+
+                                <article class="course-card" data-title="<%= course.title %>" data-category="<%= course.category %>" data-level="<%= course.level %>">
+
+                                    <div class="course-thumbnail">
+
+                                        <img src="/<%= course.thumbnail %>" alt="<%= course.title %>">
+
+                                        <div class="free-badge">
+                                            FREE
+                                        </div>
+
+                                        <div class="course-number">
+                                            <%= String(index + 1).padStart(2, "0") %>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="course-content">
+
+                                        <div class="course-meta">
+
+                                            <span class="course-category">
+                                            <%= course.category || "General" %>
+                                        </span>
+
+                                            <% if (course.level) { %>
+
+                                                <span class="course-level">
+                                                <%= course.level %>
+                                            </span>
+
+                                                <% } %>
+
+                                        </div>
+
+
+                                        <h3>
+                                            <%= course.title %>
+                                        </h3>
+
+
+                                        <p class="course-description">
+                                            <%= course.description || "Learn practical skills and build your knowledge with this course." %>
+                                        </p>
+
+
+                                        <div class="course-footer">
+
+                                            <span class="course-access">
+                                            Free access
+                                        </span>
+
+                                            <a href="/courses/<%= course._id %>/learn" class="start-course">
+                                            Start learning
+                                            <span>→</span>
+                                        </a>
+
+                                        </div>
+
+                                    </div>
+
+                                </article>
+
+                                <% }) %>
+
+                        </div>
+
+
+                        <div class="filter-empty" id="filterEmpty" style="display: none;">
+
+                            <div class="empty-icon">
+                                ⌕
+                            </div>
+
+                            <h3>
+                                No matching courses
+                            </h3>
+
+                            <p>
+                                We couldn't find a course matching your current filters.
+                            </p>
+
+                            <button type="button" id="resetSearch">
+                            Show all courses
+                        </button>
+
+                        </div>
+
+
+                        <% } else { %>
+
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    +
+                                </div>
+
+                                <h2>
+                                    No courses available yet
+                                </h2>
+
+                                <p>
+                                    New learning content will appear here when courses are published.
+                                </p>
+
+                                <a href="/" class="empty-home-btn">
+                            Back to dashboard
+                        </a>
+
+                            </div>
+
+
+                            <% } %>
+
+
+                                <div class="learning-note">
+
+                                    <div class="note-icon">
+                                        ✓
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                            Learn at your own pace
+                        </strong>
+
+                                        <p>
+                                            Choose a course and start building practical skills with XTP Academy.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                </section>
+
+
+                <section class="info-grid">
+
+                    <div class="info-card">
+
+                        <div class="info-card-icon">
+                            01
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Choose a skill
+                            </h3>
+
+                            <p>
+                                Select a course that matches what you want to learn.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <div class="info-card-icon">
+                            02
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Learn practically
+                            </h3>
+
+                            <p>
+                                Follow lessons and develop useful technical knowledge.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <div class="info-card-icon">
+                            03
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Build your skills
+                            </h3>
+
+                            <p>
+                                Practice what you learn and keep improving.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <footer class="dashboard-footer">
 
                 <span>
                 © <%= new Date().getFullYear() %> XTP Academy
@@ -430,16 +515,12 @@
                 Learn. Build. Grow.
             </span>
 
-            </div>
+            </footer>
 
-        </div>
+        </main>
 
-    </footer>
+    </div>
 
-
-    <!-- =========================
-     JAVASCRIPT
-========================== -->
 
     <script src="/js/courses.js"></script>
 

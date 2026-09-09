@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Contact Support</title>
+
+    <link rel="stylesheet" href="/css/contact.css">
+
+
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="brand-logo">X</div>
+
+                <div class="brand-text">
+                    <h2>XTP Academy</h2>
+                    <span>LEARN • BUILD • GROW</span>
+                </div>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <div class="nav-section">
+
+                    <span class="nav-title">LEARNING</span>
+
+                    <a href="/" class="nav-item">
+                        <span class="nav-icon">⌂</span>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="/courses" class="nav-item">
+                        <span class="nav-icon">▣</span>
+                        <span>Courses</span>
+                    </a>
+
+                </div>
+
+
+                <div class="nav-section">
+
+                    <span class="nav-title">ACCOUNT</span>
+
+                    <a href="/about" class="nav-item">
+                        <span class="nav-icon">ⓘ</span>
+                        <span>About Academy</span>
+                    </a>
+
+                    <a href="/contact" class="nav-item active">
+                        <span class="nav-icon">✉</span>
+                        <span>Support</span>
+                    </a>
+
+                </div>
+
+            </nav>
+
+
+            <div class="sidebar-support">
+
+                <div class="support-icon">?</div>
+
+                <div>
+                    <strong>Need Help?</strong>
+                    <p>We're here to help you.</p>
+                </div>
+
+                <a href="mailto:chinemee@gmail.com">
+            Email Support
+        </a>
+
+            </div>
+
+
+            <div class="sidebar-footer">
+
+                <a href="/logout" class="logout-link">
+                    <span>↪</span> Logout
+                </a>
+
+                <p>© 2026 XTP Academy</p>
+
+            </div>
+
+        </aside>
+
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <button class="menu-toggle" id="menuToggle">
+            ☰
+        </button>
+
+                <div class="breadcrumb">
+
+                    <span>Academy</span>
+                    <b>/</b>
+                    <strong>Contact</strong>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <div class="profile">
+
+                        <div class="profile-avatar">
+                            <%= user && user.name ? user.name.charAt(0).toUpperCase() : "U" %>
+                        </div>
+
+                        <div class="profile-info">
+
+                            <strong>
+                        <%= user && user.name ? user.name : "Student" %>
+                    </strong>
+
+                            <span>Student</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <section class="page-content">
+
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                    SUPPORT CENTER
+                </span>
+
+                        <h1>How can we help?</h1>
+
+                        <p>
+                            Have a question, need assistance or want to learn more? Get in touch with the XTP Academy team.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <section class="contact-grid">
+
+
+                    <div class="contact-main">
+
+                        <div class="contact-card">
+
+                            <div class="contact-card-header">
+
+                                <span class="section-label">
+                            GET IN TOUCH
+                        </span>
+
+                                <h2>Contact our team</h2>
+
+                                <p>
+                                    Reach out to us using any of the contact options below. We will be happy to assist you.
+                                </p>
+
+                            </div>
+
+
+                            <div class="contact-methods">
+
+
+                                <a href="mailto:chinemee@gmail.com" class="contact-method">
+
+                                    <div class="method-icon">
+                                        ✉
+                                    </div>
+
+                                    <div class="method-content">
+
+                                        <span>Email</span>
+
+                                        <strong>
+                                    chinemee@gmail.com
+                                </strong>
+
+                                        <small>
+                                    Send us an email
+                                </small>
+
+                                    </div>
+
+                                    <div class="method-arrow">
+                                        →
+                                    </div>
+
+                                </a>
+
+
+                                <a href="tel:08036299799" class="contact-method">
+
+                                    <div class="method-icon">
+                                        ☎
+                                    </div>
+
+                                    <div class="method-content">
+
+                                        <span>Phone</span>
+
+                                        <strong>
+                                    08036299799
+                                </strong>
+
+                                        <small>
+                                    Call our support team
+                                </small>
+
+                                    </div>
+
+                                    <div class="method-arrow">
+                                        →
+                                    </div>
+
+                                </a>
+
+
+                                <div class="contact-method">
+
+                                    <div class="method-icon">
+                                        ⏱
+                                    </div>
+
+                                    <div class="method-content">
+
+                                        <span>Support</span>
+
+                                        <strong>
+                                    Student Assistance
+                                </strong>
+
+                                        <small>
+                                    Questions about courses and your account
+                                </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="faq-card">
+
+                            <div class="faq-heading">
+
+                                <span class="section-label">
+                            QUICK HELP
+                        </span>
+
+                                <h2>Frequently asked questions</h2>
+
+                            </div>
+
+
+                            <div class="faq-list">
+
+
+                                <div class="faq-item">
+
+                                    <button class="faq-question">
+
+                                <span>
+                                    How do I access my courses?
+                                </span>
+
+                                <b>+</b>
+
+                            </button>
+
+                                    <div class="faq-answer">
+
+                                        <p>
+                                            Log in to your student account and visit the Courses section to browse available courses.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="faq-item">
+
+                                    <button class="faq-question">
+
+                                <span>
+                                    I am having trouble with my account.
+                                </span>
+
+                                <b>+</b>
+
+                            </button>
+
+                                    <div class="faq-answer">
+
+                                        <p>
+                                            Contact us by email or phone and provide a short description of the problem you are experiencing.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="faq-item">
+
+                                    <button class="faq-question">
+
+                                <span>
+                                    How can I get help with a course?
+                                </span>
+
+                                <b>+</b>
+
+                            </button>
+
+                                    <div class="faq-answer">
+
+                                        <p>
+                                            Contact our support team and include the course name and the issue you are experiencing.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="faq-item">
+
+                                    <button class="faq-question">
+
+                                <span>
+                                    Can I contact the academy directly?
+                                </span>
+
+                                <b>+</b>
+
+                            </button>
+
+                                    <div class="faq-answer">
+
+                                        <p>
+                                            Yes. You can contact XTP Academy through chinemee@gmail.com or 08036299799.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <aside class="contact-side">
+
+                        <div class="help-card">
+
+                            <div class="help-icon">
+                                ?
+                            </div>
+
+                            <span class="section-label light-label">
+                        NEED ASSISTANCE?
+                    </span>
+
+                            <h2>
+                                We're here to help.
+                            </h2>
+
+                            <p>
+                                Whether you have a technical issue, a course question or need help with your account, feel free to contact us.
+                            </p>
+
+                            <a href="mailto:chinemee@gmail.com" class="help-btn">
+                        Email Us →
+                    </a>
+
+                        </div>
+
+
+                        <div class="contact-info-card">
+
+                            <h3>Contact Information</h3>
+
+                            <div class="info-line">
+
+                                <span>Email</span>
+
+                                <a href="mailto:chinemee@gmail.com">
+                            chinemee@gmail.com
+                        </a>
+
+                            </div>
+
+
+                            <div class="info-line">
+
+                                <span>Phone</span>
+
+                                <a href="tel:08036299799">
+                            08036299799
+                        </a>
+
+                            </div>
+
+                        </div>
+
+                    </aside>
+
+                </section>
+
+
+                <footer class="page-footer">
+
+                    <div>
+
+                        <strong>XTP Academy</strong>
+
+                        <span>
+                    Learn • Build • Grow
+                </span>
+
+                    </div>
+
+
+                    <div class="footer-links">
+
+                        <a href="/terms">Terms</a>
+
+                        <a href="/privacy">Privacy</a>
+
+                        <a href="/about">About</a>
+
+                    </div>
+
+
+                    <p>
+                        © 2026 XTP Academy. All rights reserved.
+                    </p>
+
+                </footer>
+
+
+            </section>
+
+        </main>
+
+
+    </div>
+
+    <script src="/js/contact.js"></script>
+
+</body>
+
+</html>
