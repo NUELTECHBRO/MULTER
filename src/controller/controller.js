@@ -2,6 +2,15 @@ const User = require("../model/User.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const freecourse = require("../model/course.js");
+const cloudinary = require("cloudinary").v2;
+
+require("dotenv").config();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 const homeController = async(req, res) => {
     try {
@@ -327,9 +336,15 @@ const uploadController = (req, res) => {
 
 const postuploadController = async(req, res) => {
 
+    let video = null;
+    let thumbnail = null;
 
 
     if (!req.admin) {
+        await cleanupUploadedFiles(
+            req.files && req.files.video ? req.files.video[0] : null,
+            req.files && req.files.thumbnail ? req.files.thumbnail[0] : null
+        );
         return res.status(403).send(
             "Access denied"
         );
@@ -344,13 +359,13 @@ const postuploadController = async(req, res) => {
             description
         } = req.body;
 
-        const video =
+        video =
             req.files &&
             req.files.video ?
             req.files.video[0] :
             null;
 
-        const thumbnail =
+        thumbnail =
             req.files &&
             req.files.thumbnail ?
             req.files.thumbnail[0] :
@@ -361,18 +376,21 @@ const postuploadController = async(req, res) => {
             !level ||
             !description
         ) {
+            await cleanupUploadedFiles(video, thumbnail);
             return res.status(400).send(
                 "Please fill all course information"
             );
         }
 
         if (!video) {
+            await cleanupUploadedFiles(thumbnail);
             return res.status(400).send(
                 "Video is required"
             );
         }
 
         if (!thumbnail) {
+            await cleanupUploadedFiles(video);
             return res.status(400).send(
                 "Thumbnail is required"
             );
@@ -389,8 +407,9 @@ const postuploadController = async(req, res) => {
             description: description.trim(),
 
             video: video.path,
-
-            thumbnail: thumbnail.path
+            thumbnail: thumbnail.path,
+            videoPublicId: video.public_id,
+            thumbnailPublicId: thumbnail.public_id
         };
 
         await freecourse.create(
@@ -400,6 +419,8 @@ const postuploadController = async(req, res) => {
         return res.redirect("/");
 
     } catch (error) {
+
+        await cleanupUploadedFiles(video, thumbnail);
 
         console.error(
             "Course upload error:",
@@ -416,6 +437,48 @@ const postuploadController = async(req, res) => {
 };
 const fs = require("fs");
 const path = require("path");
+
+const getCloudinaryPublicId = (mediaUrl) => {
+    if (!mediaUrl || !mediaUrl.includes("res.cloudinary.com")) {
+        return null;
+    }
+
+    const uploadMarker = "/upload/";
+    const uploadIndex = mediaUrl.indexOf(uploadMarker);
+
+    if (uploadIndex === -1) {
+        return null;
+    }
+
+    const publicPath = mediaUrl
+        .slice(uploadIndex + uploadMarker.length)
+        .split("?")[0]
+        .replace(/^v\d+\//, "");
+
+    return publicPath.replace(/\.[^/.]+$/, "");
+};
+
+const removeCourseMedia = async(mediaUrl, resourceType, storedPublicId) => {
+    const publicId = storedPublicId || getCloudinaryPublicId(mediaUrl);
+
+    if (publicId) {
+        await cloudinary.uploader.destroy(publicId, {
+            resource_type: resourceType,
+            invalidate: true
+        });
+        return;
+    }
+
+    if (!mediaUrl) {
+        return;
+    }
+
+    const localPath = path.resolve(process.cwd(), "uploads", mediaUrl);
+
+    if (fs.existsSync(localPath)) {
+        fs.unlinkSync(localPath);
+    }
+};
 
 const manageCoursesController = async(req, res) => {
     if (!req.admin) {
@@ -486,21 +549,19 @@ const editCourseController = async(req, res) => {
          * delete the old video first.
          */
 
+        const previousVideo = {
+            url: course.video,
+            publicId: course.videoPublicId
+        };
+
+        const previousThumbnail = {
+            url: course.thumbnail,
+            publicId: course.thumbnailPublicId
+        };
+
         if (video) {
-            if (course.video) {
-                const oldVideoPath = path.join(
-                    __dirname,
-                    "..",
-                    "uploads",
-                    course.video
-                );
-
-                if (fs.existsSync(oldVideoPath)) {
-                    fs.unlinkSync(oldVideoPath);
-                }
-            }
-
             course.video = video.path;
+            course.videoPublicId = video.public_id;
         }
 
 
@@ -510,23 +571,27 @@ const editCourseController = async(req, res) => {
          */
 
         if (thumbnail) {
-            if (course.thumbnail) {
-                const oldThumbnailPath = path.join(
-                    __dirname,
-                    "..",
-                    "uploads",
-                    course.thumbnail
-                );
-
-                if (fs.existsSync(oldThumbnailPath)) {
-                    fs.unlinkSync(oldThumbnailPath);
-                }
-            }
-
             course.thumbnail = thumbnail.path;
+            course.thumbnailPublicId = thumbnail.public_id;
         }
 
         await course.save();
+
+        if (video && previousVideo.url) {
+            await removeCourseMedia(
+                previousVideo.url,
+                "video",
+                previousVideo.publicId
+            );
+        }
+
+        if (thumbnail && previousThumbnail.url) {
+            await removeCourseMedia(
+                previousThumbnail.url,
+                "image",
+                previousThumbnail.publicId
+            );
+        }
 
         return res.redirect("/admin/courses");
 
@@ -559,28 +624,11 @@ const deleteCourseController = async(req, res) => {
         |--------------------------------------------------------------------------
         */
 
-        if (course.video) {
-
-            const videoPath = path.resolve(
-                process.cwd(),
-                "uploads",
-                course.video
-            );
-
-            console.log("Video to delete:", videoPath);
-
-            if (fs.existsSync(videoPath)) {
-
-                fs.unlinkSync(videoPath);
-
-                console.log("Video deleted successfully:", videoPath);
-
-            } else {
-
-                console.log("Video file not found:", videoPath);
-
-            }
-        }
+        await removeCourseMedia(
+            course.video,
+            "video",
+            course.videoPublicId
+        );
 
 
         /*
@@ -589,34 +637,11 @@ const deleteCourseController = async(req, res) => {
         |--------------------------------------------------------------------------
         */
 
-        if (course.thumbnail) {
-
-            const thumbnailPath = path.resolve(
-                process.cwd(),
-                "uploads",
-                course.thumbnail
-            );
-
-            console.log("Thumbnail to delete:", thumbnailPath);
-
-            if (fs.existsSync(thumbnailPath)) {
-
-                fs.unlinkSync(thumbnailPath);
-
-                console.log(
-                    "Thumbnail deleted successfully:",
-                    thumbnailPath
-                );
-
-            } else {
-
-                console.log(
-                    "Thumbnail file not found:",
-                    thumbnailPath
-                );
-
-            }
-        }
+        await removeCourseMedia(
+            course.thumbnail,
+            "image",
+            course.thumbnailPublicId
+        );
 
 
         /*
@@ -657,4 +682,16 @@ module.exports = {
     postlogController,
     logController,
     regController
+};
+
+const cleanupUploadedFiles = async(...files) => {
+    const uploadedFiles = files.filter(Boolean);
+
+    await Promise.allSettled(
+        uploadedFiles.map((file) => removeCourseMedia(
+            file.path,
+            file.resource_type,
+            file.public_id
+        ))
+    );
 };

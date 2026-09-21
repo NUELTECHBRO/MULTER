@@ -6,7 +6,9 @@ const courseSchema = mongoose.Schema({
     level: { type: String, required: true },
     description: { type: String, required: true },
     video: { type: String, required: true },
-    thumbnail: { type: String, required: true }
+    thumbnail: { type: String, required: true },
+    videoPublicId: { type: String },
+    thumbnailPublicId: { type: String }
 }, )
 
 const freecourse = mongoose.model("FreeCourse", courseSchema)

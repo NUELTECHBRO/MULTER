@@ -912,6 +912,20 @@
 
 
 
+                                <div class="upload-progress" id="uploadProgress" hidden>
+
+                                    <div class="upload-progress-header">
+                                        <span id="uploadProgressLabel">Uploading course...</span>
+                                        <strong id="uploadProgressPercent">0%</strong>
+                                    </div>
+
+                                    <div class="upload-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course upload progress">
+                                        <div class="upload-progress-bar" id="uploadProgressBar"></div>
+                                    </div>
+
+                                </div>
+
+
                                 <div class="publish-actions">
 
 
@@ -1319,6 +1333,85 @@
         /* INITIAL STATE */
 
         updateCoursePricing();
+
+
+        /* UPLOAD PROGRESS */
+
+        const courseForm =
+            document.querySelector('form[action="/admin/courses/upload"]');
+
+        const uploadProgress =
+            document.getElementById("uploadProgress");
+
+        const uploadProgressBar =
+            document.getElementById("uploadProgressBar");
+
+        const uploadProgressPercent =
+            document.getElementById("uploadProgressPercent");
+
+        const uploadProgressLabel =
+            document.getElementById("uploadProgressLabel");
+
+        if (courseForm) {
+            courseForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                const submitter = event.submitter;
+                const formData = new FormData(courseForm);
+
+                if (submitter && submitter.name) {
+                    formData.append(submitter.name, submitter.value);
+                }
+
+                const request = new XMLHttpRequest();
+                const submitButtons = courseForm.querySelectorAll("button[type='submit']");
+
+                uploadProgress.hidden = false;
+                submitButtons.forEach((button) => {
+                    button.disabled = true;
+                });
+
+                request.upload.addEventListener("progress", (progressEvent) => {
+                    if (!progressEvent.lengthComputable) {
+                        return;
+                    }
+
+                    const percentage = Math.round(
+                        (progressEvent.loaded / progressEvent.total) * 100
+                    );
+
+                    uploadProgressBar.style.width = `${percentage}%`;
+                    uploadProgressPercent.textContent = `${percentage}%`;
+                    uploadProgressBar.parentElement.setAttribute(
+                        "aria-valuenow",
+                        percentage
+                    );
+                });
+
+                request.addEventListener("load", () => {
+                    if (request.status >= 200 && request.status < 400) {
+                        uploadProgressLabel.textContent = "Upload complete. Finishing course...";
+                        window.location.href = request.responseURL || "/";
+                        return;
+                    }
+
+                    uploadProgressLabel.textContent = "Upload failed. Please try again.";
+                    submitButtons.forEach((button) => {
+                        button.disabled = false;
+                    });
+                });
+
+                request.addEventListener("error", () => {
+                    uploadProgressLabel.textContent = "Upload failed. Check your connection and try again.";
+                    submitButtons.forEach((button) => {
+                        button.disabled = false;
+                    });
+                });
+
+                request.open(courseForm.method, courseForm.action);
+                request.send(formData);
+            });
+        }
     </script>
 
 

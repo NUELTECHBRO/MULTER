@@ -46,6 +46,48 @@ button {
     cursor: pointer;
 }
 
+button:disabled {
+    cursor: wait;
+    opacity: .65;
+}
+
+.upload-progress {
+    margin: 20px 0 4px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--accent-light);
+}
+
+.upload-progress-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 9px;
+    color: var(--primary-light);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.upload-progress-header strong {
+    color: var(--accent);
+}
+
+.upload-progress-track {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #dbeafe;
+}
+
+.upload-progress-bar {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--accent);
+    transition: width .15s ease;
+}
+
 .admin-layout {
     min-height: 100vh;
 }
