@@ -388,9 +388,9 @@ const postuploadController = async(req, res) => {
 
             description: description.trim(),
 
-            video: video.filename,
+            video: video.path,
 
-            thumbnail: thumbnail.filename
+            thumbnail: thumbnail.path
         };
 
         await freecourse.create(
@@ -500,7 +500,7 @@ const editCourseController = async(req, res) => {
                 }
             }
 
-            course.video = video.filename;
+            course.video = video.path;
         }
 
 
@@ -523,7 +523,7 @@ const editCourseController = async(req, res) => {
                 }
             }
 
-            course.thumbnail = thumbnail.filename;
+            course.thumbnail = thumbnail.path;
         }
 
         await course.save();

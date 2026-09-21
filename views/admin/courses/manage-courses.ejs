@@ -329,7 +329,7 @@
 
                                 <div class="course-image">
 
-                                    <img src="/<%= course.thumbnail %>" alt="<%= course.title %>">
+                                    <img src="<%= course.thumbnail.startsWith('http') ? course.thumbnail : '/' + course.thumbnail %>" alt="<%= course.title %>">
 
 
                                     <span class="level-badge <%= course.level %>">

@@ -666,7 +666,7 @@
                                         <a href="/courses/<%= datum._id %>/learn" class="course-image">
 
                                     <img
-                                        src="/<%= datum.thumbnail %>"
+                                        src="<%= datum.thumbnail.startsWith('http') ? datum.thumbnail : '/' + datum.thumbnail %>"
                                         alt="<%= datum.title %>"
                                         loading="lazy"
                                     >

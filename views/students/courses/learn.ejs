@@ -321,7 +321,7 @@
                             <video id="courseVideo" class="course-video" controls preload="metadata" playsinline>
 
                             <source
-                                src="/<%= course.video %>"
+                                src="<%= course.video.startsWith('http') ? course.video : '/' + course.video %>"
                                 type="video/mp4"
                             >
 
@@ -399,7 +399,7 @@
 
                             <div class="course-thumbnail">
 
-                                <img src="/<%= course.thumbnail %>" alt="<%= course.title %>">
+                                <img src="<%= course.thumbnail.startsWith('http') ? course.thumbnail : '/' + course.thumbnail %>" alt="<%= course.title %>">
 
                                 <div class="thumbnail-overlay">
                                     COURSE
