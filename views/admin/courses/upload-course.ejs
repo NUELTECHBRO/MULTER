@@ -1395,7 +1395,18 @@
                         return;
                     }
 
-                    uploadProgressLabel.textContent = "Upload failed. Please try again.";
+                    let errorMessage = "Upload failed. Please try again.";
+
+                    try {
+                        const response = JSON.parse(request.responseText);
+                        errorMessage = response.error || errorMessage;
+                    } catch (error) {
+                        if (request.responseText) {
+                            errorMessage = request.responseText;
+                        }
+                    }
+
+                    uploadProgressLabel.textContent = errorMessage;
                     submitButtons.forEach((button) => {
                         button.disabled = false;
                     });

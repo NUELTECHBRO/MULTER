@@ -28,6 +28,16 @@ const storage = {
     _handleFile: (req, file, cb) => {
 
         const isVideo = file.mimetype && file.mimetype.startsWith("video/");
+        let finished = false;
+
+        const finish = (error, result) => {
+            if (finished) {
+                return;
+            }
+
+            finished = true;
+            cb(error, result);
+        };
 
         let uploadStream;
 
@@ -48,10 +58,10 @@ const storage = {
                             error
                         );
 
-                        return cb(error);
+                            return finish(error);
                     }
 
-                    cb(null, {
+                    finish(null, {
                         filename: result.public_id,
                         path: result.secure_url,
                         size: result.bytes,
@@ -77,10 +87,10 @@ const storage = {
                             error
                         );
 
-                        return cb(error);
+                            return finish(error);
                     }
 
-                    cb(null, {
+                    finish(null, {
                         filename: result.public_id,
                         path: result.secure_url,
                         size: result.bytes,
@@ -91,8 +101,8 @@ const storage = {
             );
         }
 
-        file.stream.on("error", cb);
-        uploadStream.on("error", cb);
+        file.stream.on("error", finish);
+        uploadStream.on("error", finish);
         file.stream.pipe(uploadStream);
     },
 

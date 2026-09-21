@@ -20,6 +20,30 @@ const upload = require("../middleware/multer.js");
 
 const router = express.Router();
 
+const courseUploadFields = upload.fields([{
+        name: "video",
+        maxCount: 1
+    },
+    {
+        name: "thumbnail",
+        maxCount: 1
+    }
+]);
+
+const handleCourseUpload = (req, res, next) => {
+    courseUploadFields(req, res, (error) => {
+        if (!error) {
+            return next();
+        }
+
+        console.error("Course file upload error:", error);
+
+        return res.status(error.code === "LIMIT_FILE_SIZE" ? 413 : 400).json({
+            error: error.message || "Course file upload failed"
+        });
+    });
+};
+
 router.get("/", homeController);
 
 router.get("/register", regController);
@@ -72,15 +96,7 @@ router.get(
 
 router.post(
     "/admin/courses/upload",
-    upload.fields([{
-            name: "video",
-            maxCount: 1
-        },
-        {
-            name: "thumbnail",
-            maxCount: 1
-        }
-    ]),
+    handleCourseUpload,
     postuploadController
 );
 
@@ -103,15 +119,7 @@ ADMIN EDIT COURSE
 
 router.post(
     "/admin/courses/edit/:id",
-    upload.fields([{
-            name: "video",
-            maxCount: 1
-        },
-        {
-            name: "thumbnail",
-            maxCount: 1
-        }
-    ]),
+    handleCourseUpload,
     editCourseController
 );
 
