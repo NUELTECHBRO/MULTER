@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const middleware = (req, res, next) => {
 
-    const token = req.cookies.emma_app;
+    const token = req.cookies.xtp_site;
 
     if (token) {
 
@@ -21,7 +21,7 @@ const middleware = (req, res, next) => {
 
             console.log("JWT Error:", error.message);
 
-            res.clearCookie("emma_app");
+            res.clearCookie("xtp_site");
 
             req.user = null;
         }

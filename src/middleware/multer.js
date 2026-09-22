@@ -20,7 +20,8 @@ if (missingConfig.length > 0) {
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    timeout: 600000
 });
 
 const storage = {
@@ -48,17 +49,17 @@ const storage = {
                 {
                     folder: "xtp-courses",
                     resource_type: "video",
-                    chunk_size: 6000000
+                    chunk_size: 20 * 1024 * 1024,
+                    timeout: 600000
                 },
                 (error, result) => {
-
                     if (error) {
                         console.error(
                             "Cloudinary video upload error:",
                             error
                         );
 
-                            return finish(error);
+                        return finish(error);
                     }
 
                     finish(null, {
@@ -80,14 +81,13 @@ const storage = {
                     resource_type: "image"
                 },
                 (error, result) => {
-
                     if (error) {
                         console.error(
                             "Cloudinary image upload error:",
                             error
                         );
 
-                            return finish(error);
+                        return finish(error);
                     }
 
                     finish(null, {

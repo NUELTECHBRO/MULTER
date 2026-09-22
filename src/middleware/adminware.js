@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const adminware = (req, res, next) => {
-    const token = req.cookies.emma_app;
+    const token = req.cookies.xtp_site;
 
     if (!token) {
         req.admin = false;
@@ -24,7 +24,7 @@ const adminware = (req, res, next) => {
         if (error.name === "TokenExpiredError") {
             console.log("JWT token expired");
 
-            res.clearCookie("emma_app");
+            res.clearCookie("xtp_site");
             req.admin = false;
 
             return next();
@@ -32,7 +32,7 @@ const adminware = (req, res, next) => {
 
         console.log("Invalid JWT:", error.message);
 
-        res.clearCookie("emma_app");
+        res.clearCookie("xtp_site");
         req.admin = false;
 
         return next();

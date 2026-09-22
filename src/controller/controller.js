@@ -201,7 +201,7 @@ const postregController = async(req, res) => {
             }
         );
 
-        res.cookie("emma_app", token, {
+        res.cookie("xtp_site", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
@@ -275,7 +275,7 @@ const postlogController = async(req, res) => {
             }
         );
 
-        res.cookie("emma_app", token, {
+        res.cookie("xtp_site", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
@@ -304,7 +304,7 @@ const logoutController = (req, res) => {
 
 
 
-    res.clearCookie("emma_app", {
+    res.clearCookie("xtp_site", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict"
