@@ -16,6 +16,35 @@
 
 <body>
 
+    <% 
+        const stats = locals.stats || {
+            totalStudents: 0,
+            totalCourses: 0,
+            totalEnrollments: 0,
+            totalCategories: 0,
+            studentsThisMonth: 0,
+            coursesThisMonth: 0,
+            enrollmentsThisMonth: 0,
+            studentGrowth: 0,
+            courseGrowth: 0,
+            enrollmentGrowth: 0,
+            enrollmentChart: []
+        };
+        const recentStudents = (locals.recentStudents || []).slice(0, 4);
+        const topCourses = (locals.topCourses || []).slice(0, 4);
+        const studentInitials = (name) => (name || "Student").trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
+        const growthLabel = (growth) => growth === null ? "New" : `${Math.abs(growth).toFixed(1)}%`;
+        const growthIcon = (growth) => growth >= 0 ? "fa-arrow-up" : "fa-arrow-down";
+        const growthClass = (growth) => growth >= 0 ? "positive" : "negative";
+        const chartMaximum = Math.max(1, ...stats.enrollmentChart.map((month) => month.count));
+        const chartLine = stats.enrollmentChart.map((month, index) => {
+            const x = index * 700 / (stats.enrollmentChart.length - 1);
+            const y = 230 - (month.count / chartMaximum) * 200;
+            return `${index === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(" ");
+        const chartFill = `${chartLine} L700,260 L0,260 Z`;
+    %>
+
     <div class="admin-layout">
 
 
@@ -183,16 +212,16 @@
                                 <i class="fa-solid fa-user-graduate"></i>
                             </div>
 
-                            <span class="trend positive">
-                        <i class="fa-solid fa-arrow-up"></i>
-                        12.5%
+                            <span class="trend <%= growthClass(stats.studentGrowth) %>">
+                        <i class="fa-solid <%= growthIcon(stats.studentGrowth) %>"></i>
+                        <%= growthLabel(stats.studentGrowth) %>
                     </span>
                         </div>
 
                         <span class="stat-label">Total Students</span>
 
                         <div class="stat-value">
-                            6
+                            <%= stats.totalStudents %>
                         </div>
 
                         <span class="stat-description">
@@ -209,18 +238,18 @@
                                 <i class="fa-solid fa-book-open"></i>
                             </div>
 
-                            <span class="trend positive">
-                        <i class="fa-solid fa-arrow-up"></i>
-                        8.2%
+                            <span class="trend <%= growthClass(stats.courseGrowth) %>">
+                        <i class="fa-solid <%= growthIcon(stats.courseGrowth) %>"></i>
+                        <%= growthLabel(stats.courseGrowth) %>
                     </span>
                         </div>
 
                         <span class="stat-label">Published Courses</span>
 
-                        <div class="stat-value">0</div>
+                        <div class="stat-value"><%= stats.totalCourses %></div>
 
                         <span class="stat-description">
-                    0 courses added this month
+                    <%= stats.coursesThisMonth %> courses added this month
                 </span>
 
                     </div>
@@ -230,21 +259,16 @@
 
                         <div class="stat-top">
                             <div class="stat-icon revenue">
-                                <i class="fa-solid fa-naira-sign"></i>
+                                <i class="fa-solid fa-tags"></i>
                             </div>
-
-                            <span class="trend positive">
-                        <i class="fa-solid fa-arrow-up"></i>
-                        18.4%
-                    </span>
                         </div>
 
-                        <span class="stat-label">Total Revenue</span>
+                        <span class="stat-label">Course Categories</span>
 
-                        <div class="stat-value">₦0.00M</div>
+                        <div class="stat-value"><%= stats.totalCategories %></div>
 
                         <span class="stat-description">
-                    Revenue generated this month
+                    Different categories in the catalog
                 </span>
 
                     </div>
@@ -257,18 +281,18 @@
                                 <i class="fa-solid fa-chart-line"></i>
                             </div>
 
-                            <span class="trend positive">
-                        <i class="fa-solid fa-arrow-up"></i>
-                        15.8%
+                            <span class="trend <%= growthClass(stats.enrollmentGrowth) %>">
+                        <i class="fa-solid <%= growthIcon(stats.enrollmentGrowth) %>"></i>
+                        <%= growthLabel(stats.enrollmentGrowth) %>
                     </span>
                         </div>
 
                         <span class="stat-label">Enrollments</span>
 
-                        <div class="stat-value">0</div>
+                        <div class="stat-value"><%= stats.totalEnrollments %></div>
 
                         <span class="stat-description">
-                    Total course enrollments
+                    <%= stats.enrollmentsThisMonth %> added this month
                 </span>
 
                     </div>
@@ -284,91 +308,43 @@
                         <div class="panel-header">
 
                             <div>
-                                <span class="panel-label">REVENUE OVERVIEW</span>
-                                <h3>Revenue Performance</h3>
+                                <span class="panel-label">ENROLLMENT OVERVIEW</span>
+                                <h3>Enrollment Performance</h3>
                             </div>
-
-                            <select class="period-select">
-                        <option>Last 7 months</option>
-                        <option>Last 30 days</option>
-                        <option>This year</option>
-                    </select>
 
                         </div>
 
                         <div class="revenue-summary">
-
-                            <strong>₦0,000,000</strong>
-
-                            <span class="positive">
-                        <i class="fa-solid fa-arrow-up"></i>
-                        18.4%
-                    </span>
-
+                            <strong><%= stats.totalEnrollments.toLocaleString() %></strong>
+                            <span class="positive">Total enrollments</span>
                         </div>
 
                         <div class="chart">
-
                             <div class="chart-y">
-                                <span>₦3M</span>
-                                <span>₦2M</span>
-                                <span>₦1M</span>
-                                <span>₦0</span>
+                                <span><%= chartMaximum %></span>
+                                <span><%= Math.ceil(chartMaximum * 2 / 3) %></span>
+                                <span><%= Math.ceil(chartMaximum / 3) %></span>
+                                <span>0</span>
                             </div>
 
                             <div class="chart-area">
-
                                 <svg viewBox="0 0 700 260" preserveAspectRatio="none" class="revenue-chart">
-
-                            <defs>
-                                <linearGradient id="chartGradient"
-                                                x1="0"
-                                                y1="0"
-                                                x2="0"
-                                                y2="1">
-
-                                    <stop offset="0%"
-                                          stop-opacity=".20"/>
-
-                                    <stop offset="100%"
-                                          stop-opacity="0"/>
-
-                                </linearGradient>
-                            </defs>
-
-                            <path
-                                class="chart-fill"
-                                d="M0,210
-                                   C80,180 90,190 150,150
-                                   C220,105 240,160 300,120
-                                   C360,80 390,125 450,75
-                                   C520,35 560,90 610,50
-                                   C650,20 680,45 700,20
-                                   L700,260 L0,260 Z"/>
-
-                            <path
-                                class="chart-line"
-                                d="M0,210
-                                   C80,180 90,190 150,150
-                                   C220,105 240,160 300,120
-                                   C360,80 390,125 450,75
-                                   C520,35 560,90 610,50
-                                   C650,20 680,45 700,20"/>
-
-                        </svg>
+                                    <defs>
+                                        <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-opacity=".20"/>
+                                            <stop offset="100%" stop-opacity="0"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path class="chart-fill" d="<%= chartFill %>"/>
+                                    <path class="chart-line" d="<%= chartLine %>"/>
+                                </svg>
 
                                 <div class="chart-months">
-                                    <span>Feb</span>
-                                    <span>Mar</span>
-                                    <span>Apr</span>
-                                    <span>May</span>
-                                    <span>Jun</span>
-                                    <span>Jul</span>
-                                    <span>Aug</span>
+                                    <% stats.enrollmentChart.forEach((month) => { %>
+                                        <span><%= month.month %></span>
+                                    <% }); %>
                                 </div>
-
                             </div>
-
                         </div>
 
                     </div>
@@ -472,70 +448,21 @@
 
 
                         <div class="student-list">
-
-                            <div class="student-item">
-
-                                <div class="student-avatar">JD</div>
-
-                                <div class="student-details">
-                                    <strong>John David</strong>
-                                    <span>Web Development</span>
+                            <% if (recentStudents.length) { %>
+                                <% recentStudents.forEach((student) => { const studentName = student.name || "Student"; %>
+                                    <div class="student-item">
+                                        <div class="student-avatar"><%= studentInitials(studentName) %></div>
+                                        <div class="student-details">
+                                            <strong><%= studentName %></strong>
+                                            <span><%= student.email || "Student account" %></span>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            <% } else { %>
+                                <div class="student-item">
+                                    <div class="student-details"><span>No students have registered yet.</span></div>
                                 </div>
-
-                                <span class="status active-status">
-                            Active
-                        </span>
-
-                            </div>
-
-
-                            <div class="student-item">
-
-                                <div class="student-avatar">AM</div>
-
-                                <div class="student-details">
-                                    <strong>Amaka Michael</strong>
-                                    <span>JavaScript Masterclass</span>
-                                </div>
-
-                                <span class="status active-status">
-                            Active
-                        </span>
-
-                            </div>
-
-
-                            <div class="student-item">
-
-                                <div class="student-avatar">CO</div>
-
-                                <div class="student-details">
-                                    <strong>Chinedu Okafor</strong>
-                                    <span>Python Programming</span>
-                                </div>
-
-                                <span class="status pending-status">
-                            Pending
-                        </span>
-
-                            </div>
-
-
-                            <div class="student-item">
-
-                                <div class="student-avatar">SA</div>
-
-                                <div class="student-details">
-                                    <strong>Sarah Anderson</strong>
-                                    <span>UI/UX Design</span>
-                                </div>
-
-                                <span class="status active-status">
-                            Active
-                        </span>
-
-                            </div>
-
+                            <% } %>
                         </div>
 
                     </div>
@@ -560,74 +487,25 @@
 
 
                         <div class="course-list">
-
-                            <div class="course-item">
-
-                                <div class="course-number">01</div>
-
-                                <div class="course-info">
-                                    <strong>Complete Web Development</strong>
-                                    <span>842 students enrolled</span>
+                            <% if (topCourses.length) { %>
+                                <% topCourses.forEach((course, index) => { %>
+                                    <div class="course-item">
+                                        <div class="course-number"><%= String(index + 1).padStart(2, "0") %></div>
+                                        <div class="course-info">
+                                            <strong><%= course.title %></strong>
+                                            <span><%= course.category || "Uncategorized" %></span>
+                                        </div>
+                                        <div class="course-revenue">
+                                            <strong><%= course.enrollmentCount.toLocaleString() %></strong>
+                                            <span>Enrollments</span>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            <% } else { %>
+                                <div class="course-item">
+                                    <div class="course-info"><span>No courses have been added yet.</span></div>
                                 </div>
-
-                                <div class="course-revenue">
-                                    <strong>₦840K</strong>
-                                    <span>Revenue</span>
-                                </div>
-
-                            </div>
-
-
-                            <div class="course-item">
-
-                                <div class="course-number">02</div>
-
-                                <div class="course-info">
-                                    <strong>JavaScript Masterclass</strong>
-                                    <span>621 students enrolled</span>
-                                </div>
-
-                                <div class="course-revenue">
-                                    <strong>₦620K</strong>
-                                    <span>Revenue</span>
-                                </div>
-
-                            </div>
-
-
-                            <div class="course-item">
-
-                                <div class="course-number">03</div>
-
-                                <div class="course-info">
-                                    <strong>Python Programming</strong>
-                                    <span>489 students enrolled</span>
-                                </div>
-
-                                <div class="course-revenue">
-                                    <strong>₦490K</strong>
-                                    <span>Revenue</span>
-                                </div>
-
-                            </div>
-
-
-                            <div class="course-item">
-
-                                <div class="course-number">04</div>
-
-                                <div class="course-info">
-                                    <strong>UI/UX Design Fundamentals</strong>
-                                    <span>352 students enrolled</span>
-                                </div>
-
-                                <div class="course-revenue">
-                                    <strong>₦350K</strong>
-                                    <span>Revenue</span>
-                                </div>
-
-                            </div>
-
+                            <% } %>
                         </div>
 
                     </div>
@@ -645,7 +523,7 @@
                     <div>
                         <span>Admin Portal</span>
                         <span>•</span>
-                        <span>Version 1.0.0</span>
+                        <span>Version 1.0.4</span>
                     </div>
 
                 </footer>

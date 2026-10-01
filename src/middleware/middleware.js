@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
+const User = require("../model/User.js")
+const {JWTSECRET} = require("../config/env.js")
 
-require("dotenv").config();
+
 
 const middleware = (req, res, next) => {
 
@@ -12,8 +14,16 @@ const middleware = (req, res, next) => {
 
             const decoded = jwt.verify(
                 token,
-                process.env.JWTSECRET
+                JWTSECRET
             );
+
+            const isUser = User.findById(decoded.id);
+            if (!isUser) {
+                res.clearCookie("xtp_site");
+                req.user = null;
+                return next();
+
+            }
 
             req.user = decoded;
 

@@ -1,9 +1,9 @@
 {
     "name": "multer",
-    "version": "1.0.0",
+    "version": "1.0.4",
     "main": "server.js",
     "scripts": {
-        "dev": "node --watch src/main/server.js",
+        "dev": "node src/main/server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Emmanuel",

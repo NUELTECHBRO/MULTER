@@ -1,26 +1,139 @@
 const User = require("../model/User.js");
+const Enrollment = require("../model/Enrollment.js");
+const mongoose = require("mongoose");
+const adminEmails = require("../config/adminEmails.js");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const freecourse = require("../model/course.js");
 const cloudinary = require("cloudinary").v2;
+const genToken = require("../utils/genToken.js");
+const {CLOUDINARY_API_KEY,NODE_ENV,CLOUDINARY_API_SECRET,JWTSECRET,CLOUDINARY_CLOUD_NAME} = require("../config/env.js");
+const genCookie = require("../utils/genCookie.js");
+const genUser = require("../lib/User.js");
 
-require("dotenv").config();
+const getMonthlyStats = async (Model, now = new Date(), filter = {}) => {
+    const currentMonthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+    const nextMonthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
+    const previousMonthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
+    const monthlyCounts = await Model.aggregate([
+        {
+            $addFields: {
+                statCreatedAt: { $ifNull: ["$createdAt", { $toDate: "$_id" }] }
+            }
+        },
+        {
+            $match: {
+                ...filter,
+                statCreatedAt: { $gte: previousMonthStart, $lt: nextMonthStart }
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    $cond: [
+                        { $gte: ["$statCreatedAt", currentMonthStart] },
+                        "current",
+                        "previous"
+                    ]
+                },
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+    const counts = new Map(monthlyCounts.map(({ _id, count }) => [_id, count]));
+    const current = counts.get("current") || 0;
+    const previous = counts.get("previous") || 0;
+
+    const growth = previous === 0
+        ? current === 0 ? 0 : null
+        : ((current - previous) / previous) * 100;
+
+    return { current, growth };
+};
+
+const getEnrollmentChart = async (now = new Date()) => {
+    const months = Array.from({ length: 7 }, (_, index) =>
+        new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 6 + index, 1))
+    );
+    const chartStart = months[0];
+    const chartEnd = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
+    const monthlyEnrollments = await Enrollment.aggregate([
+        { $match: { createdAt: { $gte: chartStart, $lt: chartEnd } } },
+        {
+            $group: {
+                _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+    const enrollmentCounts = new Map(monthlyEnrollments.map(({ _id, count }) => [_id, count]));
+    const monthFormatter = new Intl.DateTimeFormat("en", { month: "short", timeZone: "UTC" });
+
+    return months.map((month) => ({
+        month: monthFormatter.format(month),
+        count: enrollmentCounts.get(month.toISOString().slice(0, 7)) || 0
+    }));
+};
+
 
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    cloud_name: CLOUDINARY_CLOUD_NAME,
+    api_key: CLOUDINARY_API_KEY,
+    api_secret: CLOUDINARY_API_SECRET
 });
 
-const homeController = async(req, res) => {
+const homeController = async (req, res) => {
     try {
 
 
 
         // ADMIN
         if (req.admin) {
+            const now = new Date();
+            const [data, totalStudents, totalEnrollments, studentMonthly, courseMonthly, enrollmentMonthly, enrollmentChart, courseEnrollmentCounts, recentStudents] = await Promise.all([
+                freecourse.find().lean(),
+                User.countDocuments({ email: { $nin: adminEmails } }),
+                Enrollment.countDocuments(),
+                getMonthlyStats(User, now, { email: { $nin: adminEmails } }),
+                getMonthlyStats(freecourse, now),
+                getMonthlyStats(Enrollment, now),
+                getEnrollmentChart(now),
+                Enrollment.aggregate([
+                    { $group: { _id: "$course", count: { $sum: 1 } } }
+                ]),
+                User.find({ email: { $nin: adminEmails } }).sort({ createdAt: -1, _id: -1 }).limit(4).lean()
+            ]);
+            const categories = new Set(data
+                .map((course) => typeof course.category === "string" ? course.category.trim() : "")
+                .filter(Boolean));
+            const enrollmentCounts = new Map(courseEnrollmentCounts.map(({ _id, count }) => [_id.toString(), count]));
+            const topCourses = data
+                .map((course) => ({
+                    ...course,
+                    enrollmentCount: enrollmentCounts.get(course._id.toString()) || 0
+                }))
+                .sort((first, second) =>
+                    second.enrollmentCount - first.enrollmentCount || first.title.localeCompare(second.title)
+                )
+                .slice(0, 4);
+
             return res.render("admin/home", {
-                user: req.user
+                user: req.user,
+                data,
+                recentStudents,
+                topCourses,
+                stats: {
+                    totalStudents,
+                    totalCourses: data.length,
+                    totalEnrollments,
+                    totalCategories: categories.size,
+                    studentsThisMonth: studentMonthly.current,
+                    coursesThisMonth: courseMonthly.current,
+                    enrollmentsThisMonth: enrollmentMonthly.current,
+                    studentGrowth: studentMonthly.growth,
+                    courseGrowth: courseMonthly.growth,
+                    enrollmentGrowth: enrollmentMonthly.growth,
+                    enrollmentChart
+                }
             });
         }
 
@@ -51,7 +164,7 @@ const homeController = async(req, res) => {
 
 };
 
-const coursesController = async(req, res) => {
+const coursesController = async (req, res) => {
     try {
 
 
@@ -84,7 +197,7 @@ const coursesController = async(req, res) => {
 /*
 STUDENT LEARNING PAGE
 */
-const learningController = async(req, res) => {
+const learningController = async (req, res) => {
 
 
 
@@ -105,6 +218,16 @@ const learningController = async(req, res) => {
         // Course doesn't exist
         if (!course) {
             return res.status(404).send("Course not found");
+        }
+
+        try {
+            await Enrollment.updateOne(
+                { student: req.user.id, course: course._id },
+                { $setOnInsert: { student: req.user.id, course: course._id } },
+                { upsert: true }
+            );
+        } catch (error) {
+            if (error.code !== 11000) throw error;
         }
 
         // Render learning page
@@ -154,7 +277,7 @@ const logController = (req, res) => {
 
 };
 
-const postregController = async(req, res) => {
+const postregController = async (req, res) => {
 
 
 
@@ -185,28 +308,11 @@ const postregController = async(req, res) => {
         const hashedPassword =
             await bcrypt.hash(password, 10);
 
-        const newUser = await User.create({
-            name,
-            email,
-            password: hashedPassword
-        });
+        const newUser = await genUser(name, email, hashedPassword);
 
-        const token = jwt.sign({
-                id: newUser._id,
-                name: newUser.name,
-                email: newUser.email
-            },
-            process.env.JWTSECRET, {
-                expiresIn: "1d"
-            }
-        );
+        const token = genToken(newUser._id, newUser.name, newUser.email);
+        genCookie(res, token);
 
-        res.cookie("xtp_site", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-            maxAge: 30 * 60 * 1000
-        });
 
         return res.redirect("/");
 
@@ -226,7 +332,7 @@ const postregController = async(req, res) => {
 
 };
 
-const postlogController = async(req, res) => {
+const postlogController = async (req, res) => {
 
 
 
@@ -265,22 +371,9 @@ const postlogController = async(req, res) => {
             );
         }
 
-        const token = jwt.sign({
-                id: user._id,
-                name: user.name,
-                email: user.email
-            },
-            process.env.JWTSECRET, {
-                expiresIn: "1d"
-            }
-        );
+        const token = genToken(user._id, user.name, user.email);
 
-        res.cookie("xtp_site", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-            maxAge: 30 * 60 * 1000
-        });
+        genCookie(res, token);
 
         return res.redirect("/");
 
@@ -306,7 +399,7 @@ const logoutController = (req, res) => {
 
     res.clearCookie("xtp_site", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: NODE_ENV === "production",
         sameSite: "strict"
     });
 
@@ -334,7 +427,7 @@ const uploadController = (req, res) => {
 
 };
 
-const postuploadController = async(req, res) => {
+const postuploadController = async (req, res) => {
 
     let video = null;
     let thumbnail = null;
@@ -361,15 +454,15 @@ const postuploadController = async(req, res) => {
 
         video =
             req.files &&
-            req.files.video ?
-            req.files.video[0] :
-            null;
+                req.files.video ?
+                req.files.video[0] :
+                null;
 
         thumbnail =
             req.files &&
-            req.files.thumbnail ?
-            req.files.thumbnail[0] :
-            null;
+                req.files.thumbnail ?
+                req.files.thumbnail[0] :
+                null;
 
         if (!title ||
             !category ||
@@ -458,7 +551,7 @@ const getCloudinaryPublicId = (mediaUrl) => {
     return publicPath.replace(/\.[^/.]+$/, "");
 };
 
-const removeCourseMedia = async(mediaUrl, resourceType, storedPublicId) => {
+const removeCourseMedia = async (mediaUrl, resourceType, storedPublicId) => {
     const publicId = storedPublicId || getCloudinaryPublicId(mediaUrl);
 
     if (publicId) {
@@ -480,7 +573,70 @@ const removeCourseMedia = async(mediaUrl, resourceType, storedPublicId) => {
     }
 };
 
-const manageCoursesController = async(req, res) => {
+const studentsController = async (req, res) => {
+    if (!req.admin) {
+        return res.status(403).send("Access denied");
+    }
+
+    try {
+        const students = await User.find({ email: { $nin: adminEmails } })
+            .sort({ createdAt: -1, _id: -1 })
+            .lean();
+        const enrollmentCounts = students.length
+            ? await Enrollment.aggregate([
+                { $match: { student: { $in: students.map((student) => student._id) } } },
+                { $group: { _id: "$student", count: { $sum: 1 } } }
+            ])
+            : [];
+        const countsByStudent = new Map(enrollmentCounts.map(({ _id, count }) => [_id.toString(), count]));
+        const studentRows = students.map((student) => ({
+            ...student,
+            enrollmentCount: countsByStudent.get(student._id.toString()) || 0
+        }));
+
+        return res.render("admin/students", {
+            user: req.user,
+            students: studentRows,
+            totalEnrollments: enrollmentCounts.reduce((total, enrollment) => total + enrollment.count, 0),
+            studentDeleted: req.query.deleted === "1"
+        });
+    } catch (error) {
+        console.error("Students page error:", error);
+        return res.status(500).send("Failed to load students");
+    }
+};
+
+const deleteStudentController = async (req, res) => {
+    if (!req.admin) {
+        return res.status(403).send("Access denied");
+    }
+
+    const studentId = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(studentId)) {
+        return res.status(400).send("Invalid student ID");
+    }
+
+    try {
+        const student = await User.findOne({
+            _id: studentId,
+            email: { $nin: adminEmails }
+        }).select("_id");
+
+        if (!student) {
+            return res.status(404).send("Student not found");
+        }
+
+        await Enrollment.deleteMany({ student: student._id });
+        await User.deleteOne({ _id: student._id });
+
+        return res.redirect("/admin/students?deleted=1");
+    } catch (error) {
+        console.error("Delete student error:", error);
+        return res.status(500).send("Failed to delete student");
+    }
+};
+
+const manageCoursesController = async (req, res) => {
     if (!req.admin) {
         return res.status(403).send("Access denied");
     }
@@ -502,7 +658,7 @@ const manageCoursesController = async(req, res) => {
 
 };
 
-const editCourseController = async(req, res) => {
+const editCourseController = async (req, res) => {
     if (!req.admin) {
         return res.status(403).send("Access denied");
     }
@@ -535,13 +691,13 @@ const editCourseController = async(req, res) => {
 
         const video =
             req.files && req.files.video ?
-            req.files.video[0] :
-            null;
+                req.files.video[0] :
+                null;
 
         const thumbnail =
             req.files && req.files.thumbnail ?
-            req.files.thumbnail[0] :
-            null;
+                req.files.thumbnail[0] :
+                null;
 
 
         /*
@@ -603,7 +759,7 @@ const editCourseController = async(req, res) => {
 
 };
 
-const deleteCourseController = async(req, res) => {
+const deleteCourseController = async (req, res) => {
     if (!req.admin) {
         return res.status(403).send("Access denied");
     }
@@ -650,6 +806,7 @@ const deleteCourseController = async(req, res) => {
         |--------------------------------------------------------------------------
         */
 
+        await Enrollment.deleteMany({ course: course._id });
         await freecourse.findByIdAndDelete(courseId);
 
         console.log("Course deleted from database:", courseId);
@@ -675,6 +832,8 @@ module.exports = {
     coursesController,
     learningController,
     homeController,
+    studentsController,
+    deleteStudentController,
     manageCoursesController,
     deleteCourseController,
     editCourseController,
@@ -684,7 +843,7 @@ module.exports = {
     regController
 };
 
-const cleanupUploadedFiles = async(...files) => {
+const cleanupUploadedFiles = async (...files) => {
     const uploadedFiles = files.filter(Boolean);
 
     await Promise.allSettled(

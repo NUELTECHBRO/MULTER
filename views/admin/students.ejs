@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XTP Concept Academy | Students</title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/admin-students.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <% 
+        const students = locals.students || [];
+        const studentInitials = (name) => (name || "Student").trim().split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
+        const formatDate = (date) => date ? new Date(date).toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" }) : "Date unavailable";
+    %>
+    <div class="admin-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-logo">X</div>
+                <div class="brand-text">
+                    <h2>XTP</h2>
+                    <span>CONCEPT ACADEMY</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <p class="section-title">MAIN MENU</p>
+                <nav class="sidebar-nav">
+                    <a href="/" class="nav-item">
+                        <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+                    </a>
+                    <a href="/admin/courses/upload" class="nav-item">
+                        <i class="fa-solid fa-cloud-arrow-up"></i><span>Upload Courses</span>
+                    </a>
+                    <a href="/admin/courses" class="nav-item">
+                        <i class="fa-solid fa-book-open"></i><span>Manage Courses</span>
+                    </a>
+                    <a href="/admin/students" class="nav-item active" aria-current="page">
+                        <i class="fa-solid fa-user-graduate"></i><span>Students</span>
+                    </a>
+                    <a href="/admin/payments" class="nav-item">
+                        <i class="fa-solid fa-credit-card"></i><span>Payments</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-section second-menu">
+                <p class="section-title">SYSTEM</p>
+                <nav class="sidebar-nav">
+                    <a href="/admin/settings" class="nav-item">
+                        <i class="fa-solid fa-gear"></i><span>Settings</span>
+                    </a>
+                    <a href="/logout" class="nav-item logout">
+                        <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="support-card">
+                    <div class="support-icon"><i class="fa-solid fa-circle-question"></i></div>
+                    <div><strong>Need Help?</strong><small>Contact Academy Support</small></div>
+                </div>
+                <div class="sidebar-footer"><span>© 2026 XTP Concept Academy</span></div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div>
+                        <span class="breadcrumb">Admin / Students</span>
+                        <h1>Students</h1>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="admin-profile">
+                        <div class="admin-avatar">AD</div>
+                        <div class="admin-info">
+                            <strong><%= user && user.name ? user.name : "Academy Admin" %></strong>
+                            <span>Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="students-content">
+                <div class="students-heading">
+                    <div>
+                        <span class="page-label">STUDENT MANAGEMENT</span>
+                        <h2>Student directory</h2>
+                        <p>Review student accounts, course activity, and registration dates.</p>
+                    </div>
+                </div>
+
+                <% if (studentDeleted) { %>
+                    <div class="students-feedback" role="status">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Student and their enrollments were deleted.
+                    </div>
+                <% } %>
+
+                <div class="student-summary" aria-label="Student totals">
+                    <div class="summary-item">
+                        <span class="summary-icon"><i class="fa-solid fa-users"></i></span>
+                        <div><span>Registered students</span><strong><%= students.length.toLocaleString() %></strong></div>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-icon enrollments-icon"><i class="fa-solid fa-book-open-reader"></i></span>
+                        <div><span>Student enrollments</span><strong><%= totalEnrollments.toLocaleString() %></strong></div>
+                    </div>
+                </div>
+
+                <section class="students-panel" aria-labelledby="directory-title">
+                    <div class="students-toolbar">
+                        <div>
+                            <h3 id="directory-title">All students</h3>
+                            <p>Search by student name or email.</p>
+                        </div>
+                        <div class="student-tools">
+                            <label class="student-search" for="studentSearch">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                <input id="studentSearch" type="search" placeholder="Search students" autocomplete="off">
+                                <button id="clearSearch" type="button" aria-label="Clear search" title="Clear search">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </label>
+                            <span class="result-count"><strong id="visibleStudentCount"><%= students.length %></strong> of <%= students.length %></span>
+                        </div>
+                    </div>
+
+                    <% if (students.length) { %>
+                        <div class="students-table-wrap">
+                            <table class="students-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Student</th>
+                                        <th scope="col">Enrollments</th>
+                                        <th scope="col">Registered</th>
+                                        <th scope="col"><span class="visually-hidden">Actions</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody">
+                                    <% students.forEach((student) => { %>
+                                        <tr class="student-row" data-search="<%= [student.name, student.email].join(' ').toLowerCase() %>">
+                                            <td>
+                                                <div class="student-identity">
+                                                    <span class="student-avatar"><%= studentInitials(student.name) %></span>
+                                                    <span class="student-name"><strong><%= student.name %></strong><span><%= student.email %></span></span>
+                                                </div>
+                                            </td>
+                                            <td><span class="enrollment-count"><%= student.enrollmentCount.toLocaleString() %></span></td>
+                                            <td class="registered-date"><%= formatDate(student.createdAt) %></td>
+                                            <td class="student-action-cell">
+                                                <form action="/admin/students/delete/<%= student._id %>" method="POST" class="delete-student-form" data-student-name="<%= student.name %>">
+                                                    <button type="submit" class="delete-student-button" aria-label="Delete <%= student.name %>" title="Delete student">
+                                                        <i class="fa-solid fa-trash"></i><span>Delete</span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                            <div id="noSearchResults" class="no-search-results" hidden>No students match your search.</div>
+                        </div>
+                    <% } else { %>
+                        <div class="students-empty-state">
+                            <span><i class="fa-solid fa-user-group"></i></span>
+                            <h3>No students yet</h3>
+                            <p>Student accounts will appear here after they register.</p>
+                        </div>
+                    <% } %>
+                </section>
+            </section>
+        </main>
+    </div>
+    <script src="/js/admin-students.js"></script>
+</body>
+</html>

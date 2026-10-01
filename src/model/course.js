@@ -9,7 +9,7 @@ const courseSchema = mongoose.Schema({
     thumbnail: { type: String, required: true },
     videoPublicId: { type: String },
     thumbnailPublicId: { type: String }
-}, )
+}, { timestamps: true })
 
 const freecourse = mongoose.model("FreeCourse", courseSchema)
 

@@ -11,6 +11,8 @@ const {
     postregController,
     logController,
     postlogController,
+    studentsController,
+    deleteStudentController,
     manageCoursesController,
     editCourseController,
     deleteCourseController
@@ -109,6 +111,16 @@ ADMIN MANAGE COURSES
 router.get(
     "/admin/courses",
     manageCoursesController
+);
+
+router.get(
+    "/admin/students",
+    studentsController
+);
+
+router.post(
+    "/admin/students/delete/:id",
+    deleteStudentController
 );
 
 /*                                                                                 

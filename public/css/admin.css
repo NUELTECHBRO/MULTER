@@ -447,6 +447,10 @@ select {
     color: var(--success);
 }
 
+.negative {
+    color: #dc2626;
+}
+
 .stat-label {
     color: var(--muted);
     font-size: 10px;

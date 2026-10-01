@@ -1,0 +1,15 @@
+require("dotenv").config()
+
+const data = process.env;
+
+const {MONGOURL,PORT,NODE_ENV,JWTSECRET,CLOUDINARY_CLOUD_NAME,CLOUDINARY_API_KEY,CLOUDINARY_API_SECRET} = data;
+
+module.exports = {
+    MONGOURL,
+    PORT,
+    JWTSECRET,
+    NODE_ENV,
+    CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET,
+    CLOUDINARY_CLOUD_NAME
+}
